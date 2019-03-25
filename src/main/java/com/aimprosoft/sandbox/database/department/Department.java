@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class Department {
     private String name;
     private ArrayList<String> employeeList;
+    private Integer size;
 
     public Department() {
+        size=0;
     }
 
     public String getName() {
@@ -26,5 +28,10 @@ public class Department {
 
     public void setEmployeeList(ArrayList<String> employeeList) {
         this.employeeList = employeeList;
+        this.size=employeeList.size();
+    }
+
+    public Integer getSize() {
+        return size;
     }
 }

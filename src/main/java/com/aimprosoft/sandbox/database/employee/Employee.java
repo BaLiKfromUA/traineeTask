@@ -11,6 +11,7 @@ public class Employee {
     private String email;
     private Integer rank;
     private Date registrationDate;//todo: change to long
+    private Long departmentID;
 
     public Employee(Long id) {
         ID = id;
@@ -50,5 +51,13 @@ public class Employee {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Long getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(Long departmentID) {
+        this.departmentID = departmentID;
     }
 }

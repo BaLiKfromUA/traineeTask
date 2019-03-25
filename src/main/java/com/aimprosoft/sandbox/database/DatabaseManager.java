@@ -28,14 +28,24 @@ public class DatabaseManager {
     /**
      * Statements
      **/
+    //todo: link user to department
+    private static final String CREATE_DEPARTMENT_TABLE = "CREATE TABLE IF NOT EXISTS departments(" +
+            "id BIGINT NOT NULL AUTO_INCREMENT," +
+            "name VARCHAR(128) NOT NULL UNIQUE," +
+            "PRIMARY KEY(id)" +
+            ")";
     private static final String CREATE_EMPLOYEE_TABLE = "CREATE TABLE IF NOT EXISTS employees (" +
             "id BIGINT NOT NULL AUTO_INCREMENT," +
             "login VARCHAR(512) NOT NULL UNIQUE, " +
             "email VARCHAR(512) NOT NULL UNIQUE, " +
             "rank INT, " +
-            "registration_date TIMESTAMP, " +
+            "registration_date TIMESTAMP," +
+            "department_id BIGINT NOT NULL," +
+            "FOREIGN KEY (department_id) " +
+            "REFERENCES departments (id) " +
+            "ON DELETE CASCADE," +
             "PRIMARY KEY (id) " +
-            ")";
+            ")";//todo:test this
 
     private DatabaseManager() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("database.properties");
@@ -47,7 +57,10 @@ public class DatabaseManager {
         PASSWORD = properties.getProperty("database.password");
 
         addMySQLToClassPath();
+
+        createDepartmentTable();
         createEmployeeTable();
+
         LOG.info("Database info entered!");
     }
 
@@ -72,7 +85,18 @@ public class DatabaseManager {
         }
     }
 
-    //todo:create tables for departments
+
+    private void createDepartmentTable() {
+        try (Connection dbConnection = getConnection();
+             Statement statement = dbConnection.createStatement()) {
+            statement.execute(CREATE_DEPARTMENT_TABLE);
+            LOG.info("Table 'departments' is created!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOG.error("Creating table 'departments' error!\n" + e.getMessage());
+        }
+    }
+
     private void createEmployeeTable() {
         try (Connection dbConnection = getConnection();
              Statement statement = dbConnection.createStatement()) {
