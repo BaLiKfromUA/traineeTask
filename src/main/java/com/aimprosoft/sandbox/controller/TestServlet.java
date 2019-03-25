@@ -45,7 +45,6 @@ public class TestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(employeeDAO.getAllEmployees().size());
         request.setAttribute("employees", employeeDAO.getAllEmployees().toArray());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
