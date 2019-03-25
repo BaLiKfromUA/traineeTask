@@ -37,7 +37,6 @@ public class TestServlet extends HttpServlet {
             randomUser.setRegistrationDate(new Date(currentTime.getTime()));
 
             employeeDAO.createEmployee(randomUser);
-            System.out.println("insert");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
@@ -46,12 +45,8 @@ public class TestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        String varTextA = "<h1>Hello World!</h1>";
-        request.setAttribute("textA", varTextA);
-        String varTextB = "<p>It JSP.</p>";
-        request.setAttribute("textB", varTextB);
-
+        System.out.println(employeeDAO.getAllEmployees().size());
+        request.setAttribute("employees", employeeDAO.getAllEmployees().toArray());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }

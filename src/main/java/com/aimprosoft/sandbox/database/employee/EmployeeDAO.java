@@ -18,6 +18,7 @@ public class EmployeeDAO {
     //todo: add prep. statements
     private Connection connection;
     private PreparedStatement createStatement;
+    private PreparedStatement checkStatement;
     /**
      * Statements
      **/
@@ -29,6 +30,7 @@ public class EmployeeDAO {
     public EmployeeDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
         createStatement = connection.prepareStatement(CREATE_EMPLOYEE);
+        checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL);
     }
 
     private Employee extractEmployee(ResultSet rs) {
@@ -78,6 +80,8 @@ public class EmployeeDAO {
         return k;
     }
 
+    //todo:get user method
+
     public void createEmployee(Employee employee) {
         try {
             setEmployeeData(employee, createStatement);
@@ -91,5 +95,6 @@ public class EmployeeDAO {
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();
+        checkStatement.close();
     }
 }
