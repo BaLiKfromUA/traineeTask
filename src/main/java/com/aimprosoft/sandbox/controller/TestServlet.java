@@ -1,5 +1,7 @@
 package com.aimprosoft.sandbox.controller;
 
+import com.aimprosoft.sandbox.database.department.Department;
+import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.Employee;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 
@@ -22,16 +24,23 @@ import java.util.UUID;
 public class TestServlet extends HttpServlet {
 
     private static EmployeeDAO employeeDAO = null;
+    private static DepartmentDAO departmentDAO=null;
 
     @Override
     public void init() {
         try {
             System.out.println("open connection");
             employeeDAO = new EmployeeDAO();
-            //todo: new department
+            departmentDAO=new DepartmentDAO();
+
+            Department randomDepartment=new Department(1L);
+            randomDepartment.setName("KIY "+UUID.randomUUID().toString());
+
+            departmentDAO.createDepartment(randomDepartment);
+
             Employee randomUser = new Employee(1L);
             randomUser.setLogin("BaLiK " + UUID.randomUUID().toString());
-            randomUser.setEmail(randomUser.getLogin());
+            randomUser.setEmail(UUID.randomUUID().toString()+"@gmail.com");
             randomUser.setRank(777);
             randomUser.setDepartmentID(1L);
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());

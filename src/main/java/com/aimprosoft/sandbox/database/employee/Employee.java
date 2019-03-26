@@ -1,5 +1,6 @@
 package com.aimprosoft.sandbox.database.employee;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,6 +13,9 @@ public class Employee {
     private Integer rank;
     private Date registrationDate;//todo: change to long(with pattern)
     private Long departmentID;
+    private String dateString;
+
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     public Employee(Long id) {
         ID = id;
@@ -51,6 +55,11 @@ public class Employee {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+        dateString=format.format(registrationDate);
+    }
+
+    public String getDateString() {
+        return dateString;
     }
 
     public Long getDepartmentID() {

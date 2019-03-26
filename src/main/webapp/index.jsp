@@ -33,10 +33,19 @@
         <tr>
             <form method="post" id="post ${employee.ID}">
                 <th scope="row">${employee.ID}</th>
-                <td>${employee.login}</td>
-                <td>${employee.email}</td>
-                <td>${employee.rank}</td>
-                <td>${employee.registrationDate}</td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Enter login" value="${employee.login}">
+                </td>
+                <td>
+                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
+                           value=" ${employee.email}">
+                </td>
+                <td>
+                    <input type="number" class="form-control" placeholder="Enter rank" value="${employee.rank}">
+                </td>
+                <td>
+                    <input type="date" class="form-control" value="${employee.dateString}">
+                </td>
                 <td>
                     <button type="button" class="btn btn-warning">Edit</button>
                 </td>
