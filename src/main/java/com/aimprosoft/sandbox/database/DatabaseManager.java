@@ -28,7 +28,6 @@ public class DatabaseManager {
     /**
      * Statements
      **/
-    //todo: link user to department
     private static final String CREATE_DEPARTMENT_TABLE = "CREATE TABLE IF NOT EXISTS departments(" +
             "id BIGINT NOT NULL AUTO_INCREMENT," +
             "name VARCHAR(128) NOT NULL UNIQUE," +
@@ -45,7 +44,7 @@ public class DatabaseManager {
             "REFERENCES departments (id) " +
             "ON DELETE CASCADE," +
             "PRIMARY KEY (id) " +
-            ")";//todo:test this
+            ")";
 
     private DatabaseManager() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("database.properties");

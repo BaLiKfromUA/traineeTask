@@ -19,18 +19,21 @@ public class EmployeeDAO {
     private Connection connection;
     private PreparedStatement createStatement;
     private PreparedStatement checkStatement;
+    private PreparedStatement getAllStatement;
     /**
      * Statements
      **/
     private static final String GET_ALL_EMPLOYEES = "SELECT * FROM employees";
-    private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date)" +
-            " VALUES (?,?,?,?)";
+    private static final String GET_ALL_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE department_id=?";
+    private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date, department_id)" +
+            " VALUES (?,?,?,?,?)";
     private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (login = ? OR email=?)";
 
     public EmployeeDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
         createStatement = connection.prepareStatement(CREATE_EMPLOYEE);
         checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL);
+        getAllStatement = connection.prepareStatement(GET_ALL_BY_DEPARTMENT_ID);
     }
 
     private Employee extractEmployee(ResultSet rs) {
@@ -42,6 +45,7 @@ public class EmployeeDAO {
             employee.setEmail(rs.getString("email"));
             employee.setRank(Integer.parseInt(rs.getString("rank")));
             employee.setRegistrationDate(Timestamp.valueOf(rs.getString("registration_date")));
+            employee.setDepartmentID(Long.parseLong(rs.getString("department_id")));
         } catch (SQLException e) {
             LOG.error("Can not extract employee\n" + e.getMessage());
         }
@@ -70,12 +74,29 @@ public class EmployeeDAO {
         return employees;
     }
 
+    public ArrayList<Employee> getAllByDepartmentId(Long id) {
+        ArrayList<Employee> employees = new ArrayList<>();
+        try {
+            ResultSet rs;
+            getAllStatement.setLong(1, id);
+            rs = getAllStatement.executeQuery();
+            while (rs.next()) {
+                employees.add(extractEmployee(rs));
+            }
+        } catch (SQLException e) {
+            LOG.error("Can not get Employees by Department ID\n" + e.getMessage());
+        }
+
+        return employees;
+    }
+
     private int setEmployeeData(Employee employee, PreparedStatement statement) throws SQLException {
         int k = 1;
         statement.setString(k++, employee.getLogin());
         statement.setString(k++, employee.getEmail());
         statement.setInt(k++, employee.getRank());
         statement.setTimestamp(k++, new java.sql.Timestamp(employee.getRegistrationDate().getTime()));
+        statement.setLong(k++, employee.getDepartmentID());
 
         return k;
     }
@@ -96,5 +117,6 @@ public class EmployeeDAO {
         connection.close();
         createStatement.close();
         checkStatement.close();
+        getAllStatement.close();
     }
 }

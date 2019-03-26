@@ -10,7 +10,7 @@ public class Employee {
     private String login;
     private String email;
     private Integer rank;
-    private Date registrationDate;//todo: change to long
+    private Date registrationDate;//todo: change to long(with pattern)
     private Long departmentID;
 
     public Employee(Long id) {

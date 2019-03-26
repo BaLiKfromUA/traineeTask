@@ -6,6 +6,7 @@
     <style type="text/css">
         <%@include file="bootstrap/css/bootstrap.min.css" %>
         <%@include file="bootstrap/css/bootstrap-grid.min.css" %>
+        <%@include file="bootstrap/css/bootstrap-reboot.min.css" %>
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -23,23 +24,34 @@
         <th scope="col">Email</th>
         <th scope="col">Score</th>
         <th scope="col">Reg. date</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="employee" items="${employees}">
         <tr>
-            <th scope="row">${employee.ID}</th>
-            <td>${employee.login}</td>
-            <td>${employee.email}</td>
-            <td>${employee.rank}</td>
-            <td>${employee.registrationDate}</td>
+            <form method="post" id="post ${employee.ID}">
+                <th scope="row">${employee.ID}</th>
+                <td>${employee.login}</td>
+                <td>${employee.email}</td>
+                <td>${employee.rank}</td>
+                <td>${employee.registrationDate}</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </td>
+            </form>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<footer class="page-footer font-small special-color-dark pt-4">
+<button type="button" class="btn btn-success">Add</button>
+<footer class="page-footer font-small unique-color-dark pt-4">
     <div class="footer-copyright text-center py-3">© 2019 Copyright:
-        BaLiK
+        <b>BaLiK</b>
     </div>
 </footer>
 </body>

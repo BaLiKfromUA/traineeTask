@@ -6,12 +6,18 @@ import java.util.ArrayList;
  * @author BaLiK on 25.03.19
  */
 public class Department {
+    private Long ID;
     private String name;
     private ArrayList<String> employeeList;
     private Integer size;
 
-    public Department() {
+    public Department(Long id) {
         size=0;
+        ID=id;
+    }
+
+    public Long getID() {
+        return ID;
     }
 
     public String getName() {
