@@ -23,7 +23,7 @@ public class DepartmentDAO {
     /**
      * Statements
      **/
-    private static final String GET_ALL_DEPARTMENTS = "SELECT * FROM departments";
+    private static final String GET_ALL_DEPARTMENTS = "SELECT * FROM departments ORDER BY departments.id";
     private static final String CHECK_DEPARTMENT = "SELECT * FROM departments WHERE name = ?";
     private static final String CREATE_DEPARTMENT = "INSERT INTO departments (name)" +
             " VALUES (?)";

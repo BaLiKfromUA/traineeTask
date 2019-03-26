@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
-    <h1 style="color:white">Employees in ${name}</h1>
+    <h1 style="color:white">Employees</h1>
 </nav>
 <table class="table table-striped table-dark" style="margin: 0">
     <thead>

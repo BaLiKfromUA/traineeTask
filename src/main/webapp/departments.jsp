@@ -29,20 +29,23 @@
     <tbody>
     <c:forEach var="department" items="${departments}">
         <tr>
-            <form method="post" id="post ${department.ID}">
+            <form method="post">
                 <th scope="row">${department.ID}</th>
                 <td>
                     <input type="text" class="form-control" maxlength="128" placeholder="Enter department name"
                            value="${department.name}">
                 </td>
                 <td>
-                    <button type="button" class="btn btn-info">Employee List</button>
-                </td>
-                <td>
                     <button type="button" class="btn btn-warning">Edit</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">Delete</button>
+                </td>
+            </form>
+            <form id="getform ${department.ID}" method="get">
+                <td>
+                    <input type="hidden" name="department_id" value="${department.ID}">
+                    <button type="button" onclick="document.getElementById('getform ${department.ID}').submit()" class="btn btn-info">Employee List</button>
                 </td>
             </form>
         </tr>
@@ -57,8 +60,9 @@
         <b>BaLiK</b>
     </div>
 </footer>
-</body>
-<style>
 
-</style>
+<script>
+
+</script>
+</body>
 </html>

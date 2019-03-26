@@ -23,8 +23,8 @@ public class EmployeeDAO {
     /**
      * Statements
      **/
-    private static final String GET_ALL_EMPLOYEES = "SELECT * FROM employees";
-    private static final String GET_ALL_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE department_id=?";
+    private static final String GET_ALL_EMPLOYEES = "SELECT * FROM employees ORDER BY employees.id";
+    private static final String GET_ALL_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE department_id=? ORDER BY employees.id";
     private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date, department_id)" +
             " VALUES (?,?,?,?,?)";
     private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (login = ? OR email=?)";
