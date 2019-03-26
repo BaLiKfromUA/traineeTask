@@ -20,6 +20,7 @@ public class EmployeeDAO {
     private PreparedStatement createStatement;
     private PreparedStatement checkStatement;
     private PreparedStatement getAllStatement;
+    private PreparedStatement deleteStatement;
     /**
      * Statements
      **/
@@ -28,12 +29,14 @@ public class EmployeeDAO {
     private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date, department_id)" +
             " VALUES (?,?,?,?,?)";
     private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (login = ? OR email=?)";
+    private static final String DELETE_BY_ID = "DELETE FROM employees WHERE employees.id=?";
 
     public EmployeeDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
         createStatement = connection.prepareStatement(CREATE_EMPLOYEE);
         checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL);
         getAllStatement = connection.prepareStatement(GET_ALL_BY_DEPARTMENT_ID);
+        deleteStatement = connection.prepareStatement(DELETE_BY_ID);
     }
 
     private Employee extractEmployee(ResultSet rs) {
@@ -120,9 +123,19 @@ public class EmployeeDAO {
         try {
             setEmployeeData(employee, createStatement);
             int rs = createStatement.executeUpdate();
-            LOG.info("User create result: " + rs);
+            LOG.info("Employee create result: " + rs);
         } catch (SQLException e) {
-            LOG.error("Can not create User\n" + e.getMessage());
+            LOG.error("Can not create Employee\n" + e.getMessage());
+        }
+    }
+
+    public void deleteEmployeeById(Long id) {
+        try {
+            deleteStatement.setLong(1, id);
+            int rs = deleteStatement.executeUpdate();
+            LOG.info("Employee delete result: " + rs);
+        } catch (SQLException e) {
+            LOG.error("Can not delete Employee " + id + "\n" + e.getMessage());
         }
     }
 
@@ -131,5 +144,6 @@ public class EmployeeDAO {
         createStatement.close();
         checkStatement.close();
         getAllStatement.close();
+        deleteStatement.close();
     }
 }

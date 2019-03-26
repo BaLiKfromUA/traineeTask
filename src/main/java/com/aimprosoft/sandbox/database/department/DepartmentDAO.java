@@ -44,10 +44,10 @@ public class DepartmentDAO {
         }
     }
 
-    public boolean checkDepartment(Department department) {
+    public boolean checkDepartment(String department) {
         try {
             ResultSet rs;
-            checkStatement.setString(1, department.getName());
+            checkStatement.setString(1, department);
             rs = checkStatement.executeQuery();
             if (rs.next()) {
                 return false;

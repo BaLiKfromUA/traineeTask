@@ -44,17 +44,33 @@
             </form>
             <form id="getform ${department.ID}" method="get">
                 <td>
+                    <input type="hidden" name="action-get" value="goto">
                     <input type="hidden" name="department_id" value="${department.ID}">
-                    <button type="button" onclick="document.getElementById('getform ${department.ID}').submit()" class="btn btn-info">Employee List</button>
+                    <button type="button" onclick="document.getElementById('getform ${department.ID}').submit()"
+                            class="btn btn-info">Employee List
+                    </button>
                 </td>
             </form>
         </tr>
     </c:forEach>
+    <tr>
+        <form id="add" method="post">
+            <input type="hidden" name="action-post" value="add new department">
+            <th>*</th>
+            <td>
+                <input type="text" class="form-control" name="new name" maxlength="128" placeholder="Enter new department name">
+            </td>
+            <td>
+                <button type="button" class="btn btn-success"  onclick="document.getElementById('add').submit()">Add</button>
+            </td>
+            <td>
+
+            </td>
+        </form>
+    </tr>
     </tbody>
 </table>
-<span class="d-block p-2 bg-dark text-white" style="margin: 0">
-    <button type="button" class="btn btn-success">Add</button>
-</span>
+
 <footer class="page-footer font-small unique-color-dark pt-4">
     <div class="footer-copyright text-center py-3">© 2019 Copyright:
         <b>BaLiK</b>
