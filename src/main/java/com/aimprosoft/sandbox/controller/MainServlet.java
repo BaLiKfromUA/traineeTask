@@ -1,5 +1,11 @@
 package com.aimprosoft.sandbox.controller;
 
+import com.aimprosoft.sandbox.actions.Action;
+import com.aimprosoft.sandbox.actions.get.DepartmentsPage;
+import com.aimprosoft.sandbox.actions.get.EmployeesPage;
+import com.aimprosoft.sandbox.actions.post.AddNewDepartment;
+import com.aimprosoft.sandbox.actions.post.DeleteDepartment;
+import com.aimprosoft.sandbox.actions.post.DeleteEmployee;
 import com.aimprosoft.sandbox.database.department.Department;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
@@ -40,16 +46,15 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher;
         final String action = request.getParameter("action-get");
+        Action actionToDo;
         if (action != null && action.equals("goto")) {
-            Long departmentId = Long.parseLong(request.getParameter("department_id"));
-            request.setAttribute("employees", employeeDAO.getAllByDepartmentId(departmentId).toArray());
-            dispatcher = request.getRequestDispatcher("/employees.jsp");
+            actionToDo = new EmployeesPage();
         } else {
-            request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
-            dispatcher = request.getRequestDispatcher("/departments.jsp");
+            actionToDo = new DepartmentsPage();
         }
+
+        RequestDispatcher dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
         dispatcher.forward(request, response);
     }
 
@@ -57,39 +62,25 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String action = request.getParameter("action-post");
         RequestDispatcher dispatcher;
-
+        Action actionToDo = null;
         if (action != null && action.equals("employee delete")) {
-            Long employeeId = Long.parseLong(request.getParameter("id"));
-            employeeDAO.deleteEmployeeById(employeeId);
-            LOG.info("Employee" + request.getParameter("login") + "was removed!");
-
-            Long departmentId = Long.parseLong(request.getParameter("department_id"));
-            request.setAttribute("employees", employeeDAO.getAllByDepartmentId(departmentId).toArray());
-            dispatcher = request.getRequestDispatcher("/employees.jsp");
-
+            actionToDo = new DeleteEmployee();
         } else if (action != null && action.equals("add new department")) {
-            String newDepartmentName = request.getParameter("new name");
-
-            if (departmentDAO.checkDepartment(newDepartmentName)) {
-                Department newDepartment = new Department(1L);
-                newDepartment.setName(newDepartmentName);
-
-                departmentDAO.createDepartment(newDepartment);
-                LOG.info("Department " + newDepartmentName + "was added!");
-
-                request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
-                dispatcher = request.getRequestDispatcher("/departments.jsp");
-            } else {
-                //todo:error
-                request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
-                dispatcher = request.getRequestDispatcher("/departments.jsp");
-            }
-
-        } else {
+            actionToDo = new AddNewDepartment();
+        }
+        else if(action!=null && action.equals("department delete")){
+            actionToDo=new DeleteDepartment();
+        }
+        else {
             dispatcher = request.getRequestDispatcher("/departments.jsp");
+            dispatcher.forward(request, response);
         }
 
-        dispatcher.forward(request, response);
+        if (actionToDo != null)//todo:remove
+        {
+            dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override

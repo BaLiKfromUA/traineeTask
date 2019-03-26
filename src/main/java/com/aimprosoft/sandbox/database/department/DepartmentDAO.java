@@ -19,6 +19,7 @@ public class DepartmentDAO {
     private Connection connection;
     private PreparedStatement createStatement;
     private PreparedStatement checkStatement;
+    private PreparedStatement deleteStatement;
 
     /**
      * Statements
@@ -27,11 +28,23 @@ public class DepartmentDAO {
     private static final String CHECK_DEPARTMENT = "SELECT * FROM departments WHERE name = ?";
     private static final String CREATE_DEPARTMENT = "INSERT INTO departments (name)" +
             " VALUES (?)";
+    private static final String DELETE_BY_ID="DELETE FROM departments WHERE departments.id=?";
 
     public DepartmentDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
         createStatement = connection.prepareStatement(CREATE_DEPARTMENT);
         checkStatement = connection.prepareStatement(CHECK_DEPARTMENT);
+        deleteStatement=connection.prepareStatement(DELETE_BY_ID);
+    }
+
+    public void deleteDepartmentById(Long id){
+        try {
+            deleteStatement.setLong(1, id);
+            int rs = deleteStatement.executeUpdate();
+            LOG.info("Department delete result: " + rs);
+        } catch (SQLException e) {
+            LOG.error("Can not delete Department " + id + "\n" + e.getMessage());
+        }
     }
 
     public void createDepartment(Department department) {
@@ -95,5 +108,7 @@ public class DepartmentDAO {
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();
+        checkStatement.close();
+        deleteStatement.close();
     }
 }

@@ -29,17 +29,19 @@
     <tbody>
     <c:forEach var="department" items="${departments}">
         <tr>
-            <form method="post">
-                <th scope="row">${department.ID}</th>
+            <form method="post"  id="post ${department.ID}">
+                <input type="hidden" name="action-post" id="action ${department.ID}">
+                <th scope="row">${department.ID}
+                    <input type="hidden" name="id" value="${department.ID}"></th>
                 <td>
-                    <input type="text" class="form-control" maxlength="128" placeholder="Enter department name"
+                    <input type="text" name="name" class="form-control" maxlength="128" placeholder="Enter department name"
                            value="${department.name}">
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning">Edit</button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="doDelete(${department.ID})">Delete</button>
                 </td>
             </form>
             <form id="getform ${department.ID}" method="get">
@@ -78,7 +80,10 @@
 </footer>
 
 <script>
-
+    function doDelete(id) {
+        document.getElementById('action ' + id).value = "department delete";
+        document.getElementById('post ' + id).submit();
+    }
 </script>
 </body>
 </html>
