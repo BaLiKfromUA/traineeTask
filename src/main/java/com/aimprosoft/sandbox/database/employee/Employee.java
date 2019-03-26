@@ -1,5 +1,7 @@
 package com.aimprosoft.sandbox.database.employee;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,7 +57,17 @@ public class Employee {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
-        dateString=format.format(registrationDate);
+        dateString = format.format(registrationDate);
+    }
+
+    public void setRegistrationDate(String date) {
+        try {
+            this.registrationDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            this.registrationDate = new Date(currentTime.getTime());
+        }
     }
 
     public String getDateString() {

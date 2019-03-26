@@ -101,7 +101,20 @@ public class EmployeeDAO {
         return k;
     }
 
-    //todo:get user method
+    public boolean checkEmployee(Employee employee) {
+        try {
+            ResultSet rs;
+            checkStatement.setString(1, employee.getLogin());
+            checkStatement.setString(2, employee.getEmail());
+            rs = checkStatement.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            LOG.error("Can not get Employees by Email or Login\n" + e.getMessage());
+        }
+        return true;
+    }
 
     public void createEmployee(Employee employee) {
         try {

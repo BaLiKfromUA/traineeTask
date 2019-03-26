@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.database.department.Department;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.Employee;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +23,8 @@ import java.util.UUID;
  */
 @WebServlet("/test")
 public class TestServlet extends HttpServlet {
+
+    private static Logger LOG = Logger.getLogger(TestServlet.class);
 
     private static EmployeeDAO employeeDAO = null;
     private static DepartmentDAO departmentDAO=null;
@@ -58,7 +61,7 @@ public class TestServlet extends HttpServlet {
             throws ServletException, IOException {
         //todo:employeeDAO null situation
         request.setAttribute("employees", employeeDAO.getAllEmployees().toArray());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/employees.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -67,6 +70,7 @@ public class TestServlet extends HttpServlet {
         try {
             System.out.println("close connection");
             employeeDAO.closeConnection();
+            departmentDAO.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

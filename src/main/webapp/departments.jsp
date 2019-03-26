@@ -14,37 +14,29 @@
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
-    <h1 style="color:white">Employee Table</h1>
+    <h1 style="color:white">Departments</h1>
 </nav>
-<table class="table table-striped table-dark">
+<table class="table table-striped table-dark" style="margin: 0">
     <thead>
     <tr>
         <th scope="col">ID</th>
-        <th scope="col">Login</th>
-        <th scope="col">Email</th>
-        <th scope="col">Score</th>
-        <th scope="col">Reg. date</th>
+        <th scope="col">Name</th>
+        <th></th>
         <th></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="employee" items="${employees}">
+    <c:forEach var="department" items="${departments}">
         <tr>
-            <form method="post" id="post ${employee.ID}">
-                <th scope="row">${employee.ID}</th>
+            <form method="post" id="post ${department.ID}">
+                <th scope="row">${department.ID}</th>
                 <td>
-                    <input type="text" class="form-control" placeholder="Enter login" value="${employee.login}">
+                    <input type="text" class="form-control" maxlength="128" placeholder="Enter department name"
+                           value="${department.name}">
                 </td>
                 <td>
-                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
-                           value=" ${employee.email}">
-                </td>
-                <td>
-                    <input type="number" class="form-control" placeholder="Enter rank" value="${employee.rank}">
-                </td>
-                <td>
-                    <input type="date" class="form-control" value="${employee.dateString}">
+                    <button type="button" class="btn btn-info">Employee List</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning">Edit</button>
@@ -57,7 +49,9 @@
     </c:forEach>
     </tbody>
 </table>
-<button type="button" class="btn btn-success">Add</button>
+<span class="d-block p-2 bg-dark text-white" style="margin: 0">
+    <button type="button" class="btn btn-success">Add</button>
+</span>
 <footer class="page-footer font-small unique-color-dark pt-4">
     <div class="footer-copyright text-center py-3">© 2019 Copyright:
         <b>BaLiK</b>
