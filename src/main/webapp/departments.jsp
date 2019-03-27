@@ -37,7 +37,7 @@
                     <input type="text" name="name" class="form-control" maxlength="128"
                            placeholder="Enter department name"
                            value="${department.name}" required>
-                    <c:if test="${flag.equals(department.ID)}">
+                    <c:if test="${flag.equals(''.concat(department.ID))}">
                         <div style="color: red">
                             New department name should be unique!
                         </div>
@@ -66,13 +66,19 @@
             <input type="hidden" name="action-post" value="add new department">
             <th>*</th>
             <td>
-                <input type="text" class="form-control" name="new name" maxlength="128"
-                       placeholder="Enter new department name" value="${name}" required>
-                <c:if test="${flag.equals('invalid-new-name')}">
-                    <div style="color: red">
-                        New department name should be unique!
-                    </div>
-                </c:if>
+                <c:choose>
+                    <c:when test="${flag.equals('invalid-new-name')}">
+                        <input type="text" class="form-control" name="new name" maxlength="128"
+                               placeholder="Enter new department name" value="${name}" required>
+                        <div style="color: red">
+                            New department name should be unique!
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" class="form-control" name="new name" maxlength="128"
+                               placeholder="Enter new department name" required>
+                    </c:otherwise>
+                </c:choose>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
@@ -99,6 +105,7 @@
         document.getElementById('action ' + id).value = "department delete";
         document.getElementById('post ' + id).submit();
     }
+
     function doEdit(id) {
         document.getElementById('action ' + id).value = "department edit";
         document.getElementById('post ' + id).submit();

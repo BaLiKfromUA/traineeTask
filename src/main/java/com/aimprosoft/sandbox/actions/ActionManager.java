@@ -18,6 +18,7 @@ public class ActionManager {
 
     public ActionManager() {
         actions = new HashMap<>();
+
         /**get**/
         actions.put("default", new DepartmentsPage());
         actions.put("employees", new EmployeesPage());

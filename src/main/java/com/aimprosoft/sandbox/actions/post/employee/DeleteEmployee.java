@@ -5,23 +5,24 @@ import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author BaLiK on 26.03.19
  */
 public class DeleteEmployee implements Action {
     private static Logger LOG = Logger.getLogger(DeleteEmployee.class);
+    private static String URL = "?action-get=employees&department_id=%d";
 
     @Override
-    public RequestDispatcher execute(HttpServletRequest request, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) {
+    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         Long employeeId = Long.parseLong(request.getParameter("id"));
         employeeDAO.deleteEmployeeById(employeeId);
         LOG.info("Employee " + request.getParameter("login") + " was removed!");
 
         Long departmentId = Long.parseLong(request.getParameter("department_id"));
-        request.setAttribute("employees", employeeDAO.getAllByDepartmentId(departmentId).toArray());
-        return request.getRequestDispatcher("/employees.jsp");
+        response.sendRedirect(String.format(URL, departmentId));
     }
 }

@@ -6,17 +6,19 @@ import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author BaLiK on 26.03.19
  */
 public class AddNewDepartment implements Action {
     private static Logger LOG = Logger.getLogger(AddNewDepartment.class);
+    private final static String URL = "?action-get=default&name=%s&flag=%s";
 
     @Override
-    public RequestDispatcher execute(HttpServletRequest request, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) {
+    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String newDepartmentName = request.getParameter("new name");
 
         if (!newDepartmentName.equals("") && departmentDAO.checkDepartment(newDepartmentName)) {
@@ -25,15 +27,11 @@ public class AddNewDepartment implements Action {
 
             departmentDAO.createDepartment(newDepartment);
             LOG.info("Department " + newDepartmentName + " was added!");
-
-            request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
-            request.setAttribute("name","");
-            return request.getRequestDispatcher("/departments.jsp");
+            response.sendRedirect("/");
+        } else {
+            String flag = "invalid-new-name";
+            response.sendRedirect(String.format(URL, newDepartmentName, flag));
         }
 
-        request.setAttribute("flag","invalid-new-name");
-        request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
-        request.setAttribute("name",newDepartmentName);
-        return request.getRequestDispatcher("/departments.jsp");
     }
 }

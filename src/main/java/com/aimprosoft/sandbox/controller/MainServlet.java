@@ -2,12 +2,6 @@ package com.aimprosoft.sandbox.controller;
 
 import com.aimprosoft.sandbox.actions.Action;
 import com.aimprosoft.sandbox.actions.ActionManager;
-import com.aimprosoft.sandbox.actions.get.DepartmentsPage;
-import com.aimprosoft.sandbox.actions.get.EmployeesPage;
-import com.aimprosoft.sandbox.actions.post.department.AddNewDepartment;
-import com.aimprosoft.sandbox.actions.post.department.DeleteDepartment;
-import com.aimprosoft.sandbox.actions.post.department.EditDepartment;
-import com.aimprosoft.sandbox.actions.post.employee.DeleteEmployee;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;
@@ -47,15 +41,13 @@ public class MainServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action-get");
         if (action == null) {
             action = "default";
         }
         Action actionToDo = actionManager.getAction(action);
-        RequestDispatcher dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
-        dispatcher.forward(request, response);
+        actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 
     @Override
@@ -63,8 +55,7 @@ public class MainServlet extends HttpServlet {
             ServletException, IOException {
         final String action = request.getParameter("action-post");
         Action actionToDo = actionManager.getAction(action);
-        RequestDispatcher dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
-        dispatcher.forward(request, response);
+        actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 
     @Override
