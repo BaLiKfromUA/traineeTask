@@ -27,65 +27,87 @@
     </tr>
     </thead>
     <tbody>
+    <%--@elvariable id="departments" type="java.util.List<com.aimprosoft.sandbox.database.department.Department>"--%>
     <c:forEach var="department" items="${departments}">
+
+        <c:set var="departmentName">
+            <c:choose>
+                <%--@elvariable id="flag" type="java.lang.String"--%>
+                <c:when test="${''.concat(department.ID) eq flag}">
+                    <%--@elvariable id="name" type="java.lang.String"--%>
+                    ${name}
+                    <c:set var="isError" value="true"/>
+                </c:when>
+                <c:otherwise>
+                    ${department.name}
+                    <c:set var="isError" value="false"/>
+                </c:otherwise>
+            </c:choose>
+        </c:set>
+
         <tr>
-            <form method="post" id="post ${department.ID}">
-                <input type="hidden" name="action-post" id="action ${department.ID}">
+            <form method="post">
+                <input type="hidden" name="action-post" value="department edit">
                 <th scope="row">${department.ID}
-                    <input type="hidden" name="id" value="${department.ID}" required></th>
+                    <input type="hidden" name="id" value="${department.ID}"></th>
                 <td>
-                    <c:choose>
-                        <c:when test="${flag.equals(''.concat(department.ID))}">
-                            <input type="text" name="new name" class="form-control" maxlength="128"
-                                   placeholder="Enter department name"
-                                   value="${name}" required>
-                            <div style="color: red">
-                                New department name should be unique!
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <input type="text" name="new name" class="form-control" maxlength="128"
-                                   placeholder="Enter department name"
-                                   value="${department.name}" required>
-                        </c:otherwise>
-                    </c:choose>
+                    <input type="text" name="new name" class="form-control" minlength="6" maxlength="128"
+                           placeholder="Enter department name"
+                           value="${departmentName}" required>
+
+                    <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                        New department name should be unique!
+                    </div>
+
                 </td>
                 <td>
-                    <button type="button" class="btn btn-warning" onclick="doEdit(${department.ID})">Edit</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger" onclick="doDelete(${department.ID})">Delete</button>
+                    <button type="submit" class="btn btn-warning">Edit</button>
                 </td>
             </form>
+
+            <form method="post">
+                <td>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <input type="hidden" name="action-post" value="department delete">
+                    <input type="hidden" name="id" value="${department.ID}">
+                </td>
+            </form>
+
             <form method="get">
                 <td>
+                    <button type="submit" class="btn btn-info">Employee List</button>
                     <input type="hidden" name="action-get" value="employees">
                     <input type="hidden" name="department_id" value="${department.ID}">
-                    <button type="submit"
-                            class="btn btn-info">Employee List
-                    </button>
                 </td>
             </form>
+
         </tr>
     </c:forEach>
+
     <tr>
         <form id="add" method="post">
             <input type="hidden" name="action-post" value="add new department">
             <th>*</th>
             <td>
-                <c:choose>
-                    <c:when test="${flag.equals('invalid-new-department')}">
-                        <input type="text" class="form-control" name="new name" maxlength="128"
-                               placeholder="Enter new department name" value="${name}" required>
-                        <div style="color: red">
-                            New department name should be unique!
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="text" class="form-control" name="new name" maxlength="128"
-                               placeholder="Enter new department name" required>
-                    </c:otherwise>
-                </c:choose>
+                <c:set var="departmentName">
+                    <c:choose>
+                        <%--@elvariable id="flag" type="java.lang.String"--%>
+                        <c:when test="${'invalid-new-department' eq flag}">
+                            <%--@elvariable id="name" type="java.lang.String"--%>
+                            ${name}
+                            <c:set var="isError" value="true"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="isError" value="false"/>
+                        </c:otherwise>
+                    </c:choose>
+                </c:set>
+
+                <input type="text" class="form-control" name="new name" minlength="6" maxlength="128"
+                       placeholder="Enter new department name" value="${departmentName}" required>
+                <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                    New department name should be unique!
+                </div>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
@@ -106,17 +128,5 @@
         <b>BaLiK</b>
     </div>
 </footer>
-
-<script>
-    function doDelete(id) {
-        document.getElementById('action ' + id).value = "department delete";
-        document.getElementById('post ' + id).submit();
-    }
-
-    function doEdit(id) {
-        document.getElementById('action ' + id).value = "department edit";
-        document.getElementById('post ' + id).submit();
-    }
-</script>
 </body>
 </html>
