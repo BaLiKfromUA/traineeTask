@@ -1,12 +1,13 @@
 package com.aimprosoft.sandbox.controller;
 
 import com.aimprosoft.sandbox.actions.Action;
+import com.aimprosoft.sandbox.actions.ActionManager;
 import com.aimprosoft.sandbox.actions.get.DepartmentsPage;
 import com.aimprosoft.sandbox.actions.get.EmployeesPage;
-import com.aimprosoft.sandbox.actions.post.AddNewDepartment;
-import com.aimprosoft.sandbox.actions.post.DeleteDepartment;
-import com.aimprosoft.sandbox.actions.post.DeleteEmployee;
-import com.aimprosoft.sandbox.database.department.Department;
+import com.aimprosoft.sandbox.actions.post.department.AddNewDepartment;
+import com.aimprosoft.sandbox.actions.post.department.DeleteDepartment;
+import com.aimprosoft.sandbox.actions.post.department.EditDepartment;
+import com.aimprosoft.sandbox.actions.post.employee.DeleteEmployee;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;
@@ -31,10 +32,12 @@ public class MainServlet extends HttpServlet {
 
     private static DepartmentDAO departmentDAO = null;
     private static EmployeeDAO employeeDAO = null;
+    private static ActionManager actionManager = null;
 
     @Override
     public void init() {
         LOG.info("Main servlet init...");
+        actionManager = new ActionManager();
         try {
             departmentDAO = new DepartmentDAO();
             employeeDAO = new EmployeeDAO();
@@ -46,41 +49,22 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        final String action = request.getParameter("action-get");
-        Action actionToDo;
-        if (action != null && action.equals("goto")) {
-            actionToDo = new EmployeesPage();
-        } else {
-            actionToDo = new DepartmentsPage();
+        String action = request.getParameter("action-get");
+        if (action == null) {
+            action = "default";
         }
-
+        Action actionToDo = actionManager.getAction(action);
         RequestDispatcher dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
         dispatcher.forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException {
         final String action = request.getParameter("action-post");
-        RequestDispatcher dispatcher;
-        Action actionToDo = null;
-        if (action != null && action.equals("employee delete")) {
-            actionToDo = new DeleteEmployee();
-        } else if (action != null && action.equals("add new department")) {
-            actionToDo = new AddNewDepartment();
-        }
-        else if(action!=null && action.equals("department delete")){
-            actionToDo=new DeleteDepartment();
-        }
-        else {
-            dispatcher = request.getRequestDispatcher("/departments.jsp");
-            dispatcher.forward(request, response);
-        }
-
-        if (actionToDo != null)//todo:remove
-        {
-            dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
-            dispatcher.forward(request, response);
-        }
+        Action actionToDo = actionManager.getAction(action);
+        RequestDispatcher dispatcher = actionToDo.execute(request, employeeDAO, departmentDAO);
+        dispatcher.forward(request, response);
     }
 
     @Override

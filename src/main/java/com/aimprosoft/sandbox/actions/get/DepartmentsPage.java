@@ -14,6 +14,7 @@ public class DepartmentsPage implements Action {
     @Override
     public RequestDispatcher execute(HttpServletRequest request, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) {
         request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
+        request.setAttribute("name","");
         return request.getRequestDispatcher("/departments.jsp");
     }
 }

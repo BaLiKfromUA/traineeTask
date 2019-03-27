@@ -29,26 +29,32 @@
     <tbody>
     <c:forEach var="department" items="${departments}">
         <tr>
-            <form method="post"  id="post ${department.ID}">
+            <form method="post" id="post ${department.ID}">
                 <input type="hidden" name="action-post" id="action ${department.ID}">
                 <th scope="row">${department.ID}
-                    <input type="hidden" name="id" value="${department.ID}"></th>
+                    <input type="hidden" name="id" value="${department.ID}" required></th>
                 <td>
-                    <input type="text" name="name" class="form-control" maxlength="128" placeholder="Enter department name"
-                           value="${department.name}">
+                    <input type="text" name="name" class="form-control" maxlength="128"
+                           placeholder="Enter department name"
+                           value="${department.name}" required>
+                    <c:if test="${flag.equals(department.ID)}">
+                        <div style="color: red">
+                            New department name should be unique!
+                        </div>
+                    </c:if>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-warning" onclick="doEdit(${department.ID})">Edit</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger" onclick="doDelete(${department.ID})">Delete</button>
                 </td>
             </form>
-            <form id="getform ${department.ID}" method="get">
+            <form method="get">
                 <td>
-                    <input type="hidden" name="action-get" value="goto">
+                    <input type="hidden" name="action-get" value="employees">
                     <input type="hidden" name="department_id" value="${department.ID}">
-                    <button type="button" onclick="document.getElementById('getform ${department.ID}').submit()"
+                    <button type="submit"
                             class="btn btn-info">Employee List
                     </button>
                 </td>
@@ -60,10 +66,19 @@
             <input type="hidden" name="action-post" value="add new department">
             <th>*</th>
             <td>
-                <input type="text" class="form-control" name="new name" maxlength="128" placeholder="Enter new department name">
+                <input type="text" class="form-control" name="new name" maxlength="128"
+                       placeholder="Enter new department name" value="${name}" required>
+                <c:if test="${flag.equals('invalid-new-name')}">
+                    <div style="color: red">
+                        New department name should be unique!
+                    </div>
+                </c:if>
             </td>
             <td>
-                <button type="button" class="btn btn-success"  onclick="document.getElementById('add').submit()">Add</button>
+                <button type="submit" class="btn btn-success">Add</button>
+            </td>
+            <td>
+
             </td>
             <td>
 
@@ -82,6 +97,10 @@
 <script>
     function doDelete(id) {
         document.getElementById('action ' + id).value = "department delete";
+        document.getElementById('post ' + id).submit();
+    }
+    function doEdit(id) {
+        document.getElementById('action ' + id).value = "department edit";
         document.getElementById('post ' + id).submit();
     }
 </script>

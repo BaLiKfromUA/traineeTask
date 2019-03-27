@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.actions.post;
+package com.aimprosoft.sandbox.actions.post.department;
 
 import com.aimprosoft.sandbox.actions.Action;
 import com.aimprosoft.sandbox.database.department.Department;
@@ -19,7 +19,7 @@ public class AddNewDepartment implements Action {
     public RequestDispatcher execute(HttpServletRequest request, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) {
         String newDepartmentName = request.getParameter("new name");
 
-        if (departmentDAO.checkDepartment(newDepartmentName)) {
+        if (!newDepartmentName.equals("") && departmentDAO.checkDepartment(newDepartmentName)) {
             Department newDepartment = new Department(1L);
             newDepartment.setName(newDepartmentName);
 
@@ -27,11 +27,13 @@ public class AddNewDepartment implements Action {
             LOG.info("Department " + newDepartmentName + " was added!");
 
             request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
+            request.setAttribute("name","");
             return request.getRequestDispatcher("/departments.jsp");
         }
 
-        //todo:error
+        request.setAttribute("flag","invalid-new-name");
         request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
+        request.setAttribute("name",newDepartmentName);
         return request.getRequestDispatcher("/departments.jsp");
     }
 }

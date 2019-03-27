@@ -20,6 +20,7 @@ public class DepartmentDAO {
     private PreparedStatement createStatement;
     private PreparedStatement checkStatement;
     private PreparedStatement deleteStatement;
+    private PreparedStatement updateStatement;
 
     /**
      * Statements
@@ -28,16 +29,18 @@ public class DepartmentDAO {
     private static final String CHECK_DEPARTMENT = "SELECT * FROM departments WHERE name = ?";
     private static final String CREATE_DEPARTMENT = "INSERT INTO departments (name)" +
             " VALUES (?)";
-    private static final String DELETE_BY_ID="DELETE FROM departments WHERE departments.id=?";
+    private static final String DELETE_BY_ID = "DELETE FROM departments WHERE departments.id=?";
+    private static final String UPDATE_BY_ID = "UPDATE departments SET departments.name=? WHERE departments.id=?";
 
     public DepartmentDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
         createStatement = connection.prepareStatement(CREATE_DEPARTMENT);
         checkStatement = connection.prepareStatement(CHECK_DEPARTMENT);
-        deleteStatement=connection.prepareStatement(DELETE_BY_ID);
+        deleteStatement = connection.prepareStatement(DELETE_BY_ID);
+        updateStatement = connection.prepareStatement(UPDATE_BY_ID);
     }
 
-    public void deleteDepartmentById(Long id){
+    public void deleteDepartmentById(Long id) {
         try {
             deleteStatement.setLong(1, id);
             int rs = deleteStatement.executeUpdate();
@@ -105,10 +108,22 @@ public class DepartmentDAO {
         return departments;
     }
 
+    public void updateDepartment(Department department) {
+        try {
+            updateStatement.setString(1, department.getName());
+            updateStatement.setLong(2, department.getID());
+            int rs = updateStatement.executeUpdate();
+            LOG.info("Department update result: " + rs);
+        } catch (SQLException e) {
+            LOG.error("Can not update department\n" + e.getMessage());
+        }
+    }
+
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();
         checkStatement.close();
         deleteStatement.close();
+        updateStatement.close();
     }
 }
