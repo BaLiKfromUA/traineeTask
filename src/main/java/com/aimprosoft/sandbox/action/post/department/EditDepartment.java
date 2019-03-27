@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.actions.post.department;
+package com.aimprosoft.sandbox.action.post.department;
 
-import com.aimprosoft.sandbox.actions.Action;
+import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.Department;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
@@ -20,7 +20,8 @@ public class EditDepartment implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         Long id = Long.parseLong(request.getParameter("id"));
-        String departmentName = request.getParameter("name");
+        String departmentName = request.getParameter("new name");
+
 
         if (departmentDAO.checkDepartment(departmentName)) {
             Department department = new Department(id);

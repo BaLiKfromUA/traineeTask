@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.actions.post.department;
+package com.aimprosoft.sandbox.action.post.department;
 
-import com.aimprosoft.sandbox.actions.Action;
+import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;

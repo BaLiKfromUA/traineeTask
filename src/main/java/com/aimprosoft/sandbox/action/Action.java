@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.actions;
+package com.aimprosoft.sandbox.action;
 
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;

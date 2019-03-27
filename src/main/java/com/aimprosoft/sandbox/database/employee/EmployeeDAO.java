@@ -21,6 +21,8 @@ public class EmployeeDAO {
     private PreparedStatement checkStatement;
     private PreparedStatement getAllStatement;
     private PreparedStatement deleteStatement;
+    private PreparedStatement updateStetement;
+
     /**
      * Statements
      **/
@@ -30,6 +32,8 @@ public class EmployeeDAO {
             " VALUES (?,?,?,?,?)";
     private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (login = ? OR email=?)";
     private static final String DELETE_BY_ID = "DELETE FROM employees WHERE employees.id=?";
+    private static final String UPDATE_BY_ID = "UPDATE employees " +
+            "SET employees.login=?, employees.email=?, employees.rank=?, employees.registration_date=?, employees.department_id=? WHERE employees.id=?";
 
     public EmployeeDAO() throws IOException, SQLException {
         connection = DatabaseManager.getInstance().getConnection();
@@ -37,6 +41,7 @@ public class EmployeeDAO {
         checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL);
         getAllStatement = connection.prepareStatement(GET_ALL_BY_DEPARTMENT_ID);
         deleteStatement = connection.prepareStatement(DELETE_BY_ID);
+        updateStetement = connection.prepareStatement(UPDATE_BY_ID);
     }
 
     private Employee extractEmployee(ResultSet rs) {
@@ -139,11 +144,23 @@ public class EmployeeDAO {
         }
     }
 
+    public void updateEmployee(Employee employee) {
+        try {
+            int k = setEmployeeData(employee, updateStetement);
+            updateStetement.setLong(k, employee.getID());
+            int rs = updateStetement.executeUpdate();
+            LOG.info("Employee delete result: " + rs);
+        } catch (SQLException e) {
+            LOG.error("Can not delete Employee\n" + e.getMessage());
+        }
+    }
+
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();
         checkStatement.close();
         getAllStatement.close();
         deleteStatement.close();
+        updateStetement.close();
     }
 }

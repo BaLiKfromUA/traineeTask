@@ -34,14 +34,21 @@
                 <th scope="row">${department.ID}
                     <input type="hidden" name="id" value="${department.ID}" required></th>
                 <td>
-                    <input type="text" name="name" class="form-control" maxlength="128"
-                           placeholder="Enter department name"
-                           value="${department.name}" required>
-                    <c:if test="${flag.equals(''.concat(department.ID))}">
-                        <div style="color: red">
-                            New department name should be unique!
-                        </div>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${flag.equals(''.concat(department.ID))}">
+                            <input type="text" name="new name" class="form-control" maxlength="128"
+                                   placeholder="Enter department name"
+                                   value="${name}" required>
+                            <div style="color: red">
+                                New department name should be unique!
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" name="new name" class="form-control" maxlength="128"
+                                   placeholder="Enter department name"
+                                   value="${department.name}" required>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning" onclick="doEdit(${department.ID})">Edit</button>
@@ -67,7 +74,7 @@
             <th>*</th>
             <td>
                 <c:choose>
-                    <c:when test="${flag.equals('invalid-new-name')}">
+                    <c:when test="${flag.equals('invalid-new-department')}">
                         <input type="text" class="form-control" name="new name" maxlength="128"
                                placeholder="Enter new department name" value="${name}" required>
                         <div style="color: red">

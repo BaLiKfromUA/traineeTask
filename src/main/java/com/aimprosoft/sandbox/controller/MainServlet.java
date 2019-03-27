@@ -1,12 +1,11 @@
 package com.aimprosoft.sandbox.controller;
 
-import com.aimprosoft.sandbox.actions.Action;
-import com.aimprosoft.sandbox.actions.ActionManager;
+import com.aimprosoft.sandbox.action.Action;
+import com.aimprosoft.sandbox.action.ActionManager;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

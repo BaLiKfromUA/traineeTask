@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.actions.get;
+package com.aimprosoft.sandbox.action.get;
 
-import com.aimprosoft.sandbox.actions.Action;
+import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
 
@@ -12,11 +12,14 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
-public class EmployeesPage implements Action {
+public class DepartmentsPage implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws ServletException, IOException {
-        Long departmentId = Long.parseLong(request.getParameter("department_id"));
-        request.setAttribute("employees", employeeDAO.getAllByDepartmentId(departmentId).toArray());
-        request.getRequestDispatcher("/employees.jsp").forward(request, response);
+        request.setAttribute("departments", departmentDAO.getAllDepartments().toArray());
+
+        request.setAttribute("name", request.getParameter("name"));
+        request.setAttribute("flag", request.getParameter("flag"));
+
+        request.getRequestDispatcher("/departments.jsp").forward(request, response);
     }
 }
