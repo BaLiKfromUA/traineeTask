@@ -30,7 +30,7 @@ public class EmployeeDAO {
     private static final String GET_ALL_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE department_id=? ORDER BY employees.id";
     private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date, department_id)" +
             " VALUES (?,?,?,?,?)";
-    private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (login = ? OR email=?)";
+    private static final String GET_USER_BY_LOGIN_OR_EMAIL = "SELECT * FROM employees WHERE (employees.email=? AND employees.id!=?)";//todo:test
     private static final String DELETE_BY_ID = "DELETE FROM employees WHERE employees.id=?";
     private static final String UPDATE_BY_ID = "UPDATE employees " +
             "SET employees.login=?, employees.email=?, employees.rank=?, employees.registration_date=?, employees.department_id=? WHERE employees.id=?";
@@ -112,8 +112,8 @@ public class EmployeeDAO {
     public boolean checkEmployee(Employee employee) {
         try {
             ResultSet rs;
-            checkStatement.setString(1, employee.getLogin());
-            checkStatement.setString(2, employee.getEmail());
+            checkStatement.setString(1, employee.getEmail());
+            checkStatement.setLong(2, employee.getID());
             rs = checkStatement.executeQuery();
             if (rs.next()) {
                 return false;

@@ -35,7 +35,7 @@ public class DatabaseManager {
             ")";
     private static final String CREATE_EMPLOYEE_TABLE = "CREATE TABLE IF NOT EXISTS employees (" +
             "id BIGINT NOT NULL AUTO_INCREMENT," +
-            "login VARCHAR(512) NOT NULL UNIQUE, " +
+            "login VARCHAR(512) NOT NULL, " +
             "email VARCHAR(512) NOT NULL UNIQUE, " +
             "rank INT, " +
             "registration_date TIMESTAMP," +

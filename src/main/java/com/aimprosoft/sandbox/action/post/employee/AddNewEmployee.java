@@ -27,7 +27,7 @@ public class AddNewEmployee implements Action {
         String newDate = request.getParameter("new date");
         Long departmentId = Long.parseLong(request.getParameter("department_id"));
 
-        Employee employee = new Employee(1L);
+        Employee employee = new Employee(0L);
         employee.setLogin(newLogin);
         employee.setEmail(newEmail);
         employee.setRank(newRank);

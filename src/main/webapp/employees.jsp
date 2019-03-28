@@ -31,70 +31,66 @@
     <tbody>
 
     <c:forEach var="employee" items="${employees}">
+
+        <c:choose>
+            <%--@elvariable id="flag" type="java.lang.String"--%>
+            <c:when test="${''.concat(employee.ID) eq flag}">
+                <c:set var="currLogin" value="${login}"/>
+                <c:set var="currEmail" value="${email}"/>
+                <c:set var="currRank" value="${rank}"/>
+                <c:set var="currDate" value="${date}"/>
+                <c:set var="isError" value="true"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="currLogin" value="${employee.login}"/>
+                <c:set var="currEmail" value="${employee.email}"/>
+                <c:set var="currRank" value="${employee.rank}"/>
+                <c:set var="currDate" value="${employee.dateString}"/>
+                <c:set var="isError" value="false"/>
+            </c:otherwise>
+        </c:choose>
+
+
         <tr>
-            <form method="post" id="post ${employee.ID}">
-                <input type="hidden" name="action-post" id="action ${employee.ID}">
+            <form method="post">
+                <input type="hidden" name="action-post" value="employee edit">
 
                 <th scope="row">${employee.ID}
                     <input type="hidden" name="id" value="${employee.ID}">
                 </th>
-                <c:choose>
-                    <c:when test="${flag.equals(''.concat(employee.ID))}">
-                        <td>
-                            <input type="text" class="form-control" name="new login" maxlength="512"
-                                   placeholder="Enter login"
-                                   value="${login}" required>
-                            <div style="color: red">
-                                Employee login should be unique!
-                            </div>
-                        </td>
-                        <td>
-                            <input type="email" class="form-control" name="new email" maxlength="512"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Enter email"
-                                   value=" ${email}" required>
-                            <div style="color: red">
-                                Employee email should be unique!
-                            </div>
-                        </td>
-                        <td>
-                            <input type="number" min="1" max="1000" class="form-control" placeholder="Enter rank"
-                                   name="new rank"
-                                   value="${rank}" required>
-                        </td>
-                        <td>
-                            <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                                   value="${date}" required>
-                        </td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>
-                            <input type="text" class="form-control" name="new login" maxlength="512"
-                                   placeholder="Enter login"
-                                   value="${employee.login}" required>
-                        </td>
-                        <td>
-                            <input type="email" class="form-control" name="new email" maxlength="512"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Enter email"
-                                   value=" ${employee.email}" required>
-                        </td>
-                        <td>
-                            <input type="number" min="1" max="1000" class="form-control" placeholder="Enter rank"
-                                   name="new rank"
-                                   value="${employee.rank}" required>
-                        </td>
-                        <td>
-                            <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                                   value="${employee.dateString}" required>
-                        </td>
-                    </c:otherwise>
-                </c:choose>
                 <td>
-                    <button type="button" class="btn btn-warning" onclick="doEdit(${employee.ID})">Edit</button>
+                    <input type="text" class="form-control" name="new login" maxlength="512"
+                           placeholder="Enter login"
+                           value="${currLogin}" required>
                 </td>
                 <td>
-                    <button type="button" onclick="doDelete(${employee.ID})" class="btn btn-danger">Delete</button>
+                    <input type="email" class="form-control" name="new email" maxlength="512"
+                           aria-describedby="emailHelp"
+                           placeholder="Enter email"
+                           value="${currEmail}" required>
+                    <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                        Employee email should be unique!
+                    </div>
+                </td>
+                <td>
+                    <input type="number" min="1" max="1000" class="form-control" placeholder="Enter rank"
+                           name="new rank"
+                           value="${currRank}" required>
+                </td>
+                <td>
+                    <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
+                           value="${currDate}" required>
+                </td>
+
+                <td>
+                    <button type="submit" class="btn btn-warning">Edit</button>
+                </td>
+            </form>
+            <form method="post">
+                <td>
+                    <input type="hidden" name="id" value="${employee.ID}">
+                    <input type="hidden" name="action-post" value="employee delete">
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </td>
             </form>
         </tr>
@@ -103,55 +99,48 @@
         <form id="add" method="post">
             <input type="hidden" name="action-post" value="add new employee">
             <th>*</th>
+
             <c:choose>
-                <c:when test="${flag.equals('invalid-new-employee')}">
-                    <td>
-                        <input type="text" class="form-control" name="new login" maxlength="512"
-                               placeholder="Enter login"
-                               value="${login}" required>
-                        <div style="color: red">
-                            New employee login should be unique!
-                        </div>
-                    </td>
-                    <td>
-                        <input type="email" class="form-control" name="new email" maxlength="512"
-                               aria-describedby="emailHelp"
-                               placeholder="Enter email" value="${email}" required>
-                        <div style="color: red">
-                            New employee email should be unique!
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="new rank" min="1" max="1000" class="form-control"
-                               placeholder="Enter rank"
-                               value="${rank}" required>
-                    </td>
-                    <td>
-                        <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                               value="${date}" required>
-                    </td>
+                <%--@elvariable id="flag" type="java.lang.String"--%>
+                <c:when test="${'invalid-new-employee' eq flag}">
+                    <c:set var="currLogin" value="${login}"/>
+                    <c:set var="currEmail" value="${email}"/>
+                    <c:set var="currRank" value="${rank}"/>
+                    <c:set var="currDate" value="${date}"/>
+                    <c:set var="isError" value="true"/>
                 </c:when>
                 <c:otherwise>
-                    <td>
-                        <input type="text" class="form-control" name="new login" maxlength="512"
-                               placeholder="Enter login" required>
-                    </td>
-                    <td>
-                        <input type="email" class="form-control" name="new email" maxlength="512"
-                               aria-describedby="emailHelp"
-                               placeholder="Enter email" required>
-                    </td>
-                    <td>
-                        <input type="number" name="new rank" min="1" max="1000" class="form-control"
-                               placeholder="Enter rank"
-                               required>
-                    </td>
-                    <td>
-                        <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                               required>
-                    </td>
+                    <c:set var="currLogin" value=""/>
+                    <c:set var="currEmail" value=""/>
+                    <c:set var="currRank" value=""/>
+                    <c:set var="currDate" value=""/>
+                    <c:set var="isError" value="false"/>
                 </c:otherwise>
             </c:choose>
+
+            <td>
+                <input type="text" class="form-control" name="new login" maxlength="512"
+                       placeholder="Enter login"
+                       value="${currLogin}" required>
+            </td>
+            <td>
+                <input type="email" class="form-control" name="new email" maxlength="512"
+                       aria-describedby="emailHelp"
+                       placeholder="Enter email" value="${currEmail}" required>
+                <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                    New employee email should be unique!
+                </div>
+            </td>
+            <td>
+                <input type="number" name="new rank" min="1" max="1000" class="form-control"
+                       placeholder="Enter rank"
+                       value="${currRank}" required>
+            </td>
+            <td>
+                <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
+                       value="${currDate}" required>
+            </td>
+
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
             </td>
@@ -173,19 +162,6 @@
         <b>BaLiK</b>
     </div>
 </footer>
-
-
-<script>
-    function doDelete(id) {
-        document.getElementById('action ' + id).value = "employee delete";
-        document.getElementById('post ' + id).submit();
-    }
-
-    function doEdit(id) {
-        document.getElementById('action ' + id).value = "employee edit";
-        document.getElementById('post ' + id).submit();
-    }
-</script>
 </body>
 <style>
 

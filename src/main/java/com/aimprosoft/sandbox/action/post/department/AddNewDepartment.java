@@ -22,7 +22,7 @@ public class AddNewDepartment implements Action {
         String newDepartmentName = request.getParameter("new name");
 
         if (departmentDAO.checkDepartment(newDepartmentName)) {
-            Department newDepartment = new Department(1L);
+            Department newDepartment = new Department(0L);
             newDepartment.setName(newDepartmentName);
 
             departmentDAO.createDepartment(newDepartment);
