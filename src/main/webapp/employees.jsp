@@ -53,21 +53,21 @@
 
         <tr>
             <form method="post">
-                <input type="hidden" name="action-post" value="employee edit">
+                <input type="hidden" name="action-post" value="employee edit" autocomplete="off">
 
                 <th scope="row">${employee.ID}
-                    <input type="hidden" name="id" value="${employee.ID}">
+                    <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
                 </th>
                 <td>
                     <input type="text" class="form-control" name="new login" maxlength="512"
                            placeholder="Enter login"
-                           value="${currLogin}" required>
+                           value="${currLogin}" autocomplete="off" required>
                 </td>
                 <td>
                     <input type="email" class="form-control" name="new email" maxlength="512"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
-                           value="${currEmail}" required>
+                           value="${currEmail}" autocomplete="off" required>
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                         Employee email should be unique!
                     </div>
@@ -75,11 +75,11 @@
                 <td>
                     <input type="number" min="1" max="1000" class="form-control" placeholder="Enter rank"
                            name="new rank"
-                           value="${currRank}" required>
+                           value="${currRank}" autocomplete="off" required>
                 </td>
                 <td>
                     <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                           value="${currDate}" required>
+                           value="${currDate}" autocomplete="off" required>
                 </td>
 
                 <td>
@@ -88,8 +88,8 @@
             </form>
             <form method="post">
                 <td>
-                    <input type="hidden" name="id" value="${employee.ID}">
-                    <input type="hidden" name="action-post" value="employee delete">
+                    <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
+                    <input type="hidden" name="action-post" value="employee delete" autocomplete="off">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </td>
             </form>
@@ -97,7 +97,7 @@
     </c:forEach>
     <tr>
         <form id="add" method="post">
-            <input type="hidden" name="action-post" value="add new employee">
+            <input type="hidden" name="action-post" value="add new employee" autocomplete="off">
             <th>*</th>
 
             <c:choose>
@@ -121,12 +121,12 @@
             <td>
                 <input type="text" class="form-control" name="new login" maxlength="512"
                        placeholder="Enter login"
-                       value="${currLogin}" required>
+                       value="${currLogin}" autocomplete="off" required>
             </td>
             <td>
                 <input type="email" class="form-control" name="new email" maxlength="512"
                        aria-describedby="emailHelp"
-                       placeholder="Enter email" value="${currEmail}" required>
+                       placeholder="Enter email" value="${currEmail}" autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New employee email should be unique!
                 </div>
@@ -134,11 +134,11 @@
             <td>
                 <input type="number" name="new rank" min="1" max="1000" class="form-control"
                        placeholder="Enter rank"
-                       value="${currRank}" required>
+                       value="${currRank}" autocomplete="off" required>
             </td>
             <td>
                 <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
-                       value="${currDate}" required>
+                       value="${currDate}" autocomplete="off" required>
             </td>
 
             <td>

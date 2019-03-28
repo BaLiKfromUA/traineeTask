@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * @author BaLiK on 26.03.19
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 //todo:messages if errors!!!
 //todo:new logger version
 public class MainServlet extends HttpServlet {
-    private static Logger LOG = Logger.getLogger(MainServlet.class);
+    private static final Logger LOG = Logger.getLogger(MainServlet.class);
 
     private static DepartmentDAO departmentDAO = null;
     private static EmployeeDAO employeeDAO = null;
@@ -41,19 +42,16 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action-get");
-        if (action == null) {
-            action = "default";
-        }
-        Action actionToDo = actionManager.getAction(action);
+        final String action = Optional.ofNullable(request.getParameter("action-get")).orElse("default");
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("default"));
         actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        final String action = request.getParameter("action-post");
-        Action actionToDo = actionManager.getAction(action);
+        final String action = Optional.ofNullable(request.getParameter("action-post")).orElse("default");
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("default"));
         actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 

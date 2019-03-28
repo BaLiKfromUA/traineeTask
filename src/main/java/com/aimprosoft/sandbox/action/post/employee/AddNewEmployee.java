@@ -20,7 +20,7 @@ public class AddNewEmployee implements Action {
     private final static String FAIL_URL = "?action-get=employees&department_id=%d&login=%s&email=%s&rank=%d&date=%s&flag=%s";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String newLogin = request.getParameter("new login");
         String newEmail = request.getParameter("new email");
         Integer newRank = Integer.parseInt(request.getParameter("new rank"));

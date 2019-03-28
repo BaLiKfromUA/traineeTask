@@ -17,7 +17,6 @@ public class DatabaseManager {
     /**
      * Config
      **/
-    //todo:documentation
     private final String DB_URL;
     private final String USERNAME;
     private final String PASSWORD;

@@ -15,7 +15,6 @@ public class DepartmentDAO {
     /**
      * Resources
      **/
-    //todo: add prep. statements
     private Connection connection;
     private PreparedStatement createStatement;
     private PreparedStatement checkStatement;

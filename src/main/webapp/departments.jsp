@@ -47,13 +47,13 @@
 
         <tr>
             <form method="post">
-                <input type="hidden" name="action-post" value="department edit">
+                <input type="hidden" name="action-post" value="department edit" autocomplete="off">
                 <th scope="row">${department.ID}
-                    <input type="hidden" name="id" value="${department.ID}"></th>
+                    <input type="hidden" name="id" value="${department.ID}" autocomplete="off"></th>
                 <td>
                     <input type="text" name="new name" class="form-control" minlength="6" maxlength="128"
                            placeholder="Enter department name"
-                           value="${departmentName}" required>
+                           value="${departmentName}" autocomplete="off" required>
 
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                         New department name should be unique!
@@ -68,16 +68,16 @@
             <form method="post">
                 <td>
                     <button type="submit" class="btn btn-danger">Delete</button>
-                    <input type="hidden" name="action-post" value="department delete">
-                    <input type="hidden" name="id" value="${department.ID}">
+                    <input type="hidden" name="action-post" value="department delete" autocomplete="off">
+                    <input type="hidden" name="id" value="${department.ID}" autocomplete="off">
                 </td>
             </form>
 
             <form method="get">
                 <td>
                     <button type="submit" class="btn btn-info">Employee List</button>
-                    <input type="hidden" name="action-get" value="employees">
-                    <input type="hidden" name="department_id" value="${department.ID}">
+                    <input type="hidden" name="action-get" value="employees" autocomplete="off">
+                    <input type="hidden" name="department_id" value="${department.ID}" autocomplete="off">
                 </td>
             </form>
 
@@ -86,7 +86,7 @@
 
     <tr>
         <form id="add" method="post">
-            <input type="hidden" name="action-post" value="add new department">
+            <input type="hidden" name="action-post" value="add new department" autocomplete="off">
             <th>*</th>
             <td>
                 <c:set var="departmentName">
@@ -104,7 +104,7 @@
                 </c:set>
 
                 <input type="text" class="form-control" name="new name" minlength="6" maxlength="128"
-                       placeholder="Enter new department name" value="${departmentName}" required>
+                       placeholder="Enter new department name" value="${departmentName}"  autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New department name should be unique!
                 </div>
