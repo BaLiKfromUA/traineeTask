@@ -1,7 +1,7 @@
-package com.aimprosoft.sandbox.action;
+package com.aimprosoft.sandbox.controller.action;
 
-import com.aimprosoft.sandbox.database.department.DepartmentDAO;
-import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
+import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

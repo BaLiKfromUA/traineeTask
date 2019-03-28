@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.database;
+package com.aimprosoft.sandbox.util.database;
 
 import org.apache.log4j.Logger;
 
@@ -29,13 +29,13 @@ public class DatabaseManager {
      **/
     private static final String CREATE_DEPARTMENT_TABLE = "CREATE TABLE IF NOT EXISTS departments(" +
             "id BIGINT NOT NULL AUTO_INCREMENT," +
-            "name VARCHAR(128) NOT NULL UNIQUE," +
+            "name VARCHAR(20) NOT NULL UNIQUE," +
             "PRIMARY KEY(id)" +
             ")";
     private static final String CREATE_EMPLOYEE_TABLE = "CREATE TABLE IF NOT EXISTS employees (" +
             "id BIGINT NOT NULL AUTO_INCREMENT," +
-            "login VARCHAR(512) NOT NULL, " +
-            "email VARCHAR(512) NOT NULL UNIQUE, " +
+            "login VARCHAR(20) NOT NULL, " +
+            "email VARCHAR(40) NOT NULL UNIQUE, " +
             "rank INT, " +
             "registration_date TIMESTAMP," +
             "department_id BIGINT NOT NULL," +

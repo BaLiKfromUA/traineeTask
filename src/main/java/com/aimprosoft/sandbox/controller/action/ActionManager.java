@@ -1,13 +1,13 @@
-package com.aimprosoft.sandbox.action;
+package com.aimprosoft.sandbox.controller.action;
 
-import com.aimprosoft.sandbox.action.get.DepartmentsPage;
-import com.aimprosoft.sandbox.action.get.EmployeesPage;
-import com.aimprosoft.sandbox.action.post.department.AddNewDepartment;
-import com.aimprosoft.sandbox.action.post.department.DeleteDepartment;
-import com.aimprosoft.sandbox.action.post.department.EditDepartment;
-import com.aimprosoft.sandbox.action.post.employee.AddNewEmployee;
-import com.aimprosoft.sandbox.action.post.employee.DeleteEmployee;
-import com.aimprosoft.sandbox.action.post.employee.EditEmployee;
+import com.aimprosoft.sandbox.controller.action.get.DepartmentsPage;
+import com.aimprosoft.sandbox.controller.action.get.EmployeesPage;
+import com.aimprosoft.sandbox.controller.action.post.department.AddNewDepartment;
+import com.aimprosoft.sandbox.controller.action.post.department.DeleteDepartment;
+import com.aimprosoft.sandbox.controller.action.post.department.EditDepartment;
+import com.aimprosoft.sandbox.controller.action.post.employee.AddNewEmployee;
+import com.aimprosoft.sandbox.controller.action.post.employee.DeleteEmployee;
+import com.aimprosoft.sandbox.controller.action.post.employee.EditEmployee;
 
 import java.util.HashMap;
 import java.util.Map;

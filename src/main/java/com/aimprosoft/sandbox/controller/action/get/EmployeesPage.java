@@ -1,8 +1,8 @@
-package com.aimprosoft.sandbox.action.get;
+package com.aimprosoft.sandbox.controller.action.get;
 
-import com.aimprosoft.sandbox.action.Action;
-import com.aimprosoft.sandbox.database.department.DepartmentDAO;
-import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
+import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

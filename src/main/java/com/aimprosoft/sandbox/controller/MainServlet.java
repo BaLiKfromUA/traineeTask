@@ -1,9 +1,9 @@
 package com.aimprosoft.sandbox.controller;
 
-import com.aimprosoft.sandbox.action.Action;
-import com.aimprosoft.sandbox.action.ActionManager;
-import com.aimprosoft.sandbox.database.department.DepartmentDAO;
-import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.action.ActionManager;
+import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
+import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -28,6 +28,7 @@ public class MainServlet extends HttpServlet {
     private static EmployeeDAO employeeDAO = null;
     private static ActionManager actionManager = null;
 
+    //todo:services
     @Override
     public void init() {
         LOG.info("Main servlet init...");

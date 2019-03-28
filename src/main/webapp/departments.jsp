@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <%--@elvariable id="departments" type="java.util.List<com.aimprosoft.sandbox.database.department.Department>"--%>
+    <%--@elvariable id="departments" type="java.util.List<com.aimprosoft.sandbox.domain.Department>"--%>
     <c:forEach var="department" items="${departments}">
 
         <c:set var="departmentName">
@@ -51,8 +51,8 @@
                 <th scope="row">${department.ID}
                     <input type="hidden" name="id" value="${department.ID}" autocomplete="off"></th>
                 <td>
-                    <input type="text" name="new name" class="form-control" minlength="6" maxlength="128"
-                           placeholder="Enter department name"
+                    <input type="text" name="new name" class="form-control" minlength="6" maxlength="20"
+                           placeholder="Enter department name" pattern="^[A-Z][a-zA-Z]{5,21}$"
                            value="${departmentName}" autocomplete="off" required>
 
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
@@ -103,7 +103,7 @@
                     </c:choose>
                 </c:set>
 
-                <input type="text" class="form-control" name="new name" minlength="6" maxlength="128"
+                <input type="text" class="form-control" name="new name" minlength="6" maxlength="20"
                        placeholder="Enter new department name" value="${departmentName}" autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New department name should be unique!
@@ -124,7 +124,7 @@
 </table>
 
 <footer>
-       © 2019 Copyright: <b>BaLiK</b>
+    © 2019 Copyright: <b>BaLiK</b>
 </footer>
 
 </body>

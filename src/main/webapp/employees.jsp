@@ -59,12 +59,12 @@
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
                 </th>
                 <td>
-                    <input type="text" class="form-control" name="new login" minlength="6" maxlength="512"
-                           placeholder="Enter login"
+                    <input type="text" class="form-control" name="new login" minlength="6" maxlength="20"
+                           placeholder="Enter login" pattern="^[a-z0-9_-]{5,21}$"
                            value="${currLogin}" autocomplete="off" required>
                 </td>
                 <td>
-                    <input type="email" class="form-control" name="new email" minlength="6" maxlength="512"
+                    <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
                            value="${currEmail}" autocomplete="off" required>
@@ -119,12 +119,12 @@
             </c:choose>
 
             <td>
-                <input type="text" class="form-control" name="new login" minlength="6" maxlength="512"
+                <input type="text" class="form-control" name="new login" minlength="6" maxlength="20"
                        placeholder="Enter login"
-                       value="${currLogin}" autocomplete="off" required>
+                       value="${currLogin}" pattern="^[a-z0-9_-]{5,21}$" autocomplete="off" required>
             </td>
             <td>
-                <input type="email" class="form-control" name="new email" minlength="6" maxlength="512"
+                <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                        aria-describedby="emailHelp"
                        placeholder="Enter email" value="${currEmail}" autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>

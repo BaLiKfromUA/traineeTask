@@ -1,8 +1,8 @@
-package com.aimprosoft.sandbox.action.post.department;
+package com.aimprosoft.sandbox.controller.action.post.department;
 
-import com.aimprosoft.sandbox.action.Action;
-import com.aimprosoft.sandbox.database.department.DepartmentDAO;
-import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
+import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
