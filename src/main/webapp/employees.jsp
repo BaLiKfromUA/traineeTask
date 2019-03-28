@@ -59,12 +59,12 @@
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
                 </th>
                 <td>
-                    <input type="text" class="form-control" name="new login" maxlength="512"
+                    <input type="text" class="form-control" name="new login" minlength="6" maxlength="512"
                            placeholder="Enter login"
                            value="${currLogin}" autocomplete="off" required>
                 </td>
                 <td>
-                    <input type="email" class="form-control" name="new email" maxlength="512"
+                    <input type="email" class="form-control" name="new email" minlength="6" maxlength="512"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
                            value="${currEmail}" autocomplete="off" required>
@@ -119,12 +119,12 @@
             </c:choose>
 
             <td>
-                <input type="text" class="form-control" name="new login" maxlength="512"
+                <input type="text" class="form-control" name="new login" minlength="6" maxlength="512"
                        placeholder="Enter login"
                        value="${currLogin}" autocomplete="off" required>
             </td>
             <td>
-                <input type="email" class="form-control" name="new email" maxlength="512"
+                <input type="email" class="form-control" name="new email" minlength="6" maxlength="512"
                        aria-describedby="emailHelp"
                        placeholder="Enter email" value="${currEmail}" autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
@@ -157,13 +157,23 @@
      <button type="submit" class="btn btn-primary">< BACK</button>
     </form>
 </span>
-<footer class="page-footer font-small unique-color-dark pt-4">
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-        <b>BaLiK</b>
-    </div>
+
+<footer>
+    © 2019 Copyright: <b>BaLiK</b>
 </footer>
+
 </body>
 <style>
+    body {
+        min-height: 100vh;
+        position: relative;
+        margin: 0;
+    }
 
+    footer {
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+    }
 </style>
 </html>

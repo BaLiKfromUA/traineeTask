@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.Department;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.validator.HibernateValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,11 @@ public class AddNewDepartment implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String newDepartmentName = request.getParameter("new name");
 
-        if (departmentDAO.checkDepartment(newDepartmentName)) {
-            Department newDepartment = new Department(0L);
-            newDepartment.setName(newDepartmentName);
+        Department department = new Department(0L);
+        department.setName(newDepartmentName);
 
-            departmentDAO.createDepartment(newDepartment);
+        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department.getName())) {
+            departmentDAO.createDepartment(department);
             LOG.info("Department " + newDepartmentName + " was added!");
             response.sendRedirect("/");
         } else {
