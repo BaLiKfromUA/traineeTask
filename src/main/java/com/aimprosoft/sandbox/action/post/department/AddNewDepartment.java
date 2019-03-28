@@ -33,6 +33,5 @@ public class AddNewDepartment implements Action {
             String flag = "invalid-new-department";
             response.sendRedirect(String.format(URL, newDepartmentName, flag));
         }
-
     }
 }

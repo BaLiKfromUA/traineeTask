@@ -4,9 +4,9 @@ import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.Employee;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.validator.HibernateValidator;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class AddNewEmployee implements Action {
         employee.setRegistrationDate(newDate);
         employee.setDepartmentID(departmentId);
 
-        if (employeeDAO.checkEmployee(employee)) {
+        if (HibernateValidator.getInstance().isValidate(employee) && employeeDAO.checkEmployee(employee)) {
             employeeDAO.createEmployee(employee);
             LOG.info("Employee " + newLogin + " was added!");
             response.sendRedirect(String.format(URL, departmentId));

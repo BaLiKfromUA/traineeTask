@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.Employee;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.validator.HibernateValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,6 @@ public class EditEmployee implements Action {
         String newDate = request.getParameter("new date");
         Long departmentId = Long.parseLong(request.getParameter("department_id"));
 
-
         Employee employee = new Employee(userId);
         employee.setLogin(newLogin);
         employee.setEmail(newEmail);
@@ -37,13 +37,12 @@ public class EditEmployee implements Action {
         employee.setRegistrationDate(newDate);
         employee.setDepartmentID(departmentId);
 
-        if (employeeDAO.checkEmployee(employee)) {
+        if (HibernateValidator.getInstance().isValidate(employee) && employeeDAO.checkEmployee(employee)) {
             employeeDAO.updateEmployee(employee);
             LOG.info("Employee " + newLogin + " was updated!");
             response.sendRedirect(String.format(URL, departmentId));
         } else {
             response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, String.valueOf(userId)));
         }
-
     }
 }

@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.action.Action;
 import com.aimprosoft.sandbox.database.department.Department;
 import com.aimprosoft.sandbox.database.department.DepartmentDAO;
 import com.aimprosoft.sandbox.database.employee.EmployeeDAO;
+import com.aimprosoft.sandbox.validator.HibernateValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,19 +23,16 @@ public class EditDepartment implements Action {
         Long id = Long.parseLong(request.getParameter("id"));
         String departmentName = request.getParameter("new name");
 
+        Department department = new Department(id);
+        department.setName(departmentName);
 
-        if (departmentDAO.checkDepartment(departmentName)) {
-            Department department = new Department(id);
-            department.setName(departmentName);
+        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department.getName())) {
             departmentDAO.updateDepartment(department);
-
             LOG.info("Department " + departmentName + " was updated!");
             response.sendRedirect("/");
         } else {
             String flag = String.valueOf(id);
             response.sendRedirect(String.format(URL, departmentName, flag));
         }
-
-
     }
 }
