@@ -25,7 +25,7 @@ public class DepartmentDAO {
      * Statements
      **/
     private static final String GET_ALL_DEPARTMENTS = "SELECT * FROM departments ORDER BY departments.id";
-    private static final String CHECK_DEPARTMENT = "SELECT * FROM departments WHERE name = ?";
+    private static final String CHECK_DEPARTMENT = "SELECT * FROM departments WHERE (departments.name = ? and departments.id!=?)";
     private static final String CREATE_DEPARTMENT = "INSERT INTO departments (name)" +
             " VALUES (?)";
     private static final String DELETE_BY_ID = "DELETE FROM departments WHERE departments.id=?";
@@ -59,10 +59,11 @@ public class DepartmentDAO {
         }
     }
 
-    public boolean checkDepartment(String department) {
+    public boolean checkDepartment(Department department) {
         try {
             ResultSet rs;
-            checkStatement.setString(1, department);
+            checkStatement.setString(1, department.getName());
+            checkStatement.setLong(2, department.getID());
             rs = checkStatement.executeQuery();
             if (rs.next()) {
                 return false;

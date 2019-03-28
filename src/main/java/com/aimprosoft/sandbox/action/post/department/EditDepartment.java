@@ -26,7 +26,7 @@ public class EditDepartment implements Action {
         Department department = new Department(id);
         department.setName(departmentName);
 
-        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department.getName())) {
+        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department)) {
             departmentDAO.updateDepartment(department);
             LOG.info("Department " + departmentName + " was updated!");
             response.sendRedirect("/");

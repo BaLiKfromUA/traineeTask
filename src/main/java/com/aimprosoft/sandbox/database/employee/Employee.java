@@ -17,14 +17,14 @@ public class Employee {
     private String login;
 
     @Size(min = 6, max = 512, message = "Email should be between 6 - 512 characters.")
-    @Email(message = "Email should be valid")
+    //todo:validate pattern
     private String email;
 
     @Max(value = 1000, message = "Rank should be less than 1001")
     @Min(value = 1, message = "Rank should be greater than 0")
     private Integer rank;
 
-    //todo:validate
+    //todo:validate pattern
     private Date registrationDate;//todo: change to long(with pattern)
 
     @Min(value = 0, message = "ID should be greater than -1")

@@ -25,7 +25,7 @@ public class AddNewDepartment implements Action {
         Department department = new Department(0L);
         department.setName(newDepartmentName);
 
-        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department.getName())) {
+        if (HibernateValidator.getInstance().isValidate(department) && departmentDAO.checkDepartment(department)) {
             departmentDAO.createDepartment(department);
             LOG.info("Department " + newDepartmentName + " was added!");
             response.sendRedirect("/");
