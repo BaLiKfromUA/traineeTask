@@ -2,7 +2,6 @@ package com.aimprosoft.sandbox.dao;
 
 import com.aimprosoft.sandbox.domain.Employee;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +18,5 @@ public interface EmployeeRepo {
     void deleteEmployeeById(Long id);
 
     void updateEmployee(Employee employee);
-
-    void closeConnection() throws SQLException;
 
 }

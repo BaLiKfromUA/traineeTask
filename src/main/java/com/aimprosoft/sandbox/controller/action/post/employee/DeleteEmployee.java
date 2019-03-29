@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * @author BaLiK on 26.03.19
@@ -18,7 +17,7 @@ public class DeleteEmployee implements Action {
     private static String URL = "?action-get=employees&department_id=%d";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         String depIdStr = request.getParameter("department_id");
 

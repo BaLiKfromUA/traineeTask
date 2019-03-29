@@ -3,7 +3,6 @@ package com.aimprosoft.sandbox.service;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +19,5 @@ public interface DepartmentService {
     void deleteDepartmentById(String id);
 
     void updateDepartment(DepartmentData department);
-
-    void closeConnection() throws SQLException;
 
 }

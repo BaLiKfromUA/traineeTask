@@ -12,17 +12,8 @@ import java.util.ArrayList;
 /**
  * @author BaLiK on 25.03.19
  */
-public class EmployeeDAO implements EmployeeRepo {
-    private static Logger LOG = Logger.getLogger(EmployeeDAO.class);
-    /**
-     * Resources
-     **/
-    private Connection connection;
-    private PreparedStatement createStatement;
-    private PreparedStatement checkStatement;
-    private PreparedStatement getAllStatement;
-    private PreparedStatement deleteStatement;
-    private PreparedStatement updateStatement;
+public class EmployeeRepoImpl implements EmployeeRepo {
+    private static Logger LOG = Logger.getLogger(EmployeeRepoImpl.class);
 
     /**
      * Statements
@@ -34,15 +25,6 @@ public class EmployeeDAO implements EmployeeRepo {
     private static final String DELETE_BY_ID = "DELETE FROM employees WHERE employees.id=?";
     private static final String UPDATE_BY_ID = "UPDATE employees " +
             "SET employees.login=?, employees.email=?, employees.rank=?, employees.registration_date=?, employees.department_id=? WHERE employees.id=?";
-
-    public EmployeeDAO() throws IOException, SQLException {
-        connection = DatabaseManager.getInstance().getConnection();
-        createStatement = connection.prepareStatement(CREATE_EMPLOYEE);
-        checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL);
-        getAllStatement = connection.prepareStatement(GET_ALL_BY_DEPARTMENT_ID);
-        deleteStatement = connection.prepareStatement(DELETE_BY_ID);
-        updateStatement = connection.prepareStatement(UPDATE_BY_ID);
-    }
 
     private Employee extractEmployee(ResultSet rs) {
         Employee employee = null;
@@ -64,14 +46,15 @@ public class EmployeeDAO implements EmployeeRepo {
     @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) {
         ArrayList<Employee> employees = new ArrayList<>();
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement getAllStatement = connection.prepareStatement(GET_ALL_BY_DEPARTMENT_ID)) {
             ResultSet rs;
             getAllStatement.setLong(1, id);
             rs = getAllStatement.executeQuery();
             while (rs.next()) {
                 employees.add(extractEmployee(rs));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not get Employees by Department ID\n" + e.getMessage());
         }
 
@@ -91,7 +74,8 @@ public class EmployeeDAO implements EmployeeRepo {
 
     @Override
     public boolean checkEmployee(Employee employee) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement checkStatement = connection.prepareStatement(GET_USER_BY_LOGIN_OR_EMAIL)) {
             ResultSet rs;
             checkStatement.setString(1, employee.getEmail());
             checkStatement.setLong(2, employee.getID());
@@ -99,7 +83,7 @@ public class EmployeeDAO implements EmployeeRepo {
             if (rs.next()) {
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not get Employees by Email or Login\n" + e.getMessage());
         }
         return true;
@@ -107,45 +91,39 @@ public class EmployeeDAO implements EmployeeRepo {
 
     @Override
     public void createEmployee(Employee employee) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement createStatement = connection.prepareStatement(CREATE_EMPLOYEE)) {
             setEmployeeData(employee, createStatement);
             int rs = createStatement.executeUpdate();
             LOG.info("Employee create result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not create Employee\n" + e.getMessage());
         }
     }
 
     @Override
     public void deleteEmployeeById(Long id) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
             int rs = deleteStatement.executeUpdate();
             LOG.info("Employee delete result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not delete Employee " + id + "\n" + e.getMessage());
         }
     }
 
     @Override
     public void updateEmployee(Employee employee) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement updateStatement = connection.prepareStatement(UPDATE_BY_ID)) {
             int k = setEmployeeData(employee, updateStatement);
             updateStatement.setLong(k, employee.getID());
             int rs = updateStatement.executeUpdate();
             LOG.info("Employee delete result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not delete Employee\n" + e.getMessage());
         }
     }
 
-    @Override
-    public void closeConnection() throws SQLException {
-        connection.close();
-        createStatement.close();
-        checkStatement.close();
-        getAllStatement.close();
-        deleteStatement.close();
-        updateStatement.close();
-    }
 }

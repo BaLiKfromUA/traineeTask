@@ -3,7 +3,7 @@ package com.aimprosoft.sandbox.controller.data;
 /**
  * @author BaLiK on 29.03.19
  */
-public final class EmployeeData {
+public class EmployeeData {
     private final String id;
     private final String login;
     private final String email;

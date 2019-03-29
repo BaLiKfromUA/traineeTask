@@ -3,7 +3,6 @@ package com.aimprosoft.sandbox.service;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.domain.Employee;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +19,5 @@ public interface EmployeeService {
     void deleteEmployeeById(String id);
 
     void updateEmployee(EmployeeData employee);
-
-    void closeConnection() throws SQLException;
 
 }

@@ -2,7 +2,6 @@ package com.aimprosoft.sandbox.dao;
 
 import com.aimprosoft.sandbox.domain.Department;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +18,4 @@ public interface DepartmentRepo {
     void deleteDepartmentById(Long id);
 
     void updateDepartment(Department department);
-
-    void closeConnection() throws SQLException;
-
 }

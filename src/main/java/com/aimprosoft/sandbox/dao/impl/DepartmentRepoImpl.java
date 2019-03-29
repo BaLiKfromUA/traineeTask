@@ -12,16 +12,8 @@ import java.util.ArrayList;
 /**
  * @author BaLiK on 25.03.19
  */
-public class DepartmentDAO implements DepartmentRepo {
-    private static Logger LOG = Logger.getLogger(DepartmentDAO.class);
-    /**
-     * Resources
-     **/
-    private Connection connection;
-    private PreparedStatement createStatement;
-    private PreparedStatement checkStatement;
-    private PreparedStatement deleteStatement;
-    private PreparedStatement updateStatement;
+public class DepartmentRepoImpl implements DepartmentRepo {
+    private static Logger LOG = Logger.getLogger(DepartmentRepoImpl.class);
 
     /**
      * Statements
@@ -33,39 +25,34 @@ public class DepartmentDAO implements DepartmentRepo {
     private static final String DELETE_BY_ID = "DELETE FROM departments WHERE departments.id=?";
     private static final String UPDATE_BY_ID = "UPDATE departments SET departments.name=? WHERE departments.id=?";
 
-    public DepartmentDAO() throws IOException, SQLException {
-        connection = DatabaseManager.getInstance().getConnection();
-        createStatement = connection.prepareStatement(CREATE_DEPARTMENT);
-        checkStatement = connection.prepareStatement(CHECK_DEPARTMENT);
-        deleteStatement = connection.prepareStatement(DELETE_BY_ID);
-        updateStatement = connection.prepareStatement(UPDATE_BY_ID);
-    }
-
     @Override
     public void deleteDepartmentById(Long id) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
             int rs = deleteStatement.executeUpdate();
             LOG.info("Department delete result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not delete Department " + id + "\n" + e.getMessage());
         }
     }
 
     @Override
     public void createDepartment(Department department) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement createStatement = connection.prepareStatement(CREATE_DEPARTMENT)) {
             createStatement.setString(1, department.getName());
             int rs = createStatement.executeUpdate();
             LOG.info("Department create result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not create Department\n" + e.getMessage());
         }
     }
 
     @Override
     public boolean checkDepartment(Department department) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement checkStatement = connection.prepareStatement(CHECK_DEPARTMENT)) {
             ResultSet rs;
             checkStatement.setString(1, department.getName());
             checkStatement.setLong(2, department.getID());
@@ -73,7 +60,7 @@ public class DepartmentDAO implements DepartmentRepo {
             if (rs.next()) {
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not get Department by Name\n" + e.getMessage());
         }
         return true;
@@ -98,7 +85,7 @@ public class DepartmentDAO implements DepartmentRepo {
         ResultSet rs;
         ArrayList<Department> departments = new ArrayList<>();
 
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection()) {
             statement = connection.createStatement();
 
             rs = statement.executeQuery(GET_ALL_DEPARTMENTS);
@@ -107,7 +94,7 @@ public class DepartmentDAO implements DepartmentRepo {
                 departments.add(extractDepartment(rs));
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not get Departments\n" + e.getMessage());
         }
 
@@ -116,22 +103,15 @@ public class DepartmentDAO implements DepartmentRepo {
 
     @Override
     public void updateDepartment(Department department) {
-        try {
+        try (Connection connection = DatabaseManager.getInstance().getConnection();
+             PreparedStatement updateStatement = connection.prepareStatement(UPDATE_BY_ID)) {
             updateStatement.setString(1, department.getName());
             updateStatement.setLong(2, department.getID());
             int rs = updateStatement.executeUpdate();
             LOG.info("Department update result: " + rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOG.error("Can not update department\n" + e.getMessage());
         }
     }
 
-    @Override
-    public void closeConnection() throws SQLException {
-        connection.close();
-        createStatement.close();
-        checkStatement.close();
-        deleteStatement.close();
-        updateStatement.close();
-    }
 }

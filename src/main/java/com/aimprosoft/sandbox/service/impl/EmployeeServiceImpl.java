@@ -2,12 +2,10 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
-import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
+import com.aimprosoft.sandbox.dao.impl.EmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.service.EmployeeService;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -17,8 +15,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepo repo;
 
-    public EmployeeServiceImpl() throws IOException, SQLException {
-        repo = new EmployeeDAO();
+    public EmployeeServiceImpl() {
+        repo = new EmployeeRepoImpl();
     }
 
     private Employee convert(EmployeeData data) {
@@ -58,8 +56,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         repo.updateEmployee(convert(employee));
     }
 
-    @Override
-    public void closeConnection() throws SQLException {
-        repo.closeConnection();
-    }
 }
