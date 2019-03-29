@@ -45,7 +45,7 @@
                 <c:set var="currLogin" value="${employee.login}"/>
                 <c:set var="currEmail" value="${employee.email}"/>
                 <c:set var="currRank" value="${employee.rank}"/>
-                <c:set var="currDate" value="${employee.dateString}"/>
+                <c:set var="currDate" value="${employee.getDateString()}"/>
                 <c:set var="isError" value="false"/>
             </c:otherwise>
         </c:choose>

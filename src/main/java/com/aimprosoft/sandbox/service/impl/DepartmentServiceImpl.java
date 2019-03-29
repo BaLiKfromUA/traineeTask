@@ -2,7 +2,7 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
-import com.aimprosoft.sandbox.dao.impl.DepartmentRepoImpl;
+import com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.service.DepartmentService;
 
@@ -15,7 +15,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepo repo;
 
     public DepartmentServiceImpl() {
-        repo = new DepartmentRepoImpl();
+        repo = new HibernateDepartmentRepoImpl();
     }
 
     private Department convert(DepartmentData departmentData) {

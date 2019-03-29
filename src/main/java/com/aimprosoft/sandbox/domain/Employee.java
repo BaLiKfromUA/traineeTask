@@ -1,6 +1,6 @@
 package com.aimprosoft.sandbox.domain;
 
-import java.sql.Timestamp;
+import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,15 +8,39 @@ import java.util.Date;
 /**
  * @author BaLiK on 25.03.19
  */
+@Entity
+@Table(name = "employees")
 public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long ID;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "rank")
     private Integer rank;
+
+    @Column(name = "registration_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;//todo: change to long(with pattern)
+
+    @Column(name = "department_id")
     private Long departmentID;
+
+    @JoinColumn(name = "department_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)
+    private Department department;
+
+    @Transient
     private String dateString;
 
+    @Transient
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     public Employee(Long id) {
@@ -74,12 +98,11 @@ public class Employee {
             this.registrationDate = format.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
-            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            this.registrationDate = new Date(currentTime.getTime());
         }
     }
 
     public String getDateString() {
+        dateString = format.format(registrationDate);
         return dateString;
     }
 
@@ -89,5 +112,13 @@ public class Employee {
 
     public void setDepartmentID(Long departmentID) {
         this.departmentID = departmentID;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

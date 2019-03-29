@@ -17,7 +17,6 @@ public final class Validator {
     private static Pattern pattern;
     private static Matcher matcher;
 
-    //todo: validate ids
 
     private static final String LOGIN_PATTERN = "^[a-z0-9_-]{5,21}$";
     private static final String EMAIL_PATTERN = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";

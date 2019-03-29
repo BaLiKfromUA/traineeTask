@@ -1,10 +1,20 @@
 package com.aimprosoft.sandbox.domain;
 
+import javax.persistence.*;
+
 /**
  * @author BaLiK on 25.03.19
  */
+@Entity
+@Table(name="departments")
 public class Department {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long ID;
+
+    @Column(name = "name")
     private String name;
 
     public Department() {

@@ -2,7 +2,7 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
-import com.aimprosoft.sandbox.dao.impl.EmployeeRepoImpl;
+import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.service.EmployeeService;
 
@@ -16,7 +16,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepo repo;
 
     public EmployeeServiceImpl() {
-        repo = new EmployeeRepoImpl();
+        repo = new HibernateEmployeeRepoImpl();
     }
 
     private Employee convert(EmployeeData data) {

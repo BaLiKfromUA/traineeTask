@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.controller;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.action.ActionManager;
+import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import org.apache.log4j.Logger;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
  */
 @WebServlet("/")
 //todo:new logger version
+//todo:NO HIBERNATE LOGS!
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(MainServlet.class);
 
@@ -48,5 +50,6 @@ public class MainServlet extends HttpServlet {
     @Override
     public void destroy() {
         LOG.info("Main servlet destroy...");
+        HibernateUtil.shutdown();
     }
 }
