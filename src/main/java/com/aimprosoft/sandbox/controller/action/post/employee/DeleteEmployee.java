@@ -20,13 +20,14 @@ public class DeleteEmployee implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String id = request.getParameter("id");
+        String depIdStr = request.getParameter("department_id");
 
-        if (Validator.validateId(id)) {
+        if (Validator.validateId(id) && Validator.validateId(depIdStr)) {
             Long employeeId = Long.parseLong(id);
             employeeDAO.deleteEmployeeById(employeeId);
-            LOG.info("Employee " + request.getParameter("login") + " was removed!");
+            LOG.info("Employee " + id + " was removed!");
 
-            Long departmentId = Long.parseLong(request.getParameter("department_id"));
+            Long departmentId = Long.parseLong(depIdStr);
             response.sendRedirect(String.format(URL, departmentId));
         } else {
             response.sendRedirect("?action-get=error");

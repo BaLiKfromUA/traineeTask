@@ -1,6 +1,7 @@
 package com.aimprosoft.sandbox.controller.action.post.department;
 
 import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
@@ -23,7 +24,9 @@ public class EditDepartment implements Action {
         String idStr = request.getParameter("id");
         String departmentName = request.getParameter("new name");
 
-        if (Validator.validateName(departmentName) && Validator.validateId(idStr)) {
+        DepartmentData data = new DepartmentData(idStr, departmentName);
+
+        if (Validator.validateDepartment(data)) {
             Long id = Long.parseLong(idStr);
             Department department = new Department(id);
             department.setName(departmentName);
@@ -36,6 +39,7 @@ public class EditDepartment implements Action {
                 String flag = String.valueOf(id);
                 response.sendRedirect(String.format(URL, departmentName, flag));
             }
+
         } else {
             response.sendRedirect("?action-get=error");
         }

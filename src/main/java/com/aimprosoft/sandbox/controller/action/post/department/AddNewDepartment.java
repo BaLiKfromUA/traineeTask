@@ -1,6 +1,7 @@
 package com.aimprosoft.sandbox.controller.action.post.department;
 
 import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
@@ -20,20 +21,21 @@ public class AddNewDepartment implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
-        String newDepartmentName = request.getParameter("new name");
+        DepartmentData data = new DepartmentData(request.getParameter("new name"));
 
-        if (Validator.validateName(newDepartmentName)) {
+        if (Validator.validateDepartment(data)) {
             Department department = new Department();
-            department.setName(newDepartmentName);
+            department.setName(data.getName());
 
             if (departmentDAO.checkDepartment(department)) {
                 departmentDAO.createDepartment(department);
-                LOG.info("Department " + newDepartmentName + " was added!");
+                LOG.info("Department " + data.getName() + " was added!");
                 response.sendRedirect("/");
             } else {
                 String flag = "invalid-new-department";
-                response.sendRedirect(String.format(URL, newDepartmentName, flag));
+                response.sendRedirect(String.format(URL, data.getName(), flag));
             }
+
         } else {
             response.sendRedirect("?action-get=error");
         }

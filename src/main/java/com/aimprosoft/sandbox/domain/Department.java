@@ -8,6 +8,7 @@ public class Department {
     private String name;
 
     public Department() {
+        ID=0L;
     }
 
     public Department(Long id) {

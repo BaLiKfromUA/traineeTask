@@ -1,13 +1,13 @@
 package com.aimprosoft.sandbox.controller.action.post.employee;
 
 import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
-import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
+import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,7 +30,9 @@ public class EditEmployee implements Action {
         String newDate = request.getParameter("new date");
         String departmentId = request.getParameter("department_id");
 
-        if (Validator.validateUser(newLogin, newEmail, newRank, newDate) && Validator.validateId(userId) && Validator.validateId(departmentId)) {
+        EmployeeData data = new EmployeeData(userId, newLogin, newEmail, newRank, newDate, departmentId);
+
+        if (Validator.validateUser(data)) {
             Employee employee = new Employee(Long.parseLong(userId));
             employee.setLogin(newLogin);
             employee.setEmail(newEmail);

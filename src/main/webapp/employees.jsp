@@ -67,7 +67,8 @@
                     <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
-                           value="${currEmail}" autocomplete="off" required>
+                           value="${currEmail}" pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$' autocomplete="off"
+                           required>
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                         Employee email should be unique!
                     </div>
@@ -126,7 +127,8 @@
             <td>
                 <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                        aria-describedby="emailHelp"
-                       placeholder="Enter email" value="${currEmail}" autocomplete="off" required>
+                       placeholder="Enter email" value="${currEmail}"
+                       pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$' autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New employee email should be unique!
                 </div>

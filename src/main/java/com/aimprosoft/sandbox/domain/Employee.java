@@ -24,6 +24,7 @@ public class Employee {
     }
 
     public Employee() {
+        ID=0L;
     }
 
     public Long getID() {

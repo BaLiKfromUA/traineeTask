@@ -104,7 +104,7 @@
                 </c:set>
 
                 <input type="text" class="form-control" name="new name" minlength="6" maxlength="20"
-                       placeholder="Enter new department name" value="${departmentName}" autocomplete="off" required>
+                       placeholder="Enter new department name" value="${departmentName}" autocomplete="off" pattern="^[A-Z][a-zA-Z]{5,21}$" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New department name should be unique!
                 </div>
