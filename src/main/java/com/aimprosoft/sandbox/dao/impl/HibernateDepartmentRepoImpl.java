@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @author BaLiK on 29.03.19
  */
+//todo: message for user
 public class HibernateDepartmentRepoImpl implements DepartmentRepo {
     @Override
     public ArrayList<Department> getAllDepartments() {
@@ -36,7 +37,7 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
                     .setParameter("department_id", department.getID())
                     .setParameter("department_name", department.getName());
 
-            departments = q.list();
+            departments = q.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
             e.getStackTrace();

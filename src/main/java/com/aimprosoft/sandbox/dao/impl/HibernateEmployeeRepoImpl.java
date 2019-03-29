@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @author BaLiK on 29.03.19
  */
+//todo: message for user
 public class HibernateEmployeeRepoImpl implements EmployeeRepo {
     @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) {
