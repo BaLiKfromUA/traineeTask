@@ -8,11 +8,15 @@ public class Department {
     private String name;
 
     public Department() {
-        ID=0L;
+        ID = 0L;
     }
 
     public Department(Long id) {
         ID = id;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public Long getID() {

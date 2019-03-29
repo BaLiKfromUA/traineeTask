@@ -1,5 +1,6 @@
 package com.aimprosoft.sandbox.dao.impl;
 
+import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import com.aimprosoft.sandbox.domain.Employee;
 import org.apache.log4j.Logger;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * @author BaLiK on 25.03.19
  */
-public class EmployeeDAO {
+public class EmployeeDAO implements EmployeeRepo {
     private static Logger LOG = Logger.getLogger(EmployeeDAO.class);
     /**
      * Resources
@@ -26,7 +27,6 @@ public class EmployeeDAO {
     /**
      * Statements
      **/
-    private static final String GET_ALL_EMPLOYEES = "SELECT * FROM employees ORDER BY employees.id";
     private static final String GET_ALL_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE department_id=? ORDER BY employees.id";
     private static final String CREATE_EMPLOYEE = "INSERT INTO employees (login, email, rank, registration_date, department_id)" +
             " VALUES (?,?,?,?,?)";
@@ -61,27 +61,7 @@ public class EmployeeDAO {
         return employee;
     }
 
-    public ArrayList<Employee> getAllEmployees() {
-        Statement statement;
-        ResultSet rs;
-        ArrayList<Employee> employees = new ArrayList<>();
-
-        try {
-            statement = connection.createStatement();
-
-            rs = statement.executeQuery(GET_ALL_EMPLOYEES);
-
-            while (rs.next()) {
-                employees.add(extractEmployee(rs));
-            }
-
-        } catch (SQLException e) {
-            LOG.error("Can not get Employees\n" + e.getMessage());
-        }
-
-        return employees;
-    }
-
+    @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) {
         ArrayList<Employee> employees = new ArrayList<>();
         try {
@@ -109,6 +89,7 @@ public class EmployeeDAO {
         return k;
     }
 
+    @Override
     public boolean checkEmployee(Employee employee) {
         try {
             ResultSet rs;
@@ -124,6 +105,7 @@ public class EmployeeDAO {
         return true;
     }
 
+    @Override
     public void createEmployee(Employee employee) {
         try {
             setEmployeeData(employee, createStatement);
@@ -134,6 +116,7 @@ public class EmployeeDAO {
         }
     }
 
+    @Override
     public void deleteEmployeeById(Long id) {
         try {
             deleteStatement.setLong(1, id);
@@ -144,6 +127,7 @@ public class EmployeeDAO {
         }
     }
 
+    @Override
     public void updateEmployee(Employee employee) {
         try {
             int k = setEmployeeData(employee, updateStatement);
@@ -155,6 +139,7 @@ public class EmployeeDAO {
         }
     }
 
+    @Override
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();

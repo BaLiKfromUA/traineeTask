@@ -5,12 +5,14 @@ import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
 import com.aimprosoft.sandbox.domain.Employee;
+import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author BaLiK on 27.03.19
@@ -22,7 +24,7 @@ public class EditEmployee implements Action {
 
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
         String userId = request.getParameter("id");
         String newLogin = request.getParameter("new login");
         String newEmail = request.getParameter("new email");
@@ -33,15 +35,8 @@ public class EditEmployee implements Action {
         EmployeeData data = new EmployeeData(userId, newLogin, newEmail, newRank, newDate, departmentId);
 
         if (Validator.validateUser(data)) {
-            Employee employee = new Employee(Long.parseLong(userId));
-            employee.setLogin(newLogin);
-            employee.setEmail(newEmail);
-            employee.setRank(Integer.parseInt(newRank));
-            employee.setRegistrationDate(newDate);
-            employee.setDepartmentID(Long.parseLong(departmentId));
-
-            if (employeeDAO.checkEmployee(employee)) {
-                employeeDAO.updateEmployee(employee);
+            if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
+                DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
                 LOG.info("Employee " + newLogin + " was updated!");
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             } else {

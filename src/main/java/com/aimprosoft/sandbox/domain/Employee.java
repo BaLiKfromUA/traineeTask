@@ -24,11 +24,15 @@ public class Employee {
     }
 
     public Employee() {
-        ID=0L;
+        ID = 0L;
     }
 
     public Long getID() {
         return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public String getLogin() {

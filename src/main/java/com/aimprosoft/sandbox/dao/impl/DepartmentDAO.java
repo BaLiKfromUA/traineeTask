@@ -1,5 +1,6 @@
 package com.aimprosoft.sandbox.dao.impl;
 
+import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import com.aimprosoft.sandbox.domain.Department;
 import org.apache.log4j.Logger;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * @author BaLiK on 25.03.19
  */
-public class DepartmentDAO {
+public class DepartmentDAO implements DepartmentRepo {
     private static Logger LOG = Logger.getLogger(DepartmentDAO.class);
     /**
      * Resources
@@ -40,6 +41,7 @@ public class DepartmentDAO {
         updateStatement = connection.prepareStatement(UPDATE_BY_ID);
     }
 
+    @Override
     public void deleteDepartmentById(Long id) {
         try {
             deleteStatement.setLong(1, id);
@@ -50,6 +52,7 @@ public class DepartmentDAO {
         }
     }
 
+    @Override
     public void createDepartment(Department department) {
         try {
             createStatement.setString(1, department.getName());
@@ -60,6 +63,7 @@ public class DepartmentDAO {
         }
     }
 
+    @Override
     public boolean checkDepartment(Department department) {
         try {
             ResultSet rs;
@@ -88,6 +92,7 @@ public class DepartmentDAO {
         return department;
     }
 
+    @Override
     public ArrayList<Department> getAllDepartments() {
         Statement statement;
         ResultSet rs;
@@ -109,6 +114,7 @@ public class DepartmentDAO {
         return departments;
     }
 
+    @Override
     public void updateDepartment(Department department) {
         try {
             updateStatement.setString(1, department.getName());
@@ -120,6 +126,7 @@ public class DepartmentDAO {
         }
     }
 
+    @Override
     public void closeConnection() throws SQLException {
         connection.close();
         createStatement.close();
