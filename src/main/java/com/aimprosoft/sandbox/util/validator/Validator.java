@@ -13,6 +13,7 @@ public final class Validator {
     private static Pattern pattern;
     private static Matcher matcher;
 
+    //todo: validate ids
 
     private static final String LOGIN_PATTERN = "^[a-z0-9_-]{5,21}$";
     private static final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{5,41}$";
@@ -27,6 +28,10 @@ public final class Validator {
         pattern = Pattern.compile(LOGIN_PATTERN);
         matcher = pattern.matcher(login);
         return matcher.matches();
+    }
+
+    public static boolean validateUser(final String login, final String email, final String rank, final String date) {
+        return validateLogin(login) && validateEmail(email) && validateRank(rank) && validateDate(date);
     }
 
     public static boolean validateEmail(final String email) {
@@ -51,6 +56,20 @@ public final class Validator {
         }
         long rank = Long.parseLong(rankString);
         return rank > 0 && rank <= 1000;
+    }
+
+    public static boolean validateId(final String idStr) {
+        if (idStr == null) {
+            return false;
+        }
+        pattern = Pattern.compile(NUMBER_PATTERN);
+        matcher = pattern.matcher(idStr);
+        if (!matcher.matches()) {
+            return false;
+        }
+        long id = Long.parseLong(idStr);
+        return id > 0;
+
     }
 
     //todo:better

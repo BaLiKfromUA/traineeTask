@@ -3,6 +3,7 @@ package com.aimprosoft.sandbox.controller.action.post.employee;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
+import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +19,17 @@ public class DeleteEmployee implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
-        Long employeeId = Long.parseLong(request.getParameter("id"));
-        employeeDAO.deleteEmployeeById(employeeId);
-        LOG.info("Employee " + request.getParameter("login") + " was removed!");
+        String id = request.getParameter("id");
 
-        Long departmentId = Long.parseLong(request.getParameter("department_id"));
-        response.sendRedirect(String.format(URL, departmentId));
+        if (Validator.validateId(id)) {
+            Long employeeId = Long.parseLong(id);
+            employeeDAO.deleteEmployeeById(employeeId);
+            LOG.info("Employee " + request.getParameter("login") + " was removed!");
+
+            Long departmentId = Long.parseLong(request.getParameter("department_id"));
+            response.sendRedirect(String.format(URL, departmentId));
+        } else {
+            response.sendRedirect("?action-get=error");
+        }
     }
 }

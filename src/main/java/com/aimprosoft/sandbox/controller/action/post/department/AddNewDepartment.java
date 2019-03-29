@@ -22,16 +22,20 @@ public class AddNewDepartment implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String newDepartmentName = request.getParameter("new name");
 
-        Department department = new Department();
-        department.setName(newDepartmentName);
+        if (Validator.validateName(newDepartmentName)) {
+            Department department = new Department();
+            department.setName(newDepartmentName);
 
-        if (Validator.validateName(newDepartmentName) && departmentDAO.checkDepartment(department)) {
-            departmentDAO.createDepartment(department);
-            LOG.info("Department " + newDepartmentName + " was added!");
-            response.sendRedirect("/");
+            if (departmentDAO.checkDepartment(department)) {
+                departmentDAO.createDepartment(department);
+                LOG.info("Department " + newDepartmentName + " was added!");
+                response.sendRedirect("/");
+            } else {
+                String flag = "invalid-new-department";
+                response.sendRedirect(String.format(URL, newDepartmentName, flag));
+            }
         } else {
-            String flag = "invalid-new-department";
-            response.sendRedirect(String.format(URL, newDepartmentName, flag));
+            response.sendRedirect("?action-get=error");
         }
     }
 }

@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
+import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -21,28 +22,32 @@ public class EditEmployee implements Action {
 
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws ServletException, IOException {
-        Long userId = Long.parseLong(request.getParameter("id"));
+    public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
+        String userId = request.getParameter("id");
         String newLogin = request.getParameter("new login");
         String newEmail = request.getParameter("new email");
-        Integer newRank = Integer.parseInt(request.getParameter("new rank"));
+        String newRank = request.getParameter("new rank");
         String newDate = request.getParameter("new date");
-        Long departmentId = Long.parseLong(request.getParameter("department_id"));
+        String departmentId = request.getParameter("department_id");
 
-        Employee employee = new Employee(userId);
-        employee.setLogin(newLogin);
-        employee.setEmail(newEmail);
-        employee.setRank(newRank);
-        employee.setRegistrationDate(newDate);
-        employee.setDepartmentID(departmentId);
+        if (Validator.validateUser(newLogin, newEmail, newRank, newDate) && Validator.validateId(userId) && Validator.validateId(departmentId)) {
+            Employee employee = new Employee(Long.parseLong(userId));
+            employee.setLogin(newLogin);
+            employee.setEmail(newEmail);
+            employee.setRank(Integer.parseInt(newRank));
+            employee.setRegistrationDate(newDate);
+            employee.setDepartmentID(Long.parseLong(departmentId));
 
-        //todo:validate
-        if (employeeDAO.checkEmployee(employee)) {
-            employeeDAO.updateEmployee(employee);
-            LOG.info("Employee " + newLogin + " was updated!");
-            response.sendRedirect(String.format(URL, departmentId));
+            if (employeeDAO.checkEmployee(employee)) {
+                employeeDAO.updateEmployee(employee);
+                LOG.info("Employee " + newLogin + " was updated!");
+                response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
+            } else {
+                response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId));
+            }
+
         } else {
-            response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, String.valueOf(userId)));
+            response.sendRedirect("?action-get=error");
         }
     }
 }

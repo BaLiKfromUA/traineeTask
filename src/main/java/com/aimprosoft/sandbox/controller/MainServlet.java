@@ -19,7 +19,6 @@ import java.util.Optional;
  * @author BaLiK on 26.03.19
  */
 @WebServlet("/")
-//todo:messages if errors!!!
 //todo:new logger version
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(MainServlet.class);
@@ -44,15 +43,15 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String action = Optional.ofNullable(request.getParameter("action-get")).orElse("default");
-        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("default"));
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("error"));
         actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        final String action = Optional.ofNullable(request.getParameter("action-post")).orElse("default");
-        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("default"));
+        final String action = Optional.ofNullable(request.getParameter("action-post")).orElse("error");
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("error"));
         actionToDo.execute(request, response, employeeDAO, departmentDAO);
     }
 

@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.dao.impl.DepartmentDAO;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.dao.impl.EmployeeDAO;
+import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,24 +23,29 @@ public class AddNewEmployee implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
         String newLogin = request.getParameter("new login");
         String newEmail = request.getParameter("new email");
-        Integer newRank = Integer.parseInt(request.getParameter("new rank"));
+        String newRank = request.getParameter("new rank");
         String newDate = request.getParameter("new date");
-        Long departmentId = Long.parseLong(request.getParameter("department_id"));
+        String departmentId = request.getParameter("department_id");
 
-        Employee employee = new Employee(0L);
-        employee.setLogin(newLogin);
-        employee.setEmail(newEmail);
-        employee.setRank(newRank);
-        employee.setRegistrationDate(newDate);
-        employee.setDepartmentID(departmentId);
+        if (Validator.validateUser(newLogin, newEmail, newRank, newDate) && Validator.validateId(departmentId)) {
 
-        //todo:validate
-        if (employeeDAO.checkEmployee(employee)) {
-            employeeDAO.createEmployee(employee);
-            LOG.info("Employee " + newLogin + " was added!");
-            response.sendRedirect(String.format(URL, departmentId));
+            Employee employee = new Employee();
+            employee.setLogin(newLogin);
+            employee.setEmail(newEmail);
+            employee.setRank(Integer.parseInt(newRank));
+            employee.setRegistrationDate(newDate);
+            employee.setDepartmentID(Long.parseLong(departmentId));
+
+            if (employeeDAO.checkEmployee(employee)) {
+                employeeDAO.createEmployee(employee);
+                LOG.info("Employee " + newLogin + " was added!");
+                response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
+            } else {
+                response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Long.parseLong(newRank), newDate, "invalid-new-employee"));
+            }
+
         } else {
-            response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, "invalid-new-employee"));
+            response.sendRedirect("?action-get=error");
         }
     }
 }

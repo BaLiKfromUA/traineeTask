@@ -20,19 +20,25 @@ public class EditDepartment implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) throws IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
+        String idStr = request.getParameter("id");
         String departmentName = request.getParameter("new name");
 
-        Department department = new Department(id);
-        department.setName(departmentName);
+        if (Validator.validateName(departmentName) && Validator.validateId(idStr)) {
+            Long id = Long.parseLong(idStr);
+            Department department = new Department(id);
+            department.setName(departmentName);
 
-        if (Validator.validateName(departmentName) && departmentDAO.checkDepartment(department)) {
-            departmentDAO.updateDepartment(department);
-            LOG.info("Department " + departmentName + " was updated!");
-            response.sendRedirect("/");
+            if (departmentDAO.checkDepartment(department)) {
+                departmentDAO.updateDepartment(department);
+                LOG.info("Department " + departmentName + " was updated!");
+                response.sendRedirect("/");
+            } else {
+                String flag = String.valueOf(id);
+                response.sendRedirect(String.format(URL, departmentName, flag));
+            }
         } else {
-            String flag = String.valueOf(id);
-            response.sendRedirect(String.format(URL, departmentName, flag));
+            response.sendRedirect("?action-get=error");
         }
+
     }
 }
