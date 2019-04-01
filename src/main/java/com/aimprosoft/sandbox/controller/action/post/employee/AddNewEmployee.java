@@ -3,7 +3,7 @@ package com.aimprosoft.sandbox.controller.action.post.employee;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
-import com.aimprosoft.sandbox.util.validator.Validator;
+import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class AddNewEmployee implements Action {
 
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
-        if (Validator.validateUser(data)) {
+        if (OvalValidator.getInstance().validate(data)) {
             if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
                 DatabaseService.getInstance().getEmployeeService().createEmployee(data);
                 LOG.info("Employee " + newLogin + " was added!");

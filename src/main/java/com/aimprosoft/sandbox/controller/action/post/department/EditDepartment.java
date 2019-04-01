@@ -3,6 +3,7 @@ package com.aimprosoft.sandbox.controller.action.post.department;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
+import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
@@ -18,13 +19,13 @@ public class EditDepartment implements Action {
     private final static String URL = "?action-get=default&name=%s&flag=%s";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idStr = request.getParameter("id");
         String departmentName = request.getParameter("new name");
 
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
-        if (Validator.validateDepartment(data)) {
+        if (OvalValidator.getInstance().validate(data)) {
             if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                 DatabaseService.getInstance().getDepartmentService().updateDepartment(data);
                 LOG.info("Department " + departmentName + " was updated!");

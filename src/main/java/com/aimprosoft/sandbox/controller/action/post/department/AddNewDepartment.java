@@ -3,7 +3,7 @@ package com.aimprosoft.sandbox.controller.action.post.department;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
-import com.aimprosoft.sandbox.util.validator.Validator;
+import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class AddNewDepartment implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DepartmentData data = new DepartmentData(request.getParameter("new name"));
 
-        if (Validator.validateDepartment(data)) {
+        if (OvalValidator.getInstance().validate(data)) {
             if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                 DatabaseService.getInstance().getDepartmentService().createDepartment(data);
                 LOG.info("Department " + data.getName() + " was added!");

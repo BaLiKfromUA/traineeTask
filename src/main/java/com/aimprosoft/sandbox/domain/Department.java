@@ -6,11 +6,10 @@ import javax.persistence.*;
  * @author BaLiK on 25.03.19
  */
 @Entity
-@Table(name="departments")
+@Table(name = "departments")
 public class Department {
-
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long ID;
 

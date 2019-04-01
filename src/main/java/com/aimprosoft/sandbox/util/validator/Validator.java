@@ -2,11 +2,7 @@ package com.aimprosoft.sandbox.util.validator;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
-import com.aimprosoft.sandbox.domain.Department;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,18 +13,12 @@ public final class Validator {
     private static Pattern pattern;
     private static Matcher matcher;
 
-
-    private static final String LOGIN_PATTERN = "^[a-z0-9_-]{5,21}$";
-    private static final String EMAIL_PATTERN = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-    private static final String NUMBER_PATTERN = "\\d+";
-    private static final String NAME_PATTERN = "^[A-Z][a-zA-Z]{5,21}$";
-
-    public static boolean validateLogin(final String login) {
+    static boolean validateLogin(final String login) {
         if (login == null) {
             return false;
         }
 
-        pattern = Pattern.compile(LOGIN_PATTERN);
+        pattern = Pattern.compile(DataPatterns.LOGIN_PATTERN);
         matcher = pattern.matcher(login);
         return matcher.matches();
     }
@@ -48,57 +38,47 @@ public final class Validator {
             return false;
         }
 
-        pattern = Pattern.compile(EMAIL_PATTERN);
+        pattern = Pattern.compile(DataPatterns.EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         return matcher.matches() && email.length() > 5 && email.length() < 41;
     }
 
-    public static boolean validateRank(final String rankString) {
+    static boolean validateRank(final String rankString) {
         if (rankString == null) {
             return false;
         }
 
-        pattern = Pattern.compile(NUMBER_PATTERN);
+        pattern = Pattern.compile(DataPatterns.RANK_PATTERN);
         matcher = pattern.matcher(rankString);
-        if (!matcher.matches()) {
-            return false;
-        }
-        long rank = Long.parseLong(rankString);
-        return rank > 0 && rank <= 1000;
+
+        return matcher.matches();
     }
 
     public static boolean validateId(final String idStr) {
         if (idStr == null) {
             return false;
         }
-        pattern = Pattern.compile(NUMBER_PATTERN);
+        pattern = Pattern.compile(DataPatterns.ID_PATTERN);
         matcher = pattern.matcher(idStr);
-        if (!matcher.matches()) {
-            return false;
-        }
-        long id = Long.parseLong(idStr);
-        return id > 0;
 
+        return matcher.matches();
     }
 
-    //todo:better
-    public static boolean validateDate(final String dateString) {
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date = format.parse(dateString);
-
-            return (date.compareTo(format.parse("1979-12-31")) > 0) && (date.compareTo(format.parse("2079-12-31")) < 0);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    static boolean validateDate(final String dateString) {
+        if(dateString==null){
             return false;
         }
+        pattern=Pattern.compile(DataPatterns.DATE_PATTERN);
+        matcher=pattern.matcher(dateString);
+
+        return matcher.matches();
     }
 
     public static boolean validateName(final String name) {
         if (name == null) {
             return false;
         }
-        pattern = Pattern.compile(NAME_PATTERN);
+        pattern = Pattern.compile(DataPatterns.NAME_PATTERN);
         matcher = pattern.matcher(name);
         return matcher.matches();
     }

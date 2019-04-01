@@ -1,14 +1,51 @@
 package com.aimprosoft.sandbox.controller.data;
 
+import com.aimprosoft.sandbox.util.validator.DataPatterns;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.MinLength;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
+
 /**
  * @author BaLiK on 29.03.19
  */
 public class EmployeeData {
+    @NotNull
+    @NotEmpty
+    @MinLength(value = 1)
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN)
     private final String id;
+
+    @NotNull
+    @NotEmpty
+    @MinLength(value = 6)
+    @Length(max = 20)
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.LOGIN_PATTERN)
     private final String login;
+
+    @NotNull
+    @NotEmpty
+    @MinLength(value = 6)
+    @Length(max = 40)
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.EMAIL_PATTERN)
     private final String email;
+
+    @NotNull
+    @NotEmpty
+    @MinLength(value = 1)
+    @Length(max = 3)
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.RANK_PATTERN)
     private final String rank;
+
+    @NotNull
+    @NotEmpty
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.DATE_PATTERN)
     private final String date;
+
+    @NotNull
+    @NotEmpty
+    @MinLength(value = 1)
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN)
     private final String departmentId;
 
     public EmployeeData(String login, String email, String rank, String date, String departmentId) {

@@ -67,19 +67,20 @@
                     <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
-                           value="${currEmail}" pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$' autocomplete="off"
+                           value="${currEmail}" pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$'
+                           autocomplete="off"
                            required>
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                         Employee email should be unique!
                     </div>
                 </td>
                 <td>
-                    <input type="number" min="1" max="1000" class="form-control" placeholder="Enter rank"
+                    <input type="number" min="1" max="999" class="form-control" placeholder="Enter rank"
                            name="new rank"
                            value="${currRank}" autocomplete="off" required>
                 </td>
                 <td>
-                    <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
+                    <input type="date" class="form-control" name="new date"
                            value="${currDate}" autocomplete="off" required>
                 </td>
 
@@ -134,12 +135,12 @@
                 </div>
             </td>
             <td>
-                <input type="number" name="new rank" min="1" max="1000" class="form-control"
+                <input type="number" name="new rank" min="1" max="999" class="form-control"
                        placeholder="Enter rank"
                        value="${currRank}" autocomplete="off" required>
             </td>
             <td>
-                <input type="date" class="form-control" min="1979-12-31" max="2079-12-31" name="new date"
+                <input type="date" class="form-control" name="new date"
                        value="${currDate}" autocomplete="off" required>
             </td>
 

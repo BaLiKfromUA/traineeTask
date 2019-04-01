@@ -11,7 +11,6 @@ import java.util.Date;
 @Entity
 @Table(name = "employees")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,7 +33,7 @@ public class Employee {
     private Long departmentID;
 
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)//todo:find fetch type
     private Department department;
 
     @Transient

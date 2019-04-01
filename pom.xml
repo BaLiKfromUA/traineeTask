@@ -99,6 +99,13 @@
             <version>5.2.16.Final</version>
         </dependency>
 
+        <!--VALIDATION-->
+        <dependency>
+            <groupId>net.sf.oval</groupId>
+            <artifactId>oval</artifactId>
+            <version>1.84</version>
+        </dependency>
+
 
         <!--TEST-->
         <dependency>
