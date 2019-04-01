@@ -19,7 +19,6 @@ import java.util.Optional;
  */
 @WebServlet("/")
 //todo:new logger version
-//todo:NO HIBERNATE LOGS!
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(MainServlet.class);
 

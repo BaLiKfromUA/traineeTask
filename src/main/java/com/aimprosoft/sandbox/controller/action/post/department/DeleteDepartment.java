@@ -20,7 +20,7 @@ public class DeleteDepartment implements Action {
         String id = request.getParameter("id");
         if (Validator.validateId(id)) {
             DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
-            LOG.info("Department " + request.getParameter("name") + " was removed!");
+            LOG.info("Department " + id + " was removed!");
             response.sendRedirect("/");
         } else {
             response.sendRedirect("?action-get=error");

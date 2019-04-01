@@ -52,7 +52,7 @@
                     <input type="hidden" name="id" value="${department.ID}" autocomplete="off"></th>
                 <td>
                     <input type="text" name="new name" class="form-control" minlength="6" maxlength="20"
-                           placeholder="Enter department name" pattern="^[A-Z][a-zA-Z]{5,21}$"
+                           placeholder="Enter department name" pattern="^[A-Z][a-z]{5,21}$"
                            value="${departmentName}" autocomplete="off" required>
 
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
@@ -104,7 +104,8 @@
                 </c:set>
 
                 <input type="text" class="form-control" name="new name" minlength="6" maxlength="20"
-                       placeholder="Enter new department name" value="${departmentName}" autocomplete="off" pattern="^[A-Z][a-zA-Z]{5,21}$" required>
+                       placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
+                       pattern="^[A-Z][a-z]{5,21}$" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New department name should be unique!
                 </div>

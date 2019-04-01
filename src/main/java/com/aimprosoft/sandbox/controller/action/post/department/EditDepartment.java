@@ -28,7 +28,7 @@ public class EditDepartment implements Action {
         if (OvalValidator.getInstance().validate(data)) {
             if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                 DatabaseService.getInstance().getDepartmentService().updateDepartment(data);
-                LOG.info("Department " + departmentName + " was updated!");
+                LOG.info("Department " + idStr + " was updated!");
                 response.sendRedirect("/");
             } else {
                 response.sendRedirect(String.format(URL, departmentName, idStr));

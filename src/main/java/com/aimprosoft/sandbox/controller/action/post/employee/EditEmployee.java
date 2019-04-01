@@ -34,7 +34,7 @@ public class EditEmployee implements Action {
         if (OvalValidator.getInstance().validate(data)) {
             if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
                 DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
-                LOG.info("Employee " + newLogin + " was updated!");
+                LOG.info("Employee " + userId + " was updated!");
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             } else {
                 response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId));

@@ -11,7 +11,43 @@ import static org.junit.Assert.*;
  * @author BaLiK on 28.03.19
  */
 public class ValidatorTest {
-//todo:validate name and email test
+    @Test
+    public void testCorrectEmail(){
+        assertTrue(Validator.validateEmail("test@test.com"));
+        assertTrue(Validator.validateEmail("yuhimenko.valentin@gmail.com"));
+        assertTrue(Validator.validateEmail("yuhimenko_valentin@yandex.ru"));
+        assertTrue(Validator.validateEmail("yuhimenko1204valentin@ukrnet.ua"));
+        assertTrue(Validator.validateEmail("ssmith@aspalliance.com"));
+        assertTrue(Validator.validateEmail("bob-smith@foo.com"));
+    }
+
+    @Test
+    public void testIncorrectEmail(){
+        assertFalse(Validator.validateEmail("BaLiK"));
+        assertFalse(Validator.validateEmail("balik"));
+        assertFalse(Validator.validateEmail("Yuhimenko.valentin@gmail.com"));
+        assertFalse(Validator.validateEmail("yUhimenko.valentin@gmail.com"));
+        assertFalse(Validator.validateEmail("-smith@foo.com"));
+        assertFalse(Validator.validateEmail(".smith@foo.com"));
+        assertFalse(Validator.validateEmail("smith@foo_com"));
+        assertFalse(Validator.validateEmail("yuhimenko.valentin@gmail.c"));
+    }
+
+    @Test
+    public void testCorrectName() {
+        assertTrue(Validator.validateName("Department"));
+        assertTrue(Validator.validateName("Computer"));
+        assertTrue(Validator.validateName("Abcdef"));
+    }
+
+    @Test
+    public void testIncorrectName() {
+        assertFalse(Validator.validateName("department"));
+        assertFalse(Validator.validateName("DePaRtMeNt"));
+        assertFalse(Validator.validateName("Abcde"));
+        assertFalse(Validator.validateName(""));
+    }
+
     @Test
     public void testCorrectLogin() {
         assertTrue(Validator.validateLogin("mkyong34"));
@@ -77,17 +113,11 @@ public class ValidatorTest {
 
     @Test
     public void testIncorrectDate() {
-        String date = "BaLiK";
-        assertFalse(Validator.validateDate(date));
-        date = "12-31-2018";
-        assertFalse(Validator.validateDate(date));
-        date = "31-12-2018";
-        assertFalse(Validator.validateDate(date));
-        date = "2000/12/04";
-        assertFalse(Validator.validateDate(date));
-        date = "2000-45-55";
-        assertFalse(Validator.validateDate(date));
-        date="2000-balik-29";
-        assertFalse(Validator.validateDate(date));
+        assertFalse(Validator.validateDate("BaLiK"));
+        assertFalse(Validator.validateDate("12-31-2018"));
+        assertFalse(Validator.validateDate("31-12-2018"));
+        assertFalse(Validator.validateDate("2000/12/04"));
+        assertFalse(Validator.validateDate("2000-45-55"));
+        assertFalse(Validator.validateDate("2000-balik-29"));
     }
 }
