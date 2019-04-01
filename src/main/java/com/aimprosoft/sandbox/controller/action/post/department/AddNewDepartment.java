@@ -21,6 +21,7 @@ public class AddNewDepartment implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DepartmentData data = new DepartmentData(request.getParameter("new name"));
+        String flag = "invalid-new-department";
 
         if (OvalValidator.getInstance().validate(data)) {
             try {
@@ -29,17 +30,16 @@ public class AddNewDepartment implements Action {
                     LOG.info("Department " + data.getName() + " was added!");
                     response.sendRedirect("/");
                 } else {
-                    String flag = "invalid-new-department";
                     response.sendRedirect(String.format(URL, data.getName(), flag));
                 }
             } catch (SQLException e) {
-                request.setAttribute("dbError",true);
-                request.setAttribute("errorMessage","Fail to add new department!");
+                request.setAttribute("dbError", true);
+                request.setAttribute("errorMessage", "Fail to add new department!");
                 response.sendRedirect("/");
             }
 
         } else {
-            response.sendRedirect("?action-get=error");
+            response.sendRedirect(String.format(URL, data.getName(), flag));
         }
     }
 }

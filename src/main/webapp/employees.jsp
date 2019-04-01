@@ -67,7 +67,8 @@
                     <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                            aria-describedby="emailHelp"
                            placeholder="Enter email"
-                           value="${currEmail}" pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
+                           value="${currEmail}"
+                           pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                            autocomplete="off"
                            required>
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
@@ -130,7 +131,8 @@
                 <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
                        aria-describedby="emailHelp"
                        placeholder="Enter email" value="${currEmail}"
-                       pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$" autocomplete="off" required>
+                       pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
+                       autocomplete="off" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
                     New employee email should be unique!
                 </div>
@@ -158,14 +160,21 @@
 
     </tbody>
 </table>
-<div class="alert alert-danger" role="alert" <c:if test="${not dbError}">hidden</c:if>>
-    ${errorMessage}
-</div>
 <span class="d-block p-2 bg-dark text-white" style="margin: 0">
      <form id="back" method="get" style="margin-top: 5px">
      <button type="submit" class="btn btn-primary">< BACK</button>
     </form>
 </span>
+<div class="alert alert-danger" role="alert" <c:if test="${not dbError}">hidden</c:if>>
+    ${errorMessage}
+</div>
+
+<c:forEach var="message" items="${errorMessages}">
+    <div style="margin: 0" class="alert alert-warning" role="alert">
+        ${message}
+    </div>
+</c:forEach>
+
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>

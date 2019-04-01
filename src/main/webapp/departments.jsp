@@ -56,7 +56,7 @@
                            value="${departmentName}" autocomplete="off" required>
 
                     <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
-                        New department name should be unique!
+                        Department name should be unique and valid!
                     </div>
 
                 </td>
@@ -107,7 +107,7 @@
                        placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
                        pattern="^[A-Z][a-z]{5,21}$" required>
                 <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
-                    New department name should be unique!
+                    New department name should be unique and valid!
                 </div>
             </td>
             <td>
@@ -124,8 +124,13 @@
     </tbody>
 </table>
 <div class="alert alert-danger" role="alert" <c:if test="${not dbError}">hidden</c:if>>
-     ${errorMessage}
+    ${errorMessage}
 </div>
+<c:forEach var="message" items="${errorMessages}">
+    <div style="margin: 0" class="alert alert-warning" role="alert">
+            ${message}
+    </div>
+</c:forEach>
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>

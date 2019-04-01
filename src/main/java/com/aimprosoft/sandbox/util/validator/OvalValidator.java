@@ -6,6 +6,7 @@ import net.sf.oval.configuration.annotation.AnnotationsConfigurer;
 import net.sf.oval.configuration.annotation.BeanValidationAnnotationsConfigurer;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +35,16 @@ public class OvalValidator {
         List<ConstraintViolation> violations = validator.validate(object);
         logViolations(violations);
         return violations.isEmpty();
+    }
+
+    public List<String> getErrors(Object object) {
+        List<ConstraintViolation> errors = validator.validate(object);
+        List<String> messages = new ArrayList<>();
+        for (ConstraintViolation error : errors) {
+            messages.add(error.getMessage());
+        }
+
+        return messages;
     }
 
     private void logViolations(List<ConstraintViolation> violations) {

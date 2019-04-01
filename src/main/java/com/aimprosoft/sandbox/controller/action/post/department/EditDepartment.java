@@ -4,13 +4,13 @@ import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
-import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * @author BaLiK on 27.03.19
@@ -21,8 +21,8 @@ public class EditDepartment implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String idStr = request.getParameter("id");
-        String departmentName = request.getParameter("new name");
+        String idStr = Optional.ofNullable(request.getParameter("id")).orElse("1");
+        String departmentName = Optional.ofNullable(request.getParameter("new name")).orElse("Department");
 
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
@@ -42,7 +42,7 @@ public class EditDepartment implements Action {
             }
 
         } else {
-            response.sendRedirect("?action-get=error");
+            response.sendRedirect(String.format(URL, departmentName, idStr));
         }
 
     }

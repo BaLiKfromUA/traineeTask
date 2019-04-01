@@ -23,13 +23,13 @@ public class DeleteDepartment implements Action {
             try {
                 DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
             } catch (SQLException e) {
-                request.setAttribute("dbError",true);
-                request.setAttribute("errorMessage","Fail to delete department!");
+                request.setAttribute("dbError", true);
+                request.setAttribute("errorMessage", "Fail to delete department!");
             }
             LOG.info("Department " + id + " was removed!");
             response.sendRedirect("/");
         } else {
-            response.sendRedirect("?action-get=error");
+            response.sendRedirect("?action-get=default&flag=" + id);
         }
     }
 }
