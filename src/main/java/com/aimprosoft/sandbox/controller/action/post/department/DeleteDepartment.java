@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author BaLiK on 26.03.19
@@ -19,7 +20,12 @@ public class DeleteDepartment implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         if (Validator.validateId(id)) {
-            DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
+            try {
+                DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
+            } catch (SQLException e) {
+                request.setAttribute("dbError",true);
+                request.setAttribute("errorMessage","Fail to delete department!");
+            }
             LOG.info("Department " + id + " was removed!");
             response.sendRedirect("/");
         } else {

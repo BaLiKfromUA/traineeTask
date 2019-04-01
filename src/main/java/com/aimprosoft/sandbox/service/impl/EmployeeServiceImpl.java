@@ -6,6 +6,8 @@ import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.service.EmployeeService;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -32,27 +34,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ArrayList<Employee> getAllByDepartmentId(String id) {
+    public ArrayList<Employee> getAllByDepartmentId(String id) throws IOException, SQLException {
         return repo.getAllByDepartmentId(Long.parseLong(id));
     }
 
     @Override
-    public boolean checkEmployee(EmployeeData employee) {
+    public boolean checkEmployee(EmployeeData employee) throws IOException, SQLException {
         return repo.checkEmployee(convert(employee));
     }
 
     @Override
-    public void createEmployee(EmployeeData employee) {
+    public void createEmployee(EmployeeData employee) throws IOException, SQLException {
         repo.createEmployee(convert(employee));
     }
 
     @Override
-    public void deleteEmployeeById(String id) {
+    public void deleteEmployeeById(String id) throws IOException, SQLException {
         repo.deleteEmployeeById(Long.parseLong(id));
     }
 
     @Override
-    public void updateEmployee(EmployeeData employee) {
+    public void updateEmployee(EmployeeData employee) throws IOException, SQLException {
         repo.updateEmployee(convert(employee));
     }
 

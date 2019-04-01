@@ -123,7 +123,9 @@
     </tr>
     </tbody>
 </table>
-
+<div class="alert alert-danger" role="alert" <c:if test="${not dbError}">hidden</c:if>>
+     ${errorMessage}
+</div>
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author BaLiK on 27.03.19
@@ -32,12 +33,18 @@ public class EditEmployee implements Action {
         EmployeeData data = new EmployeeData(userId, newLogin, newEmail, newRank, newDate, departmentId);
 
         if (OvalValidator.getInstance().validate(data)) {
-            if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
-                DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
-                LOG.info("Employee " + userId + " was updated!");
+            try {
+                if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
+                    DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
+                    LOG.info("Employee " + userId + " was updated!");
+                    response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
+                } else {
+                    response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId));
+                }
+            } catch (SQLException e) {
+                request.setAttribute("dbError", true);
+                request.setAttribute("errorMessage", "Fail to update employee!");
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
-            } else {
-                response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId));
             }
 
         } else {

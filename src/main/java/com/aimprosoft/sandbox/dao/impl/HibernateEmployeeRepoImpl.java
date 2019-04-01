@@ -3,6 +3,7 @@ package com.aimprosoft.sandbox.dao.impl;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -12,25 +13,27 @@ import java.util.List;
 /**
  * @author BaLiK on 29.03.19
  */
-//todo: message for user
 public class HibernateEmployeeRepoImpl implements EmployeeRepo {
+    private static Logger LOG = Logger.getLogger(HibernateEmployeeRepoImpl.class);
+
     @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) {
-        ArrayList<Employee> employees = new ArrayList<>();
+        ArrayList<Employee> employees;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             employees = new ArrayList<>(session
                     .createQuery("SELECT E FROM Employee E WHERE E.departmentID=:department_id order by E.id", Employee.class)
                     .setParameter("department_id", id)
                     .getResultList());
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not get Employees by Department ID\n" + e.getMessage());
+            throw e;
         }
         return employees;
     }
 
     @Override
     public boolean checkEmployee(Employee employee) {
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -42,7 +45,8 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             employees = q.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not get Employees by Email\n" + e.getMessage());
+            throw e;
         }
 
         return employees.isEmpty();
@@ -55,7 +59,8 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             session.save(employee);
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not create Employee\n" + e.getMessage());
+            throw e;
         }
     }
 
@@ -69,7 +74,8 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             q.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not delete Employee " + id + "\n" + e.getMessage());
+            throw e;
         }
     }
 
@@ -81,6 +87,7 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.getStackTrace();
+            throw e;
         }
     }
 }

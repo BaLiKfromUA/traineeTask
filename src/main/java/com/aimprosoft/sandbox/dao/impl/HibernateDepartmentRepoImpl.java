@@ -3,6 +3,7 @@ package com.aimprosoft.sandbox.dao.impl;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -12,22 +13,24 @@ import java.util.List;
 /**
  * @author BaLiK on 29.03.19
  */
-//todo: message for user
 public class HibernateDepartmentRepoImpl implements DepartmentRepo {
+    private static Logger LOG = Logger.getLogger(HibernateDepartmentRepoImpl.class);
+
     @Override
     public ArrayList<Department> getAllDepartments() {
-        ArrayList<Department> departments = new ArrayList<>();
+        ArrayList<Department> departments;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             departments = new ArrayList<>(session.createQuery("SELECT D FROM Department D order by D.id", Department.class).getResultList());
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not get Departments\n" + e.getMessage());
+            throw e;
         }
         return departments;
     }
 
     @Override
     public boolean checkDepartment(Department department) {
-        List<Department> departments = new ArrayList<>();
+        List<Department> departments;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -39,7 +42,8 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
             departments = q.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not get Department by Name\n" + e.getMessage());
+            throw e;
         }
 
         return departments.isEmpty();
@@ -52,7 +56,8 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
             session.save(department);
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not create Department\n" + e.getMessage());
+            throw e;
         }
     }
 
@@ -66,7 +71,8 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
             q.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not delete Department " + id + "\n" + e.getMessage());
+            throw e;
         }
     }
 
@@ -77,7 +83,8 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
             session.update(department);
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.getStackTrace();
+            LOG.error("Can not update department\n" + e.getMessage());
+            throw e;
         }
     }
 }

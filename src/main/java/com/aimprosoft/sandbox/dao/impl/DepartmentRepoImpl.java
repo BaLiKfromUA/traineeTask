@@ -26,7 +26,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
     private static final String UPDATE_BY_ID = "UPDATE departments SET departments.name=? WHERE departments.id=?";
 
     @Override
-    public void deleteDepartmentById(Long id) {
+    public void deleteDepartmentById(Long id) throws IOException, SQLException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
@@ -34,11 +34,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department delete result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not delete Department " + id + "\n" + e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public void createDepartment(Department department) {
+    public void createDepartment(Department department) throws IOException, SQLException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement createStatement = connection.prepareStatement(CREATE_DEPARTMENT)) {
             createStatement.setString(1, department.getName());
@@ -46,11 +47,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department create result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not create Department\n" + e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public boolean checkDepartment(Department department) {
+    public boolean checkDepartment(Department department) throws IOException, SQLException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement checkStatement = connection.prepareStatement(CHECK_DEPARTMENT)) {
             ResultSet rs;
@@ -62,25 +64,27 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             }
         } catch (SQLException | IOException e) {
             LOG.error("Can not get Department by Name\n" + e.getMessage());
+            throw e;
         }
         return true;
     }
 
-    private Department extractDepartment(ResultSet rs) {
-        Department department = null;
+    private Department extractDepartment(ResultSet rs) throws SQLException {
+        Department department;
 
         try {
             department = new Department(Long.parseLong(rs.getString("id")));
             department.setName(rs.getString("name"));
         } catch (SQLException e) {
             LOG.error("Can not extract department\n" + e.getMessage());
+            throw e;
         }
 
         return department;
     }
 
     @Override
-    public ArrayList<Department> getAllDepartments() {
+    public ArrayList<Department> getAllDepartments() throws IOException, SQLException {
         Statement statement;
         ResultSet rs;
         ArrayList<Department> departments = new ArrayList<>();
@@ -96,13 +100,14 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
         } catch (SQLException | IOException e) {
             LOG.error("Can not get Departments\n" + e.getMessage());
+            throw e;
         }
 
         return departments;
     }
 
     @Override
-    public void updateDepartment(Department department) {
+    public void updateDepartment(Department department) throws IOException, SQLException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement updateStatement = connection.prepareStatement(UPDATE_BY_ID)) {
             updateStatement.setString(1, department.getName());
@@ -111,6 +116,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department update result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not update department\n" + e.getMessage());
+            throw e;
         }
     }
 

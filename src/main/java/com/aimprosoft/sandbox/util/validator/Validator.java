@@ -33,7 +33,7 @@ public final class Validator {
         return validateId(data.getId()) && validateName(data.getName());
     }
 
-    public static boolean validateEmail(final String email) {
+    static boolean validateEmail(final String email) {
         if (email == null) {
             return false;
         }

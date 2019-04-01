@@ -3,6 +3,8 @@ package com.aimprosoft.sandbox.service;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -10,14 +12,14 @@ import java.util.ArrayList;
  */
 public interface DepartmentService {
 
-    ArrayList<Department> getAllDepartments();
+    ArrayList<Department> getAllDepartments() throws IOException, SQLException;
 
-    boolean checkDepartment(DepartmentData department);
+    boolean checkDepartment(DepartmentData department) throws IOException, SQLException;
 
-    void createDepartment(DepartmentData department);
+    void createDepartment(DepartmentData department) throws IOException, SQLException;
 
-    void deleteDepartmentById(String id);
+    void deleteDepartmentById(String id) throws IOException, SQLException;
 
-    void updateDepartment(DepartmentData department);
+    void updateDepartment(DepartmentData department) throws IOException, SQLException;
 
 }

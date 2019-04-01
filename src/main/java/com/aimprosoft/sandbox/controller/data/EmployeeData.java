@@ -1,10 +1,7 @@
 package com.aimprosoft.sandbox.controller.data;
 
 import com.aimprosoft.sandbox.util.validator.DataPatterns;
-import net.sf.oval.constraint.Length;
-import net.sf.oval.constraint.MinLength;
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.*;
 
 /**
  * @author BaLiK on 29.03.19
@@ -39,7 +36,7 @@ public class EmployeeData {
 
     @NotNull
     @NotEmpty
-    @javax.validation.constraints.Pattern(regexp = DataPatterns.DATE_PATTERN)
+    @DateRange(min = "1979-12-31", max = "2079-12-31", format = "yyyy-MM-dd")
     private final String date;
 
     @NotNull

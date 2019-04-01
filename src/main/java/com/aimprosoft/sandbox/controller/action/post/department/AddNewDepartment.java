@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author BaLiK on 26.03.19
@@ -22,13 +23,19 @@ public class AddNewDepartment implements Action {
         DepartmentData data = new DepartmentData(request.getParameter("new name"));
 
         if (OvalValidator.getInstance().validate(data)) {
-            if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
-                DatabaseService.getInstance().getDepartmentService().createDepartment(data);
-                LOG.info("Department " + data.getName() + " was added!");
+            try {
+                if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
+                    DatabaseService.getInstance().getDepartmentService().createDepartment(data);
+                    LOG.info("Department " + data.getName() + " was added!");
+                    response.sendRedirect("/");
+                } else {
+                    String flag = "invalid-new-department";
+                    response.sendRedirect(String.format(URL, data.getName(), flag));
+                }
+            } catch (SQLException e) {
+                request.setAttribute("dbError",true);
+                request.setAttribute("errorMessage","Fail to add new department!");
                 response.sendRedirect("/");
-            } else {
-                String flag = "invalid-new-department";
-                response.sendRedirect(String.format(URL, data.getName(), flag));
             }
 
         } else {

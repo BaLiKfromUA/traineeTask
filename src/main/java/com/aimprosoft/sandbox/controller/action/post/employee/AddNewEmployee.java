@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author BaLiK on 27.03.19
@@ -29,12 +30,18 @@ public class AddNewEmployee implements Action {
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
         if (OvalValidator.getInstance().validate(data)) {
-            if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
-                DatabaseService.getInstance().getEmployeeService().createEmployee(data);
-                LOG.info("Employee " + newLogin + " was added!");
+            try {
+                if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
+                    DatabaseService.getInstance().getEmployeeService().createEmployee(data);
+                    LOG.info("Employee " + newLogin + " was added!");
+                    response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
+                } else {
+                    response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Long.parseLong(newRank), newDate, "invalid-new-employee"));
+                }
+            } catch (SQLException e) {
+                request.setAttribute("dbError", true);
+                request.setAttribute("errorMessage", "Fail to add new employee!");
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
-            } else {
-                response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Long.parseLong(newRank), newDate, "invalid-new-employee"));
             }
 
         } else {
