@@ -25,7 +25,6 @@ public class HibernateDepartmentRepoImpl implements DepartmentRepo {
         return departments;
     }
 
-    //todo: case sensitive
     @Override
     public boolean checkDepartment(Department department) {
         List<Department> departments = new ArrayList<>();

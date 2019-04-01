@@ -27,13 +27,13 @@ public class Employee {
 
     @Column(name = "registration_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;//todo: change to long(with pattern)
+    private Date registrationDate;
 
     @Column(name = "department_id")
     private Long departmentID;
 
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)//todo:find fetch type
+    @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)
     private Department department;
 
     @Transient

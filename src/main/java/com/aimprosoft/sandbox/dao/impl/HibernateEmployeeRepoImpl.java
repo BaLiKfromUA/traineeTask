@@ -28,7 +28,6 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
         return employees;
     }
 
-    //todo: case sensitive
     @Override
     public boolean checkEmployee(Employee employee) {
         List<Employee> employees = new ArrayList<>();
