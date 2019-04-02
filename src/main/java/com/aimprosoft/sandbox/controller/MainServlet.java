@@ -7,9 +7,7 @@ import com.aimprosoft.sandbox.util.service.DatabaseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +18,6 @@ import java.util.Optional;
 /**
  * @author BaLiK on 26.03.19
  */
-@WebServlet("/")
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 

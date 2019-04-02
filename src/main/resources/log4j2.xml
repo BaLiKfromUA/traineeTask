@@ -20,6 +20,11 @@
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="FILE"/>
         </Root>
+        <!--TODO:test this-->
+        <Logger name="org.springframework" level="DEBUG" additivity="false">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE"/>
+        </Logger>
     </Loggers>
 
 </Configuration>

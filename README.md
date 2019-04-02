@@ -50,3 +50,12 @@ In case if i give any value to this property(say abc, instead of above four valu
 - **IDENTITY**: Hibernate relies on an auto-incremented database column to generate the primary key,
 - **SEQUENCE**: Hibernate requests the primary key value from a database sequence.
 - **TABLE**: Hibernate uses a database table to simulate a sequence.
+
+
+### Spring
+For information about using other forms of metadata with the Spring container, see:
+
+- Annotation-based configuration: Spring 2.5 introduced support for annotation-based configuration metadata.
+
+- Java-based configuration: Starting with Spring 3.0, many features provided by the Spring JavaConfig project became part of the core Spring Framework.
+ Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the @Configuration, @Bean, @Import and @DependsOn annotations.
