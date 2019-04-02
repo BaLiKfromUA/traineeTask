@@ -1,6 +1,8 @@
 package com.aimprosoft.sandbox.util.database;
 
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +23,7 @@ public class DatabaseManager {
     private final String USERNAME;
     private final String PASSWORD;
 
-    private static Logger LOG = Logger.getLogger(DatabaseManager.class);
+    private static Logger LOG = LogManager.getLogger(DatabaseManager.class);
     private static DatabaseManager instance;
 
     /**
@@ -78,8 +80,7 @@ public class DatabaseManager {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            LOG.error("Add MySQL error!");
+            LOG.error("Add MySQL error!\n{}", e.getMessage());
         }
     }
 
@@ -90,8 +91,7 @@ public class DatabaseManager {
             statement.execute(CREATE_DEPARTMENT_TABLE);
             LOG.info("Table 'departments' is created!");
         } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.error("Creating table 'departments' error!\n" + e.getMessage());
+            LOG.error("Creating table 'departments' error!\n{}", e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class DatabaseManager {
             LOG.info("Table 'employee' is created!");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.error("Creating table 'employee' error!\n" + e.getMessage());
+            LOG.error("Creating table 'employee' error!\n{}", e.getMessage());
         }
     }
 }

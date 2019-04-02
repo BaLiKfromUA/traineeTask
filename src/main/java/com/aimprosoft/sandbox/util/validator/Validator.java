@@ -74,7 +74,7 @@ public final class Validator {
         return matcher.matches();
     }
 
-    public static boolean validateName(final String name) {
+    static boolean validateName(final String name) {
         if (name == null) {
             return false;
         }

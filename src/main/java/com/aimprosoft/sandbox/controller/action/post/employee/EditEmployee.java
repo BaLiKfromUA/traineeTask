@@ -5,7 +5,8 @@ import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * @author BaLiK on 27.03.19
  */
 public class EditEmployee implements Action {
-    private static Logger LOG = Logger.getLogger(EditEmployee.class);
+    private static Logger LOG = LogManager.getLogger(EditEmployee.class);
     private final static String URL = "?action-get=employees&department_id=%d";
     private final static String FAIL_URL = "?action-get=employees&department_id=%s&login=%s&email=%s&rank=%s&date=%s&flag=%s&reason=%s";
 
@@ -36,7 +37,7 @@ public class EditEmployee implements Action {
             try {
                 if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
                     DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
-                    LOG.info("Employee " + userId + " was updated!");
+                    LOG.info("Employee {} was updated!", userId);
                     response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
                 } else {
                     response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, userId, "email"));

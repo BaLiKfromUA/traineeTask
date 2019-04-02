@@ -5,7 +5,8 @@ import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * @author BaLiK on 27.03.19
  */
 public class EditDepartment implements Action {
-    private static Logger LOG = Logger.getLogger(EditDepartment.class);
+    private static Logger LOG = LogManager.getLogger(EditDepartment.class);
     private final static String URL = "?action-get=default&name=%s&flag=%s";
 
     @Override
@@ -31,7 +32,7 @@ public class EditDepartment implements Action {
             try {
                 if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                     DatabaseService.getInstance().getDepartmentService().updateDepartment(data);
-                    LOG.info("Department " + idStr + " was updated!");
+                    LOG.info("Department {} was updated!", idStr);
                     response.sendRedirect("/");
                 } else {
                     response.sendRedirect(String.format(URL, departmentName, idStr));

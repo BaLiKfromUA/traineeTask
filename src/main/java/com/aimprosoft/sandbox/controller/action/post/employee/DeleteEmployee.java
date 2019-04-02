@@ -4,7 +4,9 @@ import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.Validator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,7 @@ import java.io.IOException;
  * @author BaLiK on 26.03.19
  */
 public class DeleteEmployee implements Action {
-    private static Logger LOG = Logger.getLogger(DeleteEmployee.class);
+    private static Logger LOG = LogManager.getLogger(DeleteEmployee.class);
     private static String URL = "?action-get=employees&department_id=%d";
 
     @Override
@@ -31,7 +33,8 @@ public class DeleteEmployee implements Action {
                 request.setAttribute("errorMessage", e.getMessage());
             }
 
-            LOG.info("Employee " + id + " was removed!");
+            LOG.info("Employee {} was removed!", id);
+
             Long departmentId = Long.parseLong(depIdStr);
             response.sendRedirect(String.format(URL, departmentId));
         } else {

@@ -5,7 +5,8 @@ import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * @author BaLiK on 26.03.19
  */
 public class AddNewDepartment implements Action {
-    private static Logger LOG = Logger.getLogger(AddNewDepartment.class);
+    private static Logger LOG = LogManager.getLogger(AddNewDepartment.class);
     private final static String URL = "?action-get=default&name=%s&flag=%s";
 
     @Override
@@ -28,7 +29,7 @@ public class AddNewDepartment implements Action {
             try {
                 if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                     DatabaseService.getInstance().getDepartmentService().createDepartment(data);
-                    LOG.info("Department " + data.getName() + " was added!");
+                    LOG.info("Department {} was added!", data.getName());
                     response.sendRedirect("/");
                 } else {
                     response.sendRedirect(String.format(URL, data.getName(), flag));

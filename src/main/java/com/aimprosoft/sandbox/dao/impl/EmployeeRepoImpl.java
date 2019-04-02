@@ -4,7 +4,8 @@ import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author BaLiK on 25.03.19
  */
 public class EmployeeRepoImpl implements EmployeeRepo {
-    private static Logger LOG = Logger.getLogger(EmployeeRepoImpl.class);
+    private static Logger LOG = LogManager.getLogger(EmployeeRepoImpl.class);
 
     /**
      * Statements
@@ -38,7 +39,7 @@ public class EmployeeRepoImpl implements EmployeeRepo {
             employee.setRegistrationDate(Timestamp.valueOf(rs.getString("registration_date")));
             employee.setDepartmentID(Long.parseLong(rs.getString("department_id")));
         } catch (SQLException e) {
-            LOG.error("Can not extract employee\n" + e.getMessage());
+            LOG.error("Can not extract employee\n{}", e.getMessage());
             throw e;
         }
 
@@ -57,7 +58,7 @@ public class EmployeeRepoImpl implements EmployeeRepo {
                 employees.add(extractEmployee(rs));
             }
         } catch (SQLException | IOException e) {
-            LOG.error("Can not get Employees by Department ID\n" + e.getMessage());
+            LOG.error("Can not get Employees by Department ID\n{}", e.getMessage());
             throw new DatabaseException("Fail to get employees!");
         }
 
@@ -87,7 +88,7 @@ public class EmployeeRepoImpl implements EmployeeRepo {
                 return false;
             }
         } catch (SQLException | IOException e) {
-            LOG.error("Can not get Employees by Email\n" + e.getMessage());
+            LOG.error("Can not get Employees by Email\n{}", e.getMessage());
             throw new DatabaseException("Fail to check employee!");
         }
         return true;
@@ -99,9 +100,9 @@ public class EmployeeRepoImpl implements EmployeeRepo {
              PreparedStatement createStatement = connection.prepareStatement(CREATE_EMPLOYEE)) {
             setEmployeeData(employee, createStatement);
             int rs = createStatement.executeUpdate();
-            LOG.info("Employee create result: " + rs);
+            LOG.info("Employee create result: {}", rs);
         } catch (SQLException | IOException e) {
-            LOG.error("Can not create Employee\n" + e.getMessage());
+            LOG.error("Can not create Employee\n{}", e.getMessage());
             throw new DatabaseException("Fail to add new employee!");
         }
     }
@@ -112,9 +113,9 @@ public class EmployeeRepoImpl implements EmployeeRepo {
              PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
             int rs = deleteStatement.executeUpdate();
-            LOG.info("Employee delete result: " + rs);
+            LOG.info("Employee delete result: {}", rs);
         } catch (SQLException | IOException e) {
-            LOG.error("Can not delete Employee " + id + "\n" + e.getMessage());
+            LOG.error("Can not delete Employee {}\n{}", id, e.getMessage());
             throw new DatabaseException("Fail to delete employee!");
         }
     }
@@ -126,9 +127,9 @@ public class EmployeeRepoImpl implements EmployeeRepo {
             int k = setEmployeeData(employee, updateStatement);
             updateStatement.setLong(k, employee.getID());
             int rs = updateStatement.executeUpdate();
-            LOG.info("Employee delete result: " + rs);
+            LOG.info("Employee delete result: {}", rs);
         } catch (SQLException | IOException e) {
-            LOG.error("Can not delete Employee\n" + e.getMessage());
+            LOG.error("Can not delete Employee\n{}", e.getMessage());
             throw new DatabaseException("Fail to update employee!");
         }
     }

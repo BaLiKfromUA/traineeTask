@@ -4,7 +4,9 @@ import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.action.ActionManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+
 /**
  * @author BaLiK on 26.03.19
  */
 @WebServlet("/")
-//todo:new logger version
 public class MainServlet extends HttpServlet {
-    private static final Logger LOG = Logger.getLogger(MainServlet.class);
+    private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 
     private static ActionManager actionManager = null;
 
