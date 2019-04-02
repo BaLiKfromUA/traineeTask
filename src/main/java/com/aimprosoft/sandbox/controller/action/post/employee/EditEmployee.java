@@ -17,7 +17,7 @@ import java.io.IOException;
 public class EditEmployee implements Action {
     private static Logger LOG = Logger.getLogger(EditEmployee.class);
     private final static String URL = "?action-get=employees&department_id=%d";
-    private final static String FAIL_URL = "?action-get=employees&department_id=%d&login=%s&email=%s&rank=%d&date=%s&flag=%s";
+    private final static String FAIL_URL = "?action-get=employees&department_id=%d&login=%s&email=%s&rank=%d&date=%s&flag=%s&reason=%s";
 
 
     @Override
@@ -38,7 +38,7 @@ public class EditEmployee implements Action {
                     LOG.info("Employee " + userId + " was updated!");
                     response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
                 } else {
-                    response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId));
+                    response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Integer.parseInt(newRank), newDate, userId, "email"));
                 }
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);

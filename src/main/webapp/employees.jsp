@@ -39,14 +39,14 @@
                 <c:set var="currEmail" value="${email}"/>
                 <c:set var="currRank" value="${rank}"/>
                 <c:set var="currDate" value="${date}"/>
-                <c:set var="isError" value="true"/>
+                <c:set var="error" value="${reason}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="currLogin" value="${employee.login}"/>
                 <c:set var="currEmail" value="${employee.email}"/>
                 <c:set var="currRank" value="${employee.rank}"/>
                 <c:set var="currDate" value="${employee.getDateString()}"/>
-                <c:set var="isError" value="false"/>
+                <c:set var="error" value=""/>
             </c:otherwise>
         </c:choose>
 
@@ -71,7 +71,7 @@
                            pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                            autocomplete="off"
                            required>
-                    <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                    <div style="color: red" <c:if test="${'' eq error}">hidden</c:if>>
                         Employee email should be unique!
                     </div>
                 </td>
@@ -111,14 +111,14 @@
                     <c:set var="currEmail" value="${email}"/>
                     <c:set var="currRank" value="${rank}"/>
                     <c:set var="currDate" value="${date}"/>
-                    <c:set var="isError" value="true"/>
+                    <c:set var="error" value="${reason}"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="currLogin" value=""/>
                     <c:set var="currEmail" value=""/>
                     <c:set var="currRank" value=""/>
                     <c:set var="currDate" value=""/>
-                    <c:set var="isError" value="false"/>
+                    <c:set var="error" value=""/>
                 </c:otherwise>
             </c:choose>
 
@@ -133,7 +133,7 @@
                        placeholder="Enter email" value="${currEmail}"
                        pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                        autocomplete="off" required>
-                <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
+                <div style="color: red" <c:if test="${'' eq error}">hidden</c:if>>
                     New employee email should be unique!
                 </div>
             </td>
@@ -171,7 +171,7 @@
 
 <c:forEach var="message" items="${errorMessages}">
     <div style="margin: 0" class="alert alert-warning" role="alert">
-        ${message}
+            ${message}
     </div>
 </c:forEach>
 

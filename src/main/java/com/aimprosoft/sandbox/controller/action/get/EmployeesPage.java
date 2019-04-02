@@ -33,6 +33,7 @@ public class EmployeesPage implements Action {
             request.setAttribute("rank", request.getParameter("rank"));
             request.setAttribute("date", request.getParameter("date"));
             request.setAttribute("flag", request.getParameter("flag"));
+            request.setAttribute("reason", request.getParameter("reason"));
 
             request.getRequestDispatcher("/employees.jsp").forward(request, response);
         } else {

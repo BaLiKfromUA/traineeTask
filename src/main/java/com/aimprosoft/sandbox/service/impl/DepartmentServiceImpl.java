@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author BaLiK on 29.03.19
  */
 public class DepartmentServiceImpl implements DepartmentService {
+
     private DepartmentRepo repo;
 
     public DepartmentServiceImpl() {
