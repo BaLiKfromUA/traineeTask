@@ -29,7 +29,7 @@ public class DeleteDepartment implements Action {
             LOG.info("Department " + id + " was removed!");
             response.sendRedirect("/");
         } else {
-            response.sendRedirect("?action-get=default&flag=" + id);
+            response.sendRedirect("?action-get=error");
         }
     }
 }

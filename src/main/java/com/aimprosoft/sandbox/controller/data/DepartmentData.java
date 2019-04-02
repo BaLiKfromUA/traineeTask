@@ -26,7 +26,7 @@ public class DepartmentData {
     private final String name;
 
     public DepartmentData(String name) {
-        this.id = "1";
+        this.id = "0";
         this.name = name;
     }
 

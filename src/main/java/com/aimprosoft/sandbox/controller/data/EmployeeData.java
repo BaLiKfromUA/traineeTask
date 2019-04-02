@@ -46,7 +46,7 @@ public class EmployeeData {
     private final String departmentId;
 
     public EmployeeData(String login, String email, String rank, String date, String departmentId) {
-        this.id = "1";
+        this.id = "0";
         this.login = login;
         this.email = email;
         this.rank = rank;

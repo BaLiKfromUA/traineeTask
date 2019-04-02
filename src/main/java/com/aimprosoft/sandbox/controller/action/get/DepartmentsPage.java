@@ -19,10 +19,12 @@ import java.util.Optional;
 public class DepartmentsPage implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String invalidId = Optional.ofNullable(request.getParameter("flag")).orElse("1");
+        String invalidId = Optional.ofNullable(request.getParameter("flag")).orElse("0");
+
         if (!Validator.validateId(invalidId)) {
-            invalidId = "1";
+            invalidId = "0";
         }
+
         String invalidName = Optional.ofNullable(request.getParameter("name")).orElse("Department");
 
         request.setAttribute("errorMessages", OvalValidator.getInstance().

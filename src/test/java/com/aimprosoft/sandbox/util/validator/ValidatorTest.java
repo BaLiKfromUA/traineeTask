@@ -68,6 +68,7 @@ public class ValidatorTest {
 
     @Test
     public void testCorrectId() {
+        assertTrue(Validator.validateId("0"));
         assertTrue(Validator.validateId("1"));
         assertTrue(Validator.validateId("123"));
         assertTrue(Validator.validateId("999999"));
@@ -77,7 +78,6 @@ public class ValidatorTest {
     @Test
     public void testIncorrectId() {
         assertFalse(Validator.validateId("-1"));
-        assertFalse(Validator.validateId("0"));
         assertFalse(Validator.validateId("-10000000000000000"));
         assertFalse(Validator.validateId("1abcdE222"));
         assertFalse(Validator.validateId("0123"));
