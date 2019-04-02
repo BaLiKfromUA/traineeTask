@@ -1,6 +1,7 @@
 package com.aimprosoft.sandbox.controller.action.get;
 
 import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.Validator;
 
@@ -8,11 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * @author BaLiK on 26.03.19
  */
+//todo: validate backend for employee
 public class EmployeesPage implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,9 +22,9 @@ public class EmployeesPage implements Action {
         if (Validator.validateId(id)) {
             try {
                 request.setAttribute("employees", DatabaseService.getInstance().getEmployeeService().getAllByDepartmentId(id).toArray());
-            } catch (SQLException e) {
+            } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
-                request.setAttribute("errorMessage", "Fail to get employees!");
+                request.setAttribute("errorMessage", e.getMessage());
             }
 
 

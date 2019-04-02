@@ -4,10 +4,9 @@ import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -34,27 +33,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ArrayList<Employee> getAllByDepartmentId(String id) throws IOException, SQLException {
+    public ArrayList<Employee> getAllByDepartmentId(String id) throws DatabaseException {
         return repo.getAllByDepartmentId(Long.parseLong(id));
     }
 
     @Override
-    public boolean checkEmployee(EmployeeData employee) throws IOException, SQLException {
+    public boolean checkEmployee(EmployeeData employee) throws DatabaseException {
         return repo.checkEmployee(convert(employee));
     }
 
     @Override
-    public void createEmployee(EmployeeData employee) throws IOException, SQLException {
+    public void createEmployee(EmployeeData employee) throws DatabaseException {
         repo.createEmployee(convert(employee));
     }
 
     @Override
-    public void deleteEmployeeById(String id) throws IOException, SQLException {
+    public void deleteEmployeeById(String id) throws DatabaseException {
         repo.deleteEmployeeById(Long.parseLong(id));
     }
 
     @Override
-    public void updateEmployee(EmployeeData employee) throws IOException, SQLException {
+    public void updateEmployee(EmployeeData employee) throws DatabaseException {
         repo.updateEmployee(convert(employee));
     }
 

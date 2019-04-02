@@ -4,10 +4,9 @@ import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl;
 import com.aimprosoft.sandbox.domain.Department;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -29,27 +28,27 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public ArrayList<Department> getAllDepartments() throws IOException, SQLException {
+    public ArrayList<Department> getAllDepartments() throws DatabaseException {
         return repo.getAllDepartments();
     }
 
     @Override
-    public boolean checkDepartment(DepartmentData department) throws IOException, SQLException {
+    public boolean checkDepartment(DepartmentData department) throws DatabaseException {
         return repo.checkDepartment(convert(department));
     }
 
     @Override
-    public void createDepartment(DepartmentData department) throws IOException, SQLException {
+    public void createDepartment(DepartmentData department) throws DatabaseException {
         repo.createDepartment(convert(department));
     }
 
     @Override
-    public void deleteDepartmentById(String id) throws IOException, SQLException {
+    public void deleteDepartmentById(String id) throws DatabaseException {
         repo.deleteDepartmentById(Long.parseLong(id));
     }
 
     @Override
-    public void updateDepartment(DepartmentData department) throws IOException, SQLException {
+    public void updateDepartment(DepartmentData department) throws DatabaseException {
         repo.updateDepartment(convert(department));
     }
 

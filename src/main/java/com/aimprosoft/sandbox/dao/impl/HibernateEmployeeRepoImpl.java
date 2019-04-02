@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.dao.impl;
 
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -17,7 +18,7 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
     private static Logger LOG = Logger.getLogger(HibernateEmployeeRepoImpl.class);
 
     @Override
-    public ArrayList<Employee> getAllByDepartmentId(Long id) {
+    public ArrayList<Employee> getAllByDepartmentId(Long id) throws DatabaseException {
         ArrayList<Employee> employees;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             employees = new ArrayList<>(session
@@ -26,13 +27,13 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
                     .getResultList());
         } catch (Exception e) {
             LOG.error("Can not get Employees by Department ID\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to get employees!");
         }
         return employees;
     }
 
     @Override
-    public boolean checkEmployee(Employee employee) {
+    public boolean checkEmployee(Employee employee) throws DatabaseException {
         List<Employee> employees;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -46,26 +47,26 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Can not get Employees by Email\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to check employee!");
         }
 
         return employees.isEmpty();
     }
 
     @Override
-    public void createEmployee(Employee employee) {
+    public void createEmployee(Employee employee) throws DatabaseException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.save(employee);
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Can not create Employee\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to add new employee!");
         }
     }
 
     @Override
-    public void deleteEmployeeById(Long id) {
+    public void deleteEmployeeById(Long id) throws DatabaseException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             final String hql = "DELETE FROM Employee " +
@@ -75,19 +76,19 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Can not delete Employee " + id + "\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to delete employee!");
         }
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws DatabaseException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.update(employee);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.getStackTrace();
-            throw e;
+            throw new DatabaseException("Fail to update employee!");
         }
     }
 }

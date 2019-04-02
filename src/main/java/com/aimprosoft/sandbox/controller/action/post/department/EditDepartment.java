@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.controller.action.post.department;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.log4j.Logger;
@@ -9,7 +10,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -35,9 +35,9 @@ public class EditDepartment implements Action {
                 } else {
                     response.sendRedirect(String.format(URL, departmentName, idStr));
                 }
-            } catch (SQLException e) {
+            } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
-                request.setAttribute("errorMessage", "Fail to edit department!");
+                request.setAttribute("errorMessage", e.getMessage());
                 response.sendRedirect("/");
             }
 

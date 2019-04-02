@@ -2,9 +2,8 @@ package com.aimprosoft.sandbox.service;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -12,14 +11,14 @@ import java.util.ArrayList;
  */
 public interface DepartmentService {
 
-    ArrayList<Department> getAllDepartments() throws IOException, SQLException;
+    ArrayList<Department> getAllDepartments() throws DatabaseException;
 
-    boolean checkDepartment(DepartmentData department) throws IOException, SQLException;
+    boolean checkDepartment(DepartmentData department) throws DatabaseException;
 
-    void createDepartment(DepartmentData department) throws IOException, SQLException;
+    void createDepartment(DepartmentData department) throws DatabaseException;
 
-    void deleteDepartmentById(String id) throws IOException, SQLException;
+    void deleteDepartmentById(String id) throws DatabaseException;
 
-    void updateDepartment(DepartmentData department) throws IOException, SQLException;
+    void updateDepartment(DepartmentData department) throws DatabaseException;
 
 }

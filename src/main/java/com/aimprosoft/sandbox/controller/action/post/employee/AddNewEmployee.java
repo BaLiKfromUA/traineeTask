@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.controller.action.post.employee;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.log4j.Logger;
@@ -9,7 +10,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * @author BaLiK on 27.03.19
@@ -38,9 +38,9 @@ public class AddNewEmployee implements Action {
                 } else {
                     response.sendRedirect(String.format(FAIL_URL, Long.parseLong(departmentId), newLogin, newEmail, Long.parseLong(newRank), newDate, "invalid-new-employee"));
                 }
-            } catch (SQLException e) {
+            } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
-                request.setAttribute("errorMessage", "Fail to add new employee!");
+                request.setAttribute("errorMessage", e.getMessage());
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             }
 

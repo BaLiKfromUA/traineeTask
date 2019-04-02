@@ -1,9 +1,8 @@
 package com.aimprosoft.sandbox.dao;
 
 import com.aimprosoft.sandbox.domain.Employee;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -11,14 +10,14 @@ import java.util.ArrayList;
  */
 public interface EmployeeRepo {
 
-    ArrayList<Employee> getAllByDepartmentId(Long id) throws IOException, SQLException;
+    ArrayList<Employee> getAllByDepartmentId(Long id) throws DatabaseException;
 
-    boolean checkEmployee(Employee employee) throws IOException, SQLException;
+    boolean checkEmployee(Employee employee) throws DatabaseException;
 
-    void createEmployee(Employee employee) throws IOException, SQLException;
+    void createEmployee(Employee employee) throws DatabaseException;
 
-    void deleteEmployeeById(Long id) throws IOException, SQLException;
+    void deleteEmployeeById(Long id) throws DatabaseException;
 
-    void updateEmployee(Employee employee) throws IOException, SQLException;
+    void updateEmployee(Employee employee) throws DatabaseException;
 
 }

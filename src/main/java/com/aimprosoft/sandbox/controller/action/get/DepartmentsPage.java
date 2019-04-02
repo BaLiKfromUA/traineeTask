@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.controller.action.get;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.service.DatabaseService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import com.aimprosoft.sandbox.util.validator.Validator;
@@ -10,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -30,9 +30,9 @@ public class DepartmentsPage implements Action {
 
         try {
             request.setAttribute("departments", DatabaseService.getInstance().getDepartmentService().getAllDepartments().toArray());
-        } catch (SQLException e) {
+        } catch (DatabaseException e) {
             request.setAttribute("dbError", true);
-            request.setAttribute("errorMessage", "Fail to get departments!");
+            request.setAttribute("errorMessage", e.getMessage());
         }
 
         request.setAttribute("name", request.getParameter("name"));

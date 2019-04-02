@@ -1,6 +1,7 @@
 package com.aimprosoft.sandbox.dao.impl;
 
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
+import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import com.aimprosoft.sandbox.domain.Department;
 import org.apache.log4j.Logger;
@@ -26,7 +27,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
     private static final String UPDATE_BY_ID = "UPDATE departments SET departments.name=? WHERE departments.id=?";
 
     @Override
-    public void deleteDepartmentById(Long id) throws IOException, SQLException {
+    public void deleteDepartmentById(Long id) throws DatabaseException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
@@ -34,12 +35,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department delete result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not delete Department " + id + "\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to delete department!");
         }
     }
 
     @Override
-    public void createDepartment(Department department) throws IOException, SQLException {
+    public void createDepartment(Department department) throws DatabaseException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement createStatement = connection.prepareStatement(CREATE_DEPARTMENT)) {
             createStatement.setString(1, department.getName());
@@ -47,12 +48,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department create result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not create Department\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to add new department!");
         }
     }
 
     @Override
-    public boolean checkDepartment(Department department) throws IOException, SQLException {
+    public boolean checkDepartment(Department department) throws DatabaseException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement checkStatement = connection.prepareStatement(CHECK_DEPARTMENT)) {
             ResultSet rs;
@@ -64,7 +65,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             }
         } catch (SQLException | IOException e) {
             LOG.error("Can not get Department by Name\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to check department!");
         }
         return true;
     }
@@ -84,7 +85,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
     }
 
     @Override
-    public ArrayList<Department> getAllDepartments() throws IOException, SQLException {
+    public ArrayList<Department> getAllDepartments() throws DatabaseException {
         Statement statement;
         ResultSet rs;
         ArrayList<Department> departments = new ArrayList<>();
@@ -100,14 +101,14 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
         } catch (SQLException | IOException e) {
             LOG.error("Can not get Departments\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to get departments!");
         }
 
         return departments;
     }
 
     @Override
-    public void updateDepartment(Department department) throws IOException, SQLException {
+    public void updateDepartment(Department department) throws DatabaseException {
         try (Connection connection = DatabaseManager.getInstance().getConnection();
              PreparedStatement updateStatement = connection.prepareStatement(UPDATE_BY_ID)) {
             updateStatement.setString(1, department.getName());
@@ -116,7 +117,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             LOG.info("Department update result: " + rs);
         } catch (SQLException | IOException e) {
             LOG.error("Can not update department\n" + e.getMessage());
-            throw e;
+            throw new DatabaseException("Fail to edit department!");
         }
     }
 
