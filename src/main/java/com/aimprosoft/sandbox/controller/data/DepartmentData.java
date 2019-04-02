@@ -11,18 +11,19 @@ import net.sf.oval.constraint.NotNull;
  */
 public class DepartmentData {
 
-    @NotNull
-    @NotEmpty
-    @MinLength(value = 1)
-    @Length(max = 3)
-    @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN)
+    @NotNull(message = "Id can not be null")
+    @NotEmpty(message = "Id can not be empty")
+    @MinLength(value = 1, message = "Id length should be >= 1")
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN,
+            message = "Id should be a number >= 0")
     private final String id;
 
-    @NotNull
-    @NotEmpty
-    @MinLength(value = 6)
-    @Length(max = 20)
-    @javax.validation.constraints.Pattern(regexp = DataPatterns.NAME_PATTERN)
+    @NotNull(message = "Name can not be null")
+    @NotEmpty(message = "Name can not be empty")
+    @MinLength(value = 6, message = "Name length should be >= 6")
+    @Length(max = 20, message = "Name length should be <=20")
+    @javax.validation.constraints.Pattern(regexp = DataPatterns.NAME_PATTERN,
+            message = "Name must contain ONLY letters of the English alphabet and begin with a capital letter.")
     private final String name;
 
     public DepartmentData(String name) {

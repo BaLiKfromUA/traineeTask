@@ -64,6 +64,7 @@ public class ValidatorTest {
         assertFalse(Validator.validateLogin("HALLO_WORLD"));
         assertFalse(Validator.validateLogin("HaLLoWoRlD"));
         assertFalse(Validator.validateLogin("aaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        assertFalse(Validator.validateLogin("123"));
     }
 
     @Test

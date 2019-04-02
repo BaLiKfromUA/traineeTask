@@ -71,7 +71,7 @@
                            pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                            autocomplete="off"
                            required>
-                    <div style="color: red" <c:if test="${'' eq error}">hidden</c:if>>
+                    <div style="color: red" <c:if test="${not 'email'.equals(error)}">hidden</c:if>>
                         Employee email should be unique!
                     </div>
                 </td>
@@ -133,7 +133,7 @@
                        placeholder="Enter email" value="${currEmail}"
                        pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                        autocomplete="off" required>
-                <div style="color: red" <c:if test="${'' eq error}">hidden</c:if>>
+                <div style="color: red" <c:if test="${not 'email'.equals(error)}">hidden</c:if>>
                     New employee email should be unique!
                 </div>
             </td>
@@ -169,12 +169,14 @@
     ${errorMessage}
 </div>
 
-<c:forEach var="message" items="${errorMessages}">
-    <div style="margin: 0" class="alert alert-warning" role="alert">
-            ${message}
-    </div>
-</c:forEach>
-
+<div style="margin: 0" class="alert alert-warning" role="alert"
+     <c:if test="${not 'invalid'.equals(reason)}">hidden</c:if>>
+    <h4 class="alert-heading">Invalid input data!</h4>
+    <c:forEach var="message" items="${errorMessages}">
+        <p>${message}</p>
+        <hr>
+    </c:forEach>
+</div>
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>
