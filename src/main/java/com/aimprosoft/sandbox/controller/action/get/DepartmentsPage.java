@@ -25,7 +25,7 @@ public class DepartmentsPage implements Action {
             invalidId = "0";
         }
 
-        String invalidName = Optional.ofNullable(request.getParameter("name")).orElse("Department");
+        final String invalidName = Optional.ofNullable(request.getParameter("name")).orElse("Department");
 
         request.setAttribute("errorMessages", OvalValidator.getInstance().
                 getErrors(new DepartmentData(invalidId, invalidName)).toArray());

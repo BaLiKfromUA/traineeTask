@@ -15,7 +15,6 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
-//todo: validate backend for employee
 public class EmployeesPage implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

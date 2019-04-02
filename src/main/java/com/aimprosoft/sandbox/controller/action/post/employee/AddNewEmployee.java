@@ -30,7 +30,9 @@ public class AddNewEmployee implements Action {
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
         if (OvalValidator.getInstance().validate(data)) {
+
             try {
+
                 if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
                     DatabaseService.getInstance().getEmployeeService().createEmployee(data);
                     LOG.info("Employee " + newLogin + " was added!");
@@ -38,6 +40,7 @@ public class AddNewEmployee implements Action {
                 } else {
                     response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, "invalid-new-employee", "email"));
                 }
+
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());

@@ -24,6 +24,7 @@ public class AddNewDepartment implements Action {
         String flag = "invalid-new-department";
 
         if (OvalValidator.getInstance().validate(data)) {
+
             try {
                 if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                     DatabaseService.getInstance().getDepartmentService().createDepartment(data);

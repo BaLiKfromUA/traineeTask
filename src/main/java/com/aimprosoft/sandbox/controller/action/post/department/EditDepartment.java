@@ -27,6 +27,7 @@ public class EditDepartment implements Action {
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
         if (OvalValidator.getInstance().validate(data)) {
+
             try {
                 if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
                     DatabaseService.getInstance().getDepartmentService().updateDepartment(data);

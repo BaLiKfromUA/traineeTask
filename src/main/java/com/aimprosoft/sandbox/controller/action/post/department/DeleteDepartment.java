@@ -20,12 +20,14 @@ public class DeleteDepartment implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         if (Validator.validateId(id)) {
+
             try {
                 DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
             }
+
             LOG.info("Department " + id + " was removed!");
             response.sendRedirect("/");
         } else {

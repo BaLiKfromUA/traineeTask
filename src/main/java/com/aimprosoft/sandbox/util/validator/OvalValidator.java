@@ -33,29 +33,19 @@ public class OvalValidator {
 
     public boolean validate(Object object) {
         List<ConstraintViolation> violations = validator.validate(object);
-        logViolations(violations);
         return violations.isEmpty();
     }
 
     public List<String> getErrors(Object object) {
         List<ConstraintViolation> errors = validator.validate(object);
         List<String> messages = new ArrayList<>();
+
         for (ConstraintViolation error : errors) {
+            LOG.error("Oval validation error: " + error.getMessage());
             messages.add(error.getMessage());
         }
 
         return messages;
-    }
-
-    private void logViolations(List<ConstraintViolation> violations) {
-        if (violations.isEmpty()) {
-            return;
-        }
-
-        for (ConstraintViolation violation : violations) {
-            LOG.error("Oval validation error: " + violation.getMessage());
-        }
-
     }
 
 }

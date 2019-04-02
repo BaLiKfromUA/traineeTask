@@ -23,12 +23,14 @@ public class DeleteEmployee implements Action {
         String depIdStr = request.getParameter("department_id");
 
         if (Validator.validateId(id) && Validator.validateId(depIdStr)) {
+
             try {
                 DatabaseService.getInstance().getEmployeeService().deleteEmployeeById(id);
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
             }
+
             LOG.info("Employee " + id + " was removed!");
             Long departmentId = Long.parseLong(depIdStr);
             response.sendRedirect(String.format(URL, departmentId));

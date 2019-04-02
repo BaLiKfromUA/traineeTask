@@ -32,6 +32,7 @@ public class EditEmployee implements Action {
         EmployeeData data = new EmployeeData(userId, newLogin, newEmail, newRank, newDate, departmentId);
 
         if (OvalValidator.getInstance().validate(data)) {
+
             try {
                 if (DatabaseService.getInstance().getEmployeeService().checkEmployee(data)) {
                     DatabaseService.getInstance().getEmployeeService().updateEmployee(data);
