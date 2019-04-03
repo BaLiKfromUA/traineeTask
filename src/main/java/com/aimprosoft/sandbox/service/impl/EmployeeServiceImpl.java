@@ -2,22 +2,26 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
-import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 /**
  * @author BaLiK on 29.03.19
  */
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepo repo;
 
     public EmployeeServiceImpl() {
-        repo = new HibernateEmployeeRepoImpl();
+    }
+
+    public void setRepo(EmployeeRepo repo) {
+        this.repo = repo;
     }
 
     private Employee convert(EmployeeData data) {
@@ -56,5 +60,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(EmployeeData employee) throws DatabaseException {
         repo.updateEmployee(convert(employee));
     }
-
 }

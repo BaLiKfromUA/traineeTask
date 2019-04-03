@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class DepartmentRepoImpl implements DepartmentRepo {
     private static Logger LOG = LogManager.getLogger(DepartmentRepoImpl.class);
 
+    public DepartmentRepoImpl() {
+    }
+
     /**
      * Statements
      **/

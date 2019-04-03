@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="employeeRepo"
+          class="com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl">
+    </bean>
+
+    <bean id="departmentRepo"
+          class="com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl">
+    </bean>
+
+    <bean id="employeeService"
+          class="com.aimprosoft.sandbox.service.impl.EmployeeServiceImpl"
+          scope="prototype">
+        <property name="repo" ref="employeeRepo"/>
+    </bean>
+
+    <bean id="departmentService"
+          class="com.aimprosoft.sandbox.service.impl.DepartmentServiceImpl"
+          scope="prototype">
+        <property name="repo" ref="departmentRepo"/>
+    </bean>
+
+</beans>

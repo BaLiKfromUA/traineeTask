@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class EmployeeRepoImpl implements EmployeeRepo {
     private static Logger LOG = LogManager.getLogger(EmployeeRepoImpl.class);
 
+    public EmployeeRepoImpl() {
+    }
+
     /**
      * Statements
      **/

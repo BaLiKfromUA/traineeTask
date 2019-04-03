@@ -18,6 +18,9 @@ import java.util.List;
 public class HibernateEmployeeRepoImpl implements EmployeeRepo {
     private static Logger LOG = LogManager.getLogger(HibernateEmployeeRepoImpl.class);
 
+    public HibernateEmployeeRepoImpl() {
+    }
+
     @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) throws DatabaseException {
         ArrayList<Employee> employees;

@@ -2,22 +2,26 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
-import com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 /**
  * @author BaLiK on 29.03.19
  */
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
     private DepartmentRepo repo;
 
     public DepartmentServiceImpl() {
-        repo = new HibernateDepartmentRepoImpl();
+    }
+
+    public void setRepo(DepartmentRepo repo) {
+        this.repo = repo;
     }
 
     private Department convert(DepartmentData departmentData) {
@@ -52,5 +56,4 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void updateDepartment(DepartmentData department) throws DatabaseException {
         repo.updateDepartment(convert(department));
     }
-
 }
