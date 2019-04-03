@@ -3,10 +3,8 @@ package com.aimprosoft.sandbox.controller;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.action.ActionManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
-import com.aimprosoft.sandbox.util.service.DatabaseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
@@ -34,7 +32,6 @@ public class MainServlet extends HttpServlet {
                 config.getServletContext());
 
         actionManager = new ActionManager();
-        DatabaseService.getInstance();
     }
 
     @Override

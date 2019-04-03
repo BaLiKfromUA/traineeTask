@@ -3,9 +3,11 @@ package com.aimprosoft.sandbox.controller.action.get;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
-import com.aimprosoft.sandbox.util.service.DatabaseService;
+import com.aimprosoft.sandbox.service.EmployeeService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import com.aimprosoft.sandbox.util.validator.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,14 +17,19 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
+@Controller
 public class EmployeesPage implements Action {
+
+    @Autowired
+    private EmployeeService employeeService;
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("department_id");
 
         if (Validator.validateId(id)) {
             try {
-                request.setAttribute("employees", DatabaseService.getInstance().getEmployeeService().getAllByDepartmentId(id).toArray());
+                request.setAttribute("employees", employeeService.getAllByDepartmentId(id).toArray());
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());

@@ -1,9 +1,9 @@
 package com.aimprosoft.sandbox.dao.impl;
 
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
+import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
-import com.aimprosoft.sandbox.domain.Department;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

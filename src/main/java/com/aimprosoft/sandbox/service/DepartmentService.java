@@ -3,12 +3,14 @@ package com.aimprosoft.sandbox.service;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 /**
  * @author BaLiK on 29.03.19
  */
+@Service
 public interface DepartmentService {
 
     ArrayList<Department> getAllDepartments() throws DatabaseException;

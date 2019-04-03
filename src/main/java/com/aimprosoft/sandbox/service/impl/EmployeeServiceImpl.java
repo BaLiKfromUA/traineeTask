@@ -5,8 +5,11 @@ import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +17,17 @@ import java.util.ArrayList;
  */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+    private static final Logger LOG = LogManager.getLogger(EmployeeServiceImpl.class);
 
     private EmployeeRepo repo;
 
     public EmployeeServiceImpl() {
     }
 
+    @Inject
     public void setRepo(EmployeeRepo repo) {
         this.repo = repo;
+        LOG.info("Employee repo injected!");
     }
 
     private Employee convert(EmployeeData data) {
@@ -60,4 +66,5 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(EmployeeData employee) throws DatabaseException {
         repo.updateEmployee(convert(employee));
     }
+
 }

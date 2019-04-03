@@ -3,10 +3,12 @@ package com.aimprosoft.sandbox.controller.action.post.department;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
-import com.aimprosoft.sandbox.util.service.DatabaseService;
+import com.aimprosoft.sandbox.service.DepartmentService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +18,13 @@ import java.util.Optional;
 /**
  * @author BaLiK on 27.03.19
  */
+@Controller
 public class EditDepartment implements Action {
     private static Logger LOG = LogManager.getLogger(EditDepartment.class);
     private final static String URL = "?action-get=default&name=%s&flag=%s";
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,8 +36,8 @@ public class EditDepartment implements Action {
         if (OvalValidator.getInstance().validate(data)) {
 
             try {
-                if (DatabaseService.getInstance().getDepartmentService().checkDepartment(data)) {
-                    DatabaseService.getInstance().getDepartmentService().updateDepartment(data);
+                if (departmentService.checkDepartment(data)) {
+                    departmentService.updateDepartment(data);
                     LOG.info("Department {} was updated!", idStr);
                     response.sendRedirect("/");
                 } else {

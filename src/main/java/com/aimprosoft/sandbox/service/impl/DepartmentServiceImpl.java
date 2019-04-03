@@ -5,8 +5,11 @@ import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +17,17 @@ import java.util.ArrayList;
  */
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
+    private static final Logger LOG = LogManager.getLogger(DepartmentServiceImpl.class);
 
     private DepartmentRepo repo;
 
     public DepartmentServiceImpl() {
     }
 
+    @Inject
     public void setRepo(DepartmentRepo repo) {
         this.repo = repo;
+        LOG.info("Department repo injected!");
     }
 
     private Department convert(DepartmentData departmentData) {

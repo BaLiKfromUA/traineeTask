@@ -2,10 +2,12 @@ package com.aimprosoft.sandbox.controller.action.post.department;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.exception.DatabaseException;
-import com.aimprosoft.sandbox.util.service.DatabaseService;
+import com.aimprosoft.sandbox.service.DepartmentService;
 import com.aimprosoft.sandbox.util.validator.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +16,12 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
+@Controller
 public class DeleteDepartment implements Action {
     private static Logger LOG = LogManager.getLogger(DeleteDepartment.class);
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,13 +29,13 @@ public class DeleteDepartment implements Action {
         if (Validator.validateId(id)) {
 
             try {
-                DatabaseService.getInstance().getDepartmentService().deleteDepartmentById(id);
+                departmentService.deleteDepartmentById(id);
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
             }
 
-            LOG.info("Department {} was removed!",id);
+            LOG.info("Department {} was removed!", id);
             response.sendRedirect("/");
         } else {
             response.sendRedirect("?action-get=error");
