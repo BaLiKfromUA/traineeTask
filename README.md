@@ -2,6 +2,8 @@
 
 ## TIPS
 ### SQL
+`mysql -ubalik -p1204`
+
 By default MySQL ignores differences in case and trailing spaces on varchar.
 
 If you need it to be case sensitive, you can alter the table to be varchar(...) binary.

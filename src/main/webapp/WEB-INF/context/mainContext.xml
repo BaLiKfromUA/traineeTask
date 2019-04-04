@@ -8,10 +8,20 @@
     <!--IMPORTANT-->
     <context:component-scan base-package="com.aimprosoft.sandbox"/>
 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="application.properties"/>
+    </bean>
+
+
     <!--DAOs-->
     <bean id="employeeRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl"/>
     <bean id="departmentRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl"/>
-    <bean id="databaseManager" class="com.aimprosoft.sandbox.util.database.DatabaseManager"/>
+
+    <bean id="databaseManager" class="com.aimprosoft.sandbox.util.database.DatabaseManager">
+        <constructor-arg index="0" type="java.lang.String" value="${database.url}"/>
+        <constructor-arg index="1" type="java.lang.String" value="${database.user}"/>
+        <constructor-arg index="2" type="java.lang.String" value="${database.password}"/>
+    </bean>
 
     <!--SERVICES-->
     <bean id="employeeService" class="com.aimprosoft.sandbox.service.impl.EmployeeServiceImpl">

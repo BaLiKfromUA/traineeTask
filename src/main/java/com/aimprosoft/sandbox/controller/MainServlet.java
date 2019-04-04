@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.controller;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.action.ActionManager;
+import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,6 @@ import java.util.Optional;
  * @author BaLiK on 26.03.19
  */
 @Controller
-//todo: annotation cheatsheet
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 

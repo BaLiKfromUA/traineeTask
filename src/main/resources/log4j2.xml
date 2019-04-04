@@ -21,7 +21,6 @@
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="FILE"/>
         </Root>
-        <!--TODO:test this-->
         <Logger name="org.springframework" level="info" additivity="false">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="SPRING"/>
