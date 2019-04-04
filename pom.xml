@@ -53,13 +53,6 @@
             <artifactId>spring-context</artifactId>
             <version>3.0.0.RELEASE</version>
             <scope>compile</scope>
-            <!--DISABLE DEFAULT LOGGER-->
-            <!--<exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
         <dependency>
@@ -104,6 +97,12 @@
         </dependency>
 
         <!--LOGGER-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>2.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>

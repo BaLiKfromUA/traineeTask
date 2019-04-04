@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author BaLiK on 26.03.19
  */
 @Controller
-//todo: good logs and annotation cheatsheet
+//todo: annotation cheatsheet
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 

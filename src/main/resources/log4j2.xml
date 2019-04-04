@@ -4,14 +4,15 @@
         <Property name="basePath">./logs</Property>
     </Properties>
     <Appenders>
-        <!-- File Appender -->
-        <File name="FILE" fileName="${basePath}/logfile.log" append="true">
+        <File name="FILE" fileName="${basePath}/app_log.log" append="true">
             <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"/>
         </File>
-        <!-- Console Appender -->
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"/>
         </Console>
+        <File name="SPRING" fileName="${basePath}/spring_log.log">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <Logger name="org.hibernate" level="OFF" additivity="false"/>
@@ -21,9 +22,9 @@
             <AppenderRef ref="FILE"/>
         </Root>
         <!--TODO:test this-->
-        <Logger name="org.springframework" level="DEBUG" additivity="false">
+        <Logger name="org.springframework" level="info" additivity="false">
             <AppenderRef ref="STDOUT"/>
-            <AppenderRef ref="FILE"/>
+            <AppenderRef ref="SPRING"/>
         </Logger>
     </Loggers>
 
