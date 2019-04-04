@@ -6,30 +6,36 @@ import net.sf.oval.configuration.annotation.AnnotationsConfigurer;
 import net.sf.oval.configuration.annotation.BeanValidationAnnotationsConfigurer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author BaLiK on 01.04.19
  */
+@Component
 public class OvalValidator {
     private static Logger LOG = LogManager.getLogger(OvalValidator.class);
 
-    private static OvalValidator instance = null;
-    private net.sf.oval.Validator validator;
 
-    private OvalValidator() {
-        validator = new Validator(new AnnotationsConfigurer(), new BeanValidationAnnotationsConfigurer());
+    public boolean validateId(final String idStr) {
+        if (idStr == null) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile(DataPatterns.ID_PATTERN);
+        Matcher matcher = pattern.matcher(idStr);
+
+        return matcher.matches();
     }
 
-    public static OvalValidator getInstance() {
-        if (instance == null) {
-            instance = new OvalValidator();
-            LOG.info("Oval validator created");
-        }
 
-        return instance;
+    private net.sf.oval.Validator validator;
+
+    public OvalValidator() {
+        validator = new Validator(new AnnotationsConfigurer(), new BeanValidationAnnotationsConfigurer());
     }
 
     public boolean validate(Object object) {

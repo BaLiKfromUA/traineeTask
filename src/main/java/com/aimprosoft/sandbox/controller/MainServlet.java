@@ -5,9 +5,10 @@ import com.aimprosoft.sandbox.controller.action.ActionManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,19 +20,19 @@ import java.util.Optional;
 /**
  * @author BaLiK on 26.03.19
  */
+@Controller
+//todo: good logs and annotation cheatsheet
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 
-    private static ActionManager actionManager = null;
+    @Autowired
+    private ActionManager actionManager;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init() throws ServletException {
         LOG.info("Main servlet init...");
-        super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-                config.getServletContext());
-
-        actionManager = new ActionManager();
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
     @Override

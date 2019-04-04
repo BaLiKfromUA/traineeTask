@@ -6,6 +6,7 @@ import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.sql.*;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 /**
  * @author BaLiK on 25.03.19
  */
+@Repository
 public class DepartmentRepoImpl implements DepartmentRepo {
     private static Logger LOG = LogManager.getLogger(DepartmentRepoImpl.class);
 

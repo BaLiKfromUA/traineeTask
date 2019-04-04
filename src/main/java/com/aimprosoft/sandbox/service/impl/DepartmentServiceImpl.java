@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
+import com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
@@ -9,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +24,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentServiceImpl() {
     }
 
-    @Inject
-    public void setRepo(DepartmentRepo repo) {
+    public void setRepo(HibernateDepartmentRepoImpl repo) {
         this.repo = repo;
         LOG.info("Department repo injected!");
     }

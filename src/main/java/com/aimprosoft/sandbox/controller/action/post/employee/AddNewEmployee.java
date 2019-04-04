@@ -8,7 +8,7 @@ import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author BaLiK on 27.03.19
  */
-@Controller
+@Component
 public class AddNewEmployee implements Action {
     private static Logger LOG = LogManager.getLogger(AddNewEmployee.class);
     private final static String URL = "?action-get=employees&department_id=%d";
@@ -25,6 +25,9 @@ public class AddNewEmployee implements Action {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private OvalValidator validator;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -36,7 +39,7 @@ public class AddNewEmployee implements Action {
 
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
-        if (OvalValidator.getInstance().validate(data)) {
+        if (validator.validate(data)) {
 
             try {
 

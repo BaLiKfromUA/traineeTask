@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 /**
  * @author BaLiK on 29.03.19
  */
+//todo:refactor
 public class HibernateUtil {
 
     private static Logger LOG = LogManager.getLogger(HibernateUtil.class);

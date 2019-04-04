@@ -3,11 +3,11 @@ package com.aimprosoft.sandbox.controller.action.post.employee;
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
-import com.aimprosoft.sandbox.util.validator.Validator;
+import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
-@Controller
+@Component
 public class DeleteEmployee implements Action {
     private static Logger LOG = LogManager.getLogger(DeleteEmployee.class);
     private static String URL = "?action-get=employees&department_id=%d";
@@ -24,12 +24,15 @@ public class DeleteEmployee implements Action {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private OvalValidator validator;
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         String depIdStr = request.getParameter("department_id");
 
-        if (Validator.validateId(id) && Validator.validateId(depIdStr)) {
+        if (validator.validateId(id) && validator.validateId(depIdStr)) {
 
             try {
                 employeeService.deleteEmployeeById(id);

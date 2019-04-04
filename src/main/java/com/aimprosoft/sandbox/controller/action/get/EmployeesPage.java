@@ -5,9 +5,8 @@ import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
-import com.aimprosoft.sandbox.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,17 +16,20 @@ import java.io.IOException;
 /**
  * @author BaLiK on 26.03.19
  */
-@Controller
+@Component
 public class EmployeesPage implements Action {
 
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private OvalValidator validator;
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("department_id");
 
-        if (Validator.validateId(id)) {
+        if (validator.validateId(id)) {
             try {
                 request.setAttribute("employees", employeeService.getAllByDepartmentId(id).toArray());
             } catch (DatabaseException e) {
@@ -41,8 +43,7 @@ public class EmployeesPage implements Action {
             final String date = request.getParameter("date");
 
             if ("invalid".equals(request.getParameter("reason"))) {
-                request.setAttribute("errorMessages", OvalValidator.getInstance().
-                        getErrors(new EmployeeData(login, email, rank, date, id)).toArray());
+                request.setAttribute("errorMessages", validator.getErrors(new EmployeeData(login, email, rank, date, id)).toArray());
             }
 
             request.setAttribute("login", login);
@@ -54,6 +55,8 @@ public class EmployeesPage implements Action {
 
             request.getRequestDispatcher("/employees.jsp").forward(request, response);
         } else {
+            System.out.println(id);
+            request.setAttribute("reason", "invalid");
             request.setAttribute("errorMessages", new String[]{("Invalid department id!")});
             request.getRequestDispatcher("/employees.jsp").forward(request, response);
         }

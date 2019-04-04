@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
+import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
@@ -9,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeServiceImpl() {
     }
 
-    @Inject
-    public void setRepo(EmployeeRepo repo) {
+
+    public void setRepo(HibernateEmployeeRepoImpl repo) {
         this.repo = repo;
         LOG.info("Employee repo injected!");
     }

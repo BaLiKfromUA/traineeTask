@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--IMPORTANT-->
+    <context:component-scan base-package="com.aimprosoft.sandbox"/>
 
-    <bean id="employeeRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl">
-    </bean>
+    <!--DAOs-->
+    <bean id="employeeRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl"/>
+    <bean id="departmentRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl"/>
 
-    <bean id="departmentRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl">
-    </bean>
-
+    <!--SERVICES-->
     <bean id="employeeService" class="com.aimprosoft.sandbox.service.impl.EmployeeServiceImpl">
         <property name="repo" ref="employeeRepo"/>
     </bean>
@@ -19,4 +21,44 @@
         <property name="repo" ref="departmentRepo"/>
     </bean>
 
+    <!--ACTIONS-->
+
+    <!--GET-->
+    <bean id="getDepartments" class="com.aimprosoft.sandbox.controller.action.get.DepartmentsPage"/>
+    <bean id="getEmployees" class="com.aimprosoft.sandbox.controller.action.get.EmployeesPage"/>
+    <bean id="error" class="com.aimprosoft.sandbox.controller.action.get.ErrorPage"/>
+
+    <!--POST-->
+    <bean id="addDepartment" class="com.aimprosoft.sandbox.controller.action.post.department.AddNewDepartment"/>
+    <bean id="deleteDepartment" class="com.aimprosoft.sandbox.controller.action.post.department.DeleteDepartment"/>
+    <bean id="editDepartment" class="com.aimprosoft.sandbox.controller.action.post.department.EditDepartment"/>
+
+    <bean id="addEmployee" class="com.aimprosoft.sandbox.controller.action.post.employee.AddNewEmployee"/>
+    <bean id="deleteEmployee" class="com.aimprosoft.sandbox.controller.action.post.employee.DeleteEmployee"/>
+    <bean id="editEmployee" class="com.aimprosoft.sandbox.controller.action.post.employee.EditEmployee"/>
+
+    <!--ACTION MAP-->
+    <util:map id="actionMap" value-type="java.util.List">
+
+        <entry key="default" value-ref="getDepartments"/>
+        <entry key="employees" value-ref="getEmployees"/>
+        <entry key="error" value-ref="error"/>
+
+        <entry key="add new department" value-ref="addDepartment"/>
+        <entry key="department delete" value-ref="deleteDepartment"/>
+        <entry key="department edit" value-ref="editDepartment"/>
+
+        <entry key="add new employee" value-ref="addEmployee"/>
+        <entry key="employee delete" value-ref="deleteEmployee"/>
+        <entry key="employee edit" value-ref="editEmployee"/>
+
+    </util:map>
+
+    <!--ACTION MANAGER-->
+    <bean id="actionManager" class="com.aimprosoft.sandbox.controller.action.ActionManager">
+        <property name="actions" ref="actionMap"/>
+    </bean>
+
+    <!--Validator-->
+    <bean id="validator" class="com.aimprosoft.sandbox.util.validator.OvalValidator"/>
 </beans>

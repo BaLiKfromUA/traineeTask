@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * @author BaLiK on 29.03.19
  */
+@Repository
 public class HibernateDepartmentRepoImpl implements DepartmentRepo {
     private static Logger LOG = LogManager.getLogger(HibernateDepartmentRepoImpl.class);
 

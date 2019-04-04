@@ -15,6 +15,7 @@ import java.util.Properties;
 /**
  * @author BaLiK on 25.03.19
  */
+//todo:annotations
 public class DatabaseManager {
     /**
      * Config

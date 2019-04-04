@@ -8,7 +8,7 @@ import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,13 +18,16 @@ import java.util.Optional;
 /**
  * @author BaLiK on 27.03.19
  */
-@Controller
+@Component
 public class EditDepartment implements Action {
     private static Logger LOG = LogManager.getLogger(EditDepartment.class);
     private final static String URL = "?action-get=default&name=%s&flag=%s";
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private OvalValidator validator;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,7 +36,7 @@ public class EditDepartment implements Action {
 
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
-        if (OvalValidator.getInstance().validate(data)) {
+        if (validator.validate(data)) {
 
             try {
                 if (departmentService.checkDepartment(data)) {

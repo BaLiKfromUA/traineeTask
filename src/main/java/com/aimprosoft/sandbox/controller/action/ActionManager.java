@@ -1,43 +1,29 @@
 package com.aimprosoft.sandbox.controller.action;
 
-import com.aimprosoft.sandbox.controller.action.get.DepartmentsPage;
-import com.aimprosoft.sandbox.controller.action.get.EmployeesPage;
-import com.aimprosoft.sandbox.controller.action.get.ErrorPage;
-import com.aimprosoft.sandbox.controller.action.post.department.AddNewDepartment;
-import com.aimprosoft.sandbox.controller.action.post.department.DeleteDepartment;
-import com.aimprosoft.sandbox.controller.action.post.department.EditDepartment;
-import com.aimprosoft.sandbox.controller.action.post.employee.AddNewEmployee;
-import com.aimprosoft.sandbox.controller.action.post.employee.DeleteEmployee;
-import com.aimprosoft.sandbox.controller.action.post.employee.EditEmployee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author BaLiK on 27.03.19
  */
+@Component
 public class ActionManager {
+    private static final Logger LOG = LogManager.getLogger(ActionManager.class);
     private Map<String, Action> actions;
 
     public ActionManager() {
-        actions = new HashMap<>();
-
-        /**get**/
-        actions.put("default", new DepartmentsPage());
-        actions.put("employees", new EmployeesPage());
-        actions.put("error", new ErrorPage());
-
-        /**post**/
-        actions.put("employee edit", new EditEmployee());
-        actions.put("add new employee", new AddNewEmployee());
-        actions.put("employee delete", new DeleteEmployee());
-
-        actions.put("department edit", new EditDepartment());
-        actions.put("add new department", new AddNewDepartment());
-        actions.put("department delete", new DeleteDepartment());
 
     }
 
+    @Required
+    public void setActions(Map<String, Action> actions) {
+        this.actions = actions;
+        LOG.info("Action map injected!");
+    }
 
     public Action getAction(String tag) {
         return actions.get(tag);
