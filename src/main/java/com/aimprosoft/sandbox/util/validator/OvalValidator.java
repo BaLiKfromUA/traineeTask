@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 public class OvalValidator {
     private static Logger LOG = LogManager.getLogger(OvalValidator.class);
 
-
     public boolean validateId(final String idStr) {
         if (idStr == null) {
             return false;
@@ -30,7 +29,6 @@ public class OvalValidator {
 
         return matcher.matches();
     }
-
 
     private net.sf.oval.Validator validator;
 
@@ -54,5 +52,4 @@ public class OvalValidator {
 
         return messages;
     }
-
 }

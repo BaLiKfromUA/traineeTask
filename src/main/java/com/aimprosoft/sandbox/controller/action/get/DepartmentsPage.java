@@ -17,6 +17,7 @@ import java.util.Optional;
 /**
  * @author BaLiK on 26.03.19
  */
+//todo:refactor all
 @Component
 public class DepartmentsPage implements Action {
 

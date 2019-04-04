@@ -11,6 +11,7 @@
     <!--DAOs-->
     <bean id="employeeRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl"/>
     <bean id="departmentRepo" class="com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl"/>
+    <bean id="databaseManager" class="com.aimprosoft.sandbox.util.database.DatabaseManager"/>
 
     <!--SERVICES-->
     <bean id="employeeService" class="com.aimprosoft.sandbox.service.impl.EmployeeServiceImpl">

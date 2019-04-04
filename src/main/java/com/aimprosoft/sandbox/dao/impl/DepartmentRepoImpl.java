@@ -6,9 +6,9 @@ import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -22,6 +22,9 @@ public class DepartmentRepoImpl implements DepartmentRepo {
     public DepartmentRepoImpl() {
     }
 
+    @Autowired
+    private DatabaseManager databaseManager;
+
     /**
      * Statements
      **/
@@ -34,12 +37,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
     @Override
     public void deleteDepartmentById(Long id) throws DatabaseException {
-        try (Connection connection = DatabaseManager.getInstance().getConnection();
+        try (Connection connection = databaseManager.getConnection();
              PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BY_ID)) {
             deleteStatement.setLong(1, id);
             int rs = deleteStatement.executeUpdate();
             LOG.info("Department delete result: {}", rs);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOG.error("Can not delete Department {}\n{}", id, e.getMessage());
             throw new DatabaseException("Fail to delete department!");
         }
@@ -47,12 +50,12 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
     @Override
     public void createDepartment(Department department) throws DatabaseException {
-        try (Connection connection = DatabaseManager.getInstance().getConnection();
+        try (Connection connection = databaseManager.getConnection();
              PreparedStatement createStatement = connection.prepareStatement(CREATE_DEPARTMENT)) {
             createStatement.setString(1, department.getName());
             int rs = createStatement.executeUpdate();
             LOG.info("Department create result: {}", rs);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOG.error("Can not create Department\n{}", e.getMessage());
             throw new DatabaseException("Fail to add new department!");
         }
@@ -60,7 +63,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
     @Override
     public boolean checkDepartment(Department department) throws DatabaseException {
-        try (Connection connection = DatabaseManager.getInstance().getConnection();
+        try (Connection connection = databaseManager.getConnection();
              PreparedStatement checkStatement = connection.prepareStatement(CHECK_DEPARTMENT)) {
             ResultSet rs;
             checkStatement.setString(1, department.getName());
@@ -69,7 +72,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
             if (rs.next()) {
                 return false;
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOG.error("Can not get Department by Name\n{}", e.getMessage());
             throw new DatabaseException("Fail to check department!");
         }
@@ -96,7 +99,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
         ResultSet rs;
         ArrayList<Department> departments = new ArrayList<>();
 
-        try (Connection connection = DatabaseManager.getInstance().getConnection()) {
+        try (Connection connection = databaseManager.getConnection()) {
             statement = connection.createStatement();
 
             rs = statement.executeQuery(GET_ALL_DEPARTMENTS);
@@ -105,7 +108,7 @@ public class DepartmentRepoImpl implements DepartmentRepo {
                 departments.add(extractDepartment(rs));
             }
 
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOG.error("Can not get Departments\n{}", e.getMessage());
             throw new DatabaseException("Fail to get departments!");
         }
@@ -115,13 +118,13 @@ public class DepartmentRepoImpl implements DepartmentRepo {
 
     @Override
     public void updateDepartment(Department department) throws DatabaseException {
-        try (Connection connection = DatabaseManager.getInstance().getConnection();
+        try (Connection connection = databaseManager.getConnection();
              PreparedStatement updateStatement = connection.prepareStatement(UPDATE_BY_ID)) {
             updateStatement.setString(1, department.getName());
             updateStatement.setLong(2, department.getID());
             int rs = updateStatement.executeUpdate();
             LOG.info("Department update result: {}", rs);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOG.error("Can not update department\n{}", e.getMessage());
             throw new DatabaseException("Fail to edit department!");
         }

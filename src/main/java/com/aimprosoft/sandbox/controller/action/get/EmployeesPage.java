@@ -55,7 +55,6 @@ public class EmployeesPage implements Action {
 
             request.getRequestDispatcher("/employees.jsp").forward(request, response);
         } else {
-            System.out.println(id);
             request.setAttribute("reason", "invalid");
             request.setAttribute("errorMessages", new String[]{("Invalid department id!")});
             request.getRequestDispatcher("/employees.jsp").forward(request, response);

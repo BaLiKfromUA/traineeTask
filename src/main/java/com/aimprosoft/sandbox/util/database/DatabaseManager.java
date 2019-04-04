@@ -3,6 +3,7 @@ package com.aimprosoft.sandbox.util.database;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.Properties;
  * @author BaLiK on 25.03.19
  */
 //todo:annotations
+@Component
 public class DatabaseManager {
     /**
      * Config
@@ -25,7 +27,6 @@ public class DatabaseManager {
     private final String PASSWORD;
 
     private static Logger LOG = LogManager.getLogger(DatabaseManager.class);
-    private static DatabaseManager instance;
 
     /**
      * Statements
@@ -48,11 +49,12 @@ public class DatabaseManager {
             "PRIMARY KEY (id) " +
             ")";
 
-    private DatabaseManager() throws IOException {
+    public DatabaseManager() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("database.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
 
+        //todo:spring property
         DB_URL = properties.getProperty("database.url");
         USERNAME = properties.getProperty("database.user");
         PASSWORD = properties.getProperty("database.password");
@@ -63,14 +65,6 @@ public class DatabaseManager {
         createEmployeeTable();
 
         LOG.info("Database info entered!");
-    }
-
-    public static DatabaseManager getInstance() throws IOException {
-        if (instance == null) {
-            instance = new DatabaseManager();
-            LOG.info("DatabaseManager instance created.");
-        }
-        return instance;
     }
 
     public Connection getConnection() throws SQLException {
