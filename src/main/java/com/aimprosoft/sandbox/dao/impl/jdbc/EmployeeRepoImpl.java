@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.dao.impl;
+package com.aimprosoft.sandbox.dao.impl.jdbc;
 
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;

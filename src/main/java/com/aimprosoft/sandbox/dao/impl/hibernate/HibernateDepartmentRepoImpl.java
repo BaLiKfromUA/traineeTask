@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.dao.impl;
+package com.aimprosoft.sandbox.dao.impl.hibernate;
 
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.domain.Department;

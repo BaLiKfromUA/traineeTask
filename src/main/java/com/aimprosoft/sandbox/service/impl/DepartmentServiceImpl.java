@@ -2,13 +2,13 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
-import com.aimprosoft.sandbox.dao.impl.HibernateDepartmentRepoImpl;
 import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentServiceImpl() {
     }
 
-    public void setRepo(HibernateDepartmentRepoImpl repo) {
+    public void setRepo(DepartmentRepo repo) {
         this.repo = repo;
         LOG.info("Department repo injected!");
     }
@@ -38,26 +38,31 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public ArrayList<Department> getAllDepartments() throws DatabaseException {
         return repo.getAllDepartments();
     }
 
     @Override
+    @Transactional
     public boolean checkDepartment(DepartmentData department) throws DatabaseException {
         return repo.checkDepartment(convert(department));
     }
 
     @Override
+    @Transactional
     public void createDepartment(DepartmentData department) throws DatabaseException {
         repo.createDepartment(convert(department));
     }
 
     @Override
+    @Transactional
     public void deleteDepartmentById(String id) throws DatabaseException {
         repo.deleteDepartmentById(Long.parseLong(id));
     }
 
     @Override
+    @Transactional
     public void updateDepartment(DepartmentData department) throws DatabaseException {
         repo.updateDepartment(convert(department));
     }

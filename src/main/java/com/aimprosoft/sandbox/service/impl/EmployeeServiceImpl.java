@@ -2,13 +2,13 @@ package com.aimprosoft.sandbox.service.impl;
 
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
-import com.aimprosoft.sandbox.dao.impl.HibernateEmployeeRepoImpl;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    public void setRepo(HibernateEmployeeRepoImpl repo) {
+    public void setRepo(EmployeeRepo repo) {
         this.repo = repo;
         LOG.info("Employee repo injected!");
     }
@@ -43,28 +43,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public ArrayList<Employee> getAllByDepartmentId(String id) throws DatabaseException {
         return repo.getAllByDepartmentId(Long.parseLong(id));
     }
 
     @Override
+    @Transactional
     public boolean checkEmployee(EmployeeData employee) throws DatabaseException {
         return repo.checkEmployee(convert(employee));
     }
 
     @Override
+    @Transactional
     public void createEmployee(EmployeeData employee) throws DatabaseException {
         repo.createEmployee(convert(employee));
     }
 
     @Override
+    @Transactional
     public void deleteEmployeeById(String id) throws DatabaseException {
         repo.deleteEmployeeById(Long.parseLong(id));
     }
 
     @Override
+    @Transactional
     public void updateEmployee(EmployeeData employee) throws DatabaseException {
         repo.updateEmployee(convert(employee));
     }
-
 }
