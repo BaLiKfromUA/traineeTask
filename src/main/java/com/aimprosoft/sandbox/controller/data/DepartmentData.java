@@ -10,7 +10,7 @@ import net.sf.oval.constraint.NotNull;
 /**
  * @author BaLiK on 29.03.19
  */
-@UniqueDepartment
+@UniqueDepartment(message = "Department name should be unique!")
 public class DepartmentData {
 
     @NotNull(message = "Id can not be null")

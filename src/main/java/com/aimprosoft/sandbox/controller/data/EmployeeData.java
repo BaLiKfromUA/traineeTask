@@ -7,7 +7,7 @@ import net.sf.oval.constraint.*;
 /**
  * @author BaLiK on 29.03.19
  */
-@UniqueEmployee
+@UniqueEmployee(message = "Employee email should be unique!")
 public class EmployeeData {
 
     @NotNull(message = "Id can not be null")

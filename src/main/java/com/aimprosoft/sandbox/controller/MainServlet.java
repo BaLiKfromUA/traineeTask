@@ -22,6 +22,7 @@ import java.util.Optional;
  * @author BaLiK on 26.03.19
  */
 @Controller
+//todo:remake urls
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 

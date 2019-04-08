@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.TYPE)
 @net.sf.oval.configuration.annotation.Constraint(checkWith = UniqueDepartmentCheck.class)
 public @interface UniqueDepartment {
-    String message() default "Department name should be unique!";
+    String message();
 }

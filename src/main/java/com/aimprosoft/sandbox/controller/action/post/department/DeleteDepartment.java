@@ -39,9 +39,9 @@ public class DeleteDepartment implements Action {
             }
 
             LOG.info("Department {} was removed!", id);
-            response.sendRedirect("/");
+            response.sendRedirect("/old");
         } else {
-            response.sendRedirect("?action-get=error");
+            response.sendRedirect("/old?action-get=error");
         }
     }
 }

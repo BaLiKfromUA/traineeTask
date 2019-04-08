@@ -21,7 +21,7 @@ import java.util.Optional;
 @Component
 public class EditDepartment implements Action {
     private static Logger LOG = LogManager.getLogger(EditDepartment.class);
-    private final static String URL = "?action-get=default&name=%s&flag=%s";
+    private final static String URL = "/old?action-get=default&name=%s&flag=%s";
 
     @Autowired
     private DepartmentService departmentService;
@@ -40,11 +40,11 @@ public class EditDepartment implements Action {
             try {
                 departmentService.updateDepartment(data);
                 LOG.info("Department {} was updated!", idStr);
-                response.sendRedirect("/");
+                response.sendRedirect("/old");
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
-                response.sendRedirect("/");
+                response.sendRedirect("/old");
             }
         } else {
             response.sendRedirect(String.format(URL, departmentName, idStr));

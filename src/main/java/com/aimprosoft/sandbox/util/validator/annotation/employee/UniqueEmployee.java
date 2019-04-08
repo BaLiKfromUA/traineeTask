@@ -12,6 +12,6 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.TYPE)
 @net.sf.oval.configuration.annotation.Constraint(checkWith = UniqueEmployeeCheck.class)
 public @interface UniqueEmployee {
-    String message() default "Employee email should be unique!";
+    String message();
 }
 
