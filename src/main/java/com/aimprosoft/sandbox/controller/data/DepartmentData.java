@@ -1,6 +1,7 @@
 package com.aimprosoft.sandbox.controller.data;
 
 import com.aimprosoft.sandbox.util.validator.DataPatterns;
+import com.aimprosoft.sandbox.util.validator.annotation.department.UniqueDepartment;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MinLength;
 import net.sf.oval.constraint.NotEmpty;
@@ -9,6 +10,8 @@ import net.sf.oval.constraint.NotNull;
 /**
  * @author BaLiK on 29.03.19
  */
+@UniqueDepartment
+//todo:prototype bean
 public class DepartmentData {
 
     @NotNull(message = "Id can not be null")

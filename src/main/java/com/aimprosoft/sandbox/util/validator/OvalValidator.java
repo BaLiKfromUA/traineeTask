@@ -4,6 +4,7 @@ import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AnnotationsConfigurer;
 import net.sf.oval.configuration.annotation.BeanValidationAnnotationsConfigurer;
+import net.sf.oval.integration.spring.BeanInjectingCheckInitializationListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,9 @@ public class OvalValidator {
     private net.sf.oval.Validator validator;
 
     public OvalValidator() {
-        validator = new Validator(new AnnotationsConfigurer(), new BeanValidationAnnotationsConfigurer());
+        AnnotationsConfigurer myConfigurer = new AnnotationsConfigurer();
+        myConfigurer.addCheckInitializationListener(BeanInjectingCheckInitializationListener.INSTANCE);
+        validator = new Validator(myConfigurer, new BeanValidationAnnotationsConfigurer());
     }
 
     public boolean validate(Object object) {

@@ -36,7 +36,7 @@
                 <prop key="javax.persistence.validation.mode">${javax.persistence.validation.mode}</prop>
             </props>
         </property>
-        <property name="packagesToScan" value="com.aimprosoft.sandbox.domain" />
+        <property name="packagesToScan" value="com.aimprosoft.sandbox.domain"/>
     </bean>
 
     <bean id="databaseManager" class="com.aimprosoft.sandbox.util.database.DatabaseManager">
@@ -114,6 +114,8 @@
         <property name="actions" ref="actionMap"/>
     </bean>
 
-    <!--Validator-->
+    <!--VALIDATOR-->
     <bean id="validator" class="com.aimprosoft.sandbox.util.validator.OvalValidator"/>
+
+    <bean class="net.sf.oval.integration.spring.SpringInjector"/>
 </beans>
