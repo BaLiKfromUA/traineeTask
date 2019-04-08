@@ -1,11 +1,13 @@
 package com.aimprosoft.sandbox.controller.data;
 
 import com.aimprosoft.sandbox.util.validator.DataPatterns;
+import com.aimprosoft.sandbox.util.validator.annotation.employee.UniqueEmployee;
 import net.sf.oval.constraint.*;
 
 /**
  * @author BaLiK on 29.03.19
  */
+@UniqueEmployee
 public class EmployeeData {
 
     @NotNull(message = "Id can not be null")

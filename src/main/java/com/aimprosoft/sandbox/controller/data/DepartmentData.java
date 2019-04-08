@@ -11,7 +11,6 @@ import net.sf.oval.constraint.NotNull;
  * @author BaLiK on 29.03.19
  */
 @UniqueDepartment
-//todo:prototype bean
 public class DepartmentData {
 
     @NotNull(message = "Id can not be null")

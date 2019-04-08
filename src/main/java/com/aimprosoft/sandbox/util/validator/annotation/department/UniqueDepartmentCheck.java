@@ -16,8 +16,6 @@ public class UniqueDepartmentCheck extends AbstractAnnotationCheck<UniqueDepartm
     @Autowired
     private DepartmentService departmentService;
 
-
-    //todo:test
     @Override
     public boolean isSatisfied(Object validatedObject, Object valueToValidate, OValContext oValContext, Validator validator) throws OValException {
         if (validatedObject == null) {
