@@ -39,14 +39,12 @@
                 <c:set var="currEmail" value="${email}"/>
                 <c:set var="currRank" value="${rank}"/>
                 <c:set var="currDate" value="${date}"/>
-                <c:set var="error" value="${reason}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="currLogin" value="${employee.login}"/>
                 <c:set var="currEmail" value="${employee.email}"/>
                 <c:set var="currRank" value="${employee.rank}"/>
                 <c:set var="currDate" value="${employee.getDateString()}"/>
-                <c:set var="error" value=""/>
             </c:otherwise>
         </c:choose>
 
@@ -71,9 +69,6 @@
                            pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                            autocomplete="off"
                            required>
-                    <div style="color: red" <c:if test="${not 'email'.equals(error)}">hidden</c:if>>
-                        Employee email should be unique!
-                    </div>
                 </td>
                 <td>
                     <input type="number" min="1" max="999" class="form-control" placeholder="Enter rank"
@@ -111,14 +106,12 @@
                     <c:set var="currEmail" value="${email}"/>
                     <c:set var="currRank" value="${rank}"/>
                     <c:set var="currDate" value="${date}"/>
-                    <c:set var="error" value="${reason}"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="currLogin" value=""/>
                     <c:set var="currEmail" value=""/>
                     <c:set var="currRank" value=""/>
                     <c:set var="currDate" value=""/>
-                    <c:set var="error" value=""/>
                 </c:otherwise>
             </c:choose>
 
@@ -133,9 +126,6 @@
                        placeholder="Enter email" value="${currEmail}"
                        pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                        autocomplete="off" required>
-                <div style="color: red" <c:if test="${not 'email'.equals(error)}">hidden</c:if>>
-                    New employee email should be unique!
-                </div>
             </td>
             <td>
                 <input type="number" name="new rank" min="1" max="999" class="form-control"

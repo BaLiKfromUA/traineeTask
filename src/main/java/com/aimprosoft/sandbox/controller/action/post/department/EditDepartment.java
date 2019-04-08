@@ -37,21 +37,15 @@ public class EditDepartment implements Action {
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
         if (validator.validate(data)) {
-
             try {
-                if (departmentService.checkDepartment(data)) {
-                    departmentService.updateDepartment(data);
-                    LOG.info("Department {} was updated!", idStr);
-                    response.sendRedirect("/");
-                } else {
-                    response.sendRedirect(String.format(URL, departmentName, idStr));
-                }
+                departmentService.updateDepartment(data);
+                LOG.info("Department {} was updated!", idStr);
+                response.sendRedirect("/");
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
                 response.sendRedirect("/");
             }
-
         } else {
             response.sendRedirect(String.format(URL, departmentName, idStr));
         }

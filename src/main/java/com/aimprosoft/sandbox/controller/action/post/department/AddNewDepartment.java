@@ -34,15 +34,10 @@ public class AddNewDepartment implements Action {
         String flag = "invalid-new-department";
 
         if (validator.validate(data)) {
-
             try {
-                if (departmentService.checkDepartment(data)) {
-                    departmentService.createDepartment(data);
-                    LOG.info("Department {} was added!", data.getName());
-                    response.sendRedirect("/");
-                } else {
-                    response.sendRedirect(String.format(URL, data.getName(), flag));
-                }
+                departmentService.createDepartment(data);
+                LOG.info("Department {} was added!", data.getName());
+                response.sendRedirect("/");
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());

@@ -36,11 +36,9 @@
                 <c:when test="${''.concat(department.ID) eq flag}">
                     <%--@elvariable id="name" type="java.lang.String"--%>
                     ${name}
-                    <c:set var="isError" value="true"/>
                 </c:when>
                 <c:otherwise>
                     ${department.name}
-                    <c:set var="isError" value="false"/>
                 </c:otherwise>
             </c:choose>
         </c:set>
@@ -54,11 +52,6 @@
                     <input type="text" name="new name" class="form-control" minlength="6" maxlength="20"
                            placeholder="Enter department name" pattern="^[A-Z][a-z]{5,21}$"
                            value="${departmentName}" autocomplete="off" required>
-
-                    <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
-                        Department name should be unique and valid!
-                    </div>
-
                 </td>
                 <td>
                     <button type="submit" class="btn btn-warning">Edit</button>
@@ -95,10 +88,8 @@
                         <c:when test="${'invalid-new-department' eq flag}">
                             <%--@elvariable id="name" type="java.lang.String"--%>
                             ${name}
-                            <c:set var="isError" value="true"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="isError" value="false"/>
                         </c:otherwise>
                     </c:choose>
                 </c:set>
@@ -106,9 +97,6 @@
                 <input type="text" class="form-control" name="new name" minlength="6" maxlength="20"
                        placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
                        pattern="^[A-Z][a-z]{5,21}$" required>
-                <div style="color: red" <c:if test="${not isError}">hidden</c:if>>
-                    New department name should be unique and valid!
-                </div>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>

@@ -40,23 +40,15 @@ public class AddNewEmployee implements Action {
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
         if (validator.validate(data)) {
-
             try {
-
-                if (employeeService.checkEmployee(data)) {
-                    employeeService.createEmployee(data);
-                    LOG.info("Employee {} was added!", newLogin);
-                    response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
-                } else {
-                    response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, "invalid-new-employee", "email"));
-                }
-
+                employeeService.createEmployee(data);
+                LOG.info("Employee {} was added!", newLogin);
+                response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
                 response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             }
-
         } else {
             response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, "invalid-new-employee", "invalid"));
         }

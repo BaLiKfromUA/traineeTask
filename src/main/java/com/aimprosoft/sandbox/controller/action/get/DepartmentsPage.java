@@ -34,10 +34,12 @@ public class DepartmentsPage implements Action {
             invalidId = "0";
         }
 
-        final String invalidName = Optional.ofNullable(request.getParameter("name")).orElse("Department");
+        final String invalidName = request.getParameter("name");
 
-        request.setAttribute("errorMessages", validator.getErrors(new DepartmentData(invalidId, invalidName)).toArray());
+        if (invalidName != null) {
+            request.setAttribute("errorMessages", validator.getErrors(new DepartmentData(invalidId, invalidName)).toArray());
 
+        }
         try {
             request.setAttribute("departments", departmentService.getAllDepartments().toArray());
         } catch (DatabaseException e) {
