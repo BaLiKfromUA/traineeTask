@@ -2,13 +2,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>BaLiK Sandbox</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -49,8 +52,7 @@
 
 
         <tr>
-            <form method="post">
-                <input type="hidden" name="action-post" value="employee edit" autocomplete="off">
+            <form method="post" action="/old/employees/edit?department_id=<%= request.getParameter("department_id") %>">
 
                 <th scope="row">${employee.ID}
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
@@ -84,18 +86,16 @@
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </td>
             </form>
-            <form method="post">
+            <form method="post" action="/old/employees/delete?department_id=<%= request.getParameter("department_id") %>">
                 <td>
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
-                    <input type="hidden" name="action-post" value="employee delete" autocomplete="off">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </td>
             </form>
         </tr>
     </c:forEach>
     <tr>
-        <form id="add" method="post">
-            <input type="hidden" name="action-post" value="add new employee" autocomplete="off">
+        <form id="add" method="post" action="/old/employees/add?department_id=<%= request.getParameter("department_id") %>">
             <th>*</th>
 
             <c:choose>
@@ -150,7 +150,7 @@
     </tbody>
 </table>
 <span class="d-block p-2 bg-dark text-white" style="margin: 0">
-     <form id="back" method="get" style="margin-top: 5px">
+     <form id="back" method="get" action="/old/departments" style="margin-top: 5px">
      <button type="submit" class="btn btn-primary">< BACK</button>
     </form>
 </span>

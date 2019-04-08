@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 public class AddNewDepartment implements Action {
     private static Logger LOG = LogManager.getLogger(AddNewDepartment.class);
-    private final static String URL = "/old?action-get=default&name=%s&flag=%s";
+    private final static String URL = "/old/departments?name=%s&flag=%s";
 
     @Autowired
     private DepartmentService departmentService;
@@ -37,11 +37,11 @@ public class AddNewDepartment implements Action {
             try {
                 departmentService.createDepartment(data);
                 LOG.info("Department {} was added!", data.getName());
-                response.sendRedirect("/old");
+                response.sendRedirect("/old/departments");
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
-                response.sendRedirect("/old");
+                response.sendRedirect("/old/departments");
             }
 
         } else {

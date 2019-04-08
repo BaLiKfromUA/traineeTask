@@ -52,7 +52,7 @@ public class EmployeeData {
     @NotEmpty(message = "Department Id can not be empty")
     @MinLength(value = 1, message = "Department Id length should be >= 1")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN,
-            message = "Department Id should be a number >= 0")
+            message = "Department Id should be a number >= 0")//todo: test
     private final String departmentId;
 
     public EmployeeData(String login, String email, String rank, String date, String departmentId) {

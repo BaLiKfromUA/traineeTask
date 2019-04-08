@@ -2,7 +2,6 @@ package com.aimprosoft.sandbox.controller;
 
 import com.aimprosoft.sandbox.controller.action.Action;
 import com.aimprosoft.sandbox.controller.action.ActionManager;
-import com.aimprosoft.sandbox.util.database.DatabaseManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +21,6 @@ import java.util.Optional;
  * @author BaLiK on 26.03.19
  */
 @Controller
-//todo:remake urls
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 
@@ -38,9 +36,7 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String servletUri = request.getPathInfo();
-        System.out.println(servletUri);
-        final String action = Optional.ofNullable(servletUri).orElse("/error");
+        final String action = Optional.ofNullable(request.getPathInfo()).orElse("/error");
         final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("/error"));
         actionToDo.execute(request, response);
     }
@@ -48,8 +44,8 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        final String action = Optional.ofNullable(request.getParameter("action-post")).orElse("error");
-        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("error"));
+        final String action = Optional.ofNullable(request.getPathInfo()).orElse("/error");
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("/error"));
         actionToDo.execute(request, response);
     }
 

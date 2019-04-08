@@ -20,8 +20,8 @@ import java.io.IOException;
 @Component
 public class AddNewEmployee implements Action {
     private static Logger LOG = LogManager.getLogger(AddNewEmployee.class);
-    private final static String URL = "/old?action-get=employees&department_id=%d";
-    private final static String FAIL_URL = "/old?action-get=employees&department_id=%s&login=%s&email=%s&rank=%s&date=%s&flag=%s&reason=%s";
+    private final static String URL = "/old/employees?department_id=%d";
+    private final static String FAIL_URL = "/old/employees?department_id=%s&login=%s&email=%s&rank=%s&date=%s&flag=%s&reason=%s";
 
     @Autowired
     private EmployeeService employeeService;

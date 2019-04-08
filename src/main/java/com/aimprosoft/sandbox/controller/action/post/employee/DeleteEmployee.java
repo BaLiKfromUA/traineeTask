@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class DeleteEmployee implements Action {
     private static Logger LOG = LogManager.getLogger(DeleteEmployee.class);
-    private static String URL = "/old?action-get=employees&department_id=%d";
+    private static String URL = "/old/employees?department_id=%d";
 
     @Autowired
     private EmployeeService employeeService;
@@ -46,7 +46,7 @@ public class DeleteEmployee implements Action {
             Long departmentId = Long.parseLong(depIdStr);
             response.sendRedirect(String.format(URL, departmentId));
         } else {
-            response.sendRedirect("/old?action-get=error");
+            response.sendRedirect("/old/errors");
         }
     }
 }

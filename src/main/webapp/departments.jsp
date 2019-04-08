@@ -42,8 +42,7 @@
         </c:set>
 
         <tr>
-            <form method="post">
-                <input type="hidden" name="action-post" value="department edit" autocomplete="off">
+            <form method="post"  action="/old/departments/edit">
                 <th scope="row">${department.ID}
                     <input type="hidden" name="id" value="${department.ID}" autocomplete="off"></th>
                 <td>
@@ -56,18 +55,16 @@
                 </td>
             </form>
 
-            <form method="post">
+            <form method="post" action="/old/departments/delete" >
                 <td>
                     <button type="submit" class="btn btn-danger">Delete</button>
-                    <input type="hidden" name="action-post" value="department delete" autocomplete="off">
                     <input type="hidden" name="id" value="${department.ID}" autocomplete="off">
                 </td>
             </form>
 
-            <form method="get">
+            <form method="get" action="/old/employees">
                 <td>
                     <button type="submit" class="btn btn-info">Employee List</button>
-                    <input type="hidden" name="action-get" value="employees" autocomplete="off">
                     <input type="hidden" name="department_id" value="${department.ID}" autocomplete="off">
                 </td>
             </form>
@@ -76,8 +73,7 @@
     </c:forEach>
 
     <tr>
-        <form id="add" method="post">
-            <input type="hidden" name="action-post" value="add new department" autocomplete="off">
+        <form id="add" method="post"  action="/old/departments/add">
             <th>*</th>
             <td>
                 <c:set var="departmentName">

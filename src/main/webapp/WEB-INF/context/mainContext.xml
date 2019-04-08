@@ -99,13 +99,13 @@
         <entry key="/employees" value-ref="getEmployees"/>
         <entry key="/error" value-ref="error"/>
 
-        <entry key="add new department" value-ref="addDepartment"/>
-        <entry key="department delete" value-ref="deleteDepartment"/>
-        <entry key="department edit" value-ref="editDepartment"/>
+        <entry key="/departments/add" value-ref="addDepartment"/>
+        <entry key="/departments/delete" value-ref="deleteDepartment"/>
+        <entry key="/departments/edit" value-ref="editDepartment"/>
 
-        <entry key="add new employee" value-ref="addEmployee"/>
-        <entry key="employee delete" value-ref="deleteEmployee"/>
-        <entry key="employee edit" value-ref="editEmployee"/>
+        <entry key="/employees/add" value-ref="addEmployee"/>
+        <entry key="/employees/delete" value-ref="deleteEmployee"/>
+        <entry key="/employees/edit" value-ref="editEmployee"/>
 
     </util:map>
 
