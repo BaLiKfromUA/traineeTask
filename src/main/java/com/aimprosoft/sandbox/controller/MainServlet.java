@@ -38,8 +38,10 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String action = Optional.ofNullable(request.getParameter("action-get")).orElse("default");
-        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("error"));
+        final String servletUri = request.getPathInfo();
+        System.out.println(servletUri);
+        final String action = Optional.ofNullable(servletUri).orElse("/error");
+        final Action actionToDo = Optional.ofNullable(actionManager.getAction(action)).orElse(actionManager.getAction("/error"));
         actionToDo.execute(request, response);
     }
 

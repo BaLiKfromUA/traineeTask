@@ -95,9 +95,9 @@
     <!--ACTION MAP-->
     <util:map id="actionMap" value-type="java.util.List">
 
-        <entry key="default" value-ref="getDepartments"/>
-        <entry key="employees" value-ref="getEmployees"/>
-        <entry key="error" value-ref="error"/>
+        <entry key="/departments" value-ref="getDepartments"/>
+        <entry key="/employees" value-ref="getEmployees"/>
+        <entry key="/error" value-ref="error"/>
 
         <entry key="add new department" value-ref="addDepartment"/>
         <entry key="department delete" value-ref="deleteDepartment"/>
