@@ -1,6 +1,22 @@
 # SANDBOX
 
 ## TIPS
+### CUSTOM ANNOTATIONS
+#### java.lang.annotation.ElementType:
+
+A program element type. The constants of this enumerated type provide a simple classification of the declared elements in a Java program. These constants are used with the Target meta-annotation type to specify where it is legal to use an annotation type.
+
+There are the following constants:
+
+- **ANNOTATION_TYPE** - Annotation type declaration
+- **CONSTRUCTOR** - Constructor declaration
+- **FIELD** - Field declaration (includes enum constants)
+- **LOCAL_VARIABLE** - Local variable declaration
+- **METHOD** - Method declaration
+- **PACKAGE** - Package declaration
+- **PARAMETER** - Parameter declaration
+- **TYPE** - Class, interface (including annotation type), or enum declaration
+
 ### SQL
 `mysql -ubalik -p1204`
 

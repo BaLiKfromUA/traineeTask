@@ -4,6 +4,7 @@ import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
+import com.aimprosoft.sandbox.util.database.StatementsHQL;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
         ArrayList<Employee> employees;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             employees = new ArrayList<>(session
-                    .createQuery("SELECT E FROM Employee E WHERE E.departmentID=:department_id order by E.id", Employee.class)
+                    .createQuery(StatementsHQL.GET_ALL_EMPLOYEES, Employee.class)
                     .setParameter("department_id", id)
                     .getResultList());
         } catch (Exception e) {
@@ -44,8 +45,7 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            final String hql = "FROM Employee E WHERE E.id <> :employee_id AND E.email=:employee_email";
-            Query q = session.createQuery(hql)
+            Query q = session.createQuery(StatementsHQL.CHECK_EMPLOYEE)
                     .setParameter("employee_id", employee.getID())
                     .setParameter("employee_email", employee.getEmail());
 
@@ -75,9 +75,8 @@ public class HibernateEmployeeRepoImpl implements EmployeeRepo {
     public void deleteEmployeeById(Long id) throws DatabaseException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            final String hql = "DELETE FROM Employee " +
-                    "WHERE id = :employee_id";
-            Query q = session.createQuery(hql).setParameter("employee_id", id);
+            Query q = session.createQuery(StatementsHQL.DELETE_EMPLOYEE)
+                    .setParameter("employee_id", id);
             q.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {

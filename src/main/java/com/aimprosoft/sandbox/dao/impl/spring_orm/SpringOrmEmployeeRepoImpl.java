@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.dao.impl.spring_orm;
 
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.domain.Employee;
+import com.aimprosoft.sandbox.util.database.StatementsHQL;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
@@ -21,17 +22,17 @@ public class SpringOrmEmployeeRepoImpl implements EmployeeRepo {
     @Override
     public ArrayList<Employee> getAllByDepartmentId(Long id) {
         return new ArrayList<>(sessionFactory.getCurrentSession()
-                .createQuery("SELECT E FROM Employee E where E.departmentID=? order by E.id")
-                .setParameter(0, id)
+                .createQuery(StatementsHQL.GET_ALL_EMPLOYEES)
+                .setParameter("department_id", id)
                 .list());
     }
 
     @Override
     public boolean checkEmployee(Employee employee) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Employee E where E.email=? and E.id!=?")
-                .setParameter(0, employee.getEmail())
-                .setParameter(1, employee.getID())
+                .createQuery(StatementsHQL.CHECK_EMPLOYEE)
+                .setParameter("employee_id", employee.getID())
+                .setParameter("employee_email", employee.getEmail())
                 .list().isEmpty();
     }
 

@@ -2,6 +2,7 @@ package com.aimprosoft.sandbox.dao.impl.spring_orm;
 
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.domain.Department;
+import com.aimprosoft.sandbox.util.database.StatementsHQL;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
@@ -21,16 +22,16 @@ public class SpringOrmDepartmentRepoImpl implements DepartmentRepo {
     @Override
     public ArrayList<Department> getAllDepartments() {
         return new ArrayList<>(sessionFactory.getCurrentSession()
-                .createQuery("SELECT D FROM Department D order by D.id")
+                .createQuery(StatementsHQL.GET_ALL_DEPARTMENTS)
                 .list());
     }
 
     @Override
     public boolean checkDepartment(Department department) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Department D where D.name=? and D.id!=?")
-                .setParameter(0, department.getName())
-                .setParameter(1, department.getID())
+                .createQuery(StatementsHQL.CHECK_DEPARTMENT)
+                .setParameter("department_id", department.getID())
+                .setParameter("department_name", department.getName())
                 .list().isEmpty();
     }
 
