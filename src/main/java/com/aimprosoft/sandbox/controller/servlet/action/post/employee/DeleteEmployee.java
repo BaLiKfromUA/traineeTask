@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.controller.action.post.employee;
+package com.aimprosoft.sandbox.controller.servlet.action.post.employee;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;

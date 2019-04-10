@@ -43,31 +43,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public ArrayList<Employee> getAllByDepartmentId(String id) throws DatabaseException {
         return repo.getAllByDepartmentId(Long.parseLong(id));
     }
 
     @Override
-    @Transactional
     public boolean checkEmployee(EmployeeData employee) throws DatabaseException {
         return repo.checkEmployee(convert(employee));
     }
 
     @Override
-    @Transactional
     public void createEmployee(EmployeeData employee) throws DatabaseException {
         repo.createEmployee(convert(employee));
     }
 
     @Override
-    @Transactional
     public void deleteEmployeeById(String id) throws DatabaseException {
         repo.deleteEmployeeById(Long.parseLong(id));
     }
 
     @Override
-    @Transactional
     public void updateEmployee(EmployeeData employee) throws DatabaseException {
         repo.updateEmployee(convert(employee));
     }

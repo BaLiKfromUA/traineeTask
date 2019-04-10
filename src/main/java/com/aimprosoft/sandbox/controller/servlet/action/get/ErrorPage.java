@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.controller.action.get;
+package com.aimprosoft.sandbox.controller.servlet.action.get;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;

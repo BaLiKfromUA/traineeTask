@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.controller.action.post.department;
+package com.aimprosoft.sandbox.controller.servlet.action.post.department;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;

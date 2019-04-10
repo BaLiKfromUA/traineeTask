@@ -1,6 +1,7 @@
-package com.aimprosoft.sandbox.controller.action.post.department;
+package com.aimprosoft.sandbox.controller.servlet.action.post.department;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
+import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
 import com.aimprosoft.sandbox.util.validator.OvalValidator;
@@ -17,8 +18,9 @@ import java.io.IOException;
  * @author BaLiK on 26.03.19
  */
 @Component
-public class DeleteDepartment implements Action {
-    private static Logger LOG = LogManager.getLogger(DeleteDepartment.class);
+public class AddNewDepartment implements Action {
+    private static Logger LOG = LogManager.getLogger(AddNewDepartment.class);
+    private final static String URL = "/old/departments?name=%s&flag=%s";
 
     @Autowired
     private DepartmentService departmentService;
@@ -28,20 +30,22 @@ public class DeleteDepartment implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
-        if (validator.validateId(id)) {
+        DepartmentData data = new DepartmentData(request.getParameter("new name"));
+        String flag = "invalid-new-department";
 
+        if (validator.validate(data)) {
             try {
-                departmentService.deleteDepartmentById(id);
+                departmentService.createDepartment(data);
+                LOG.info("Department {} was added!", data.getName());
+                response.sendRedirect("/old/departments");
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
+                response.sendRedirect("/old/departments");
             }
 
-            LOG.info("Department {} was removed!", id);
-            response.sendRedirect("/old/departments");
         } else {
-            response.sendRedirect("/old/errors");
+            response.sendRedirect(String.format(URL, data.getName(), flag));
         }
     }
 }

@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.controller.action.get;
+package com.aimprosoft.sandbox.controller.servlet.action.get;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
 import com.aimprosoft.sandbox.controller.data.DepartmentData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.DepartmentService;
@@ -51,6 +51,6 @@ public class DepartmentsPage implements Action {
         request.setAttribute("name", request.getParameter("name"));
         request.setAttribute("flag", request.getParameter("flag"));
 
-        request.getRequestDispatcher("/departments.jsp").forward(request, response);
+        request.getRequestDispatcher("/departmentsPage.jsp").forward(request, response);
     }
 }

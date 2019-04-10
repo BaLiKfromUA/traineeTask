@@ -1,6 +1,6 @@
-package com.aimprosoft.sandbox.controller.action.get;
+package com.aimprosoft.sandbox.controller.servlet.action.get;
 
-import com.aimprosoft.sandbox.controller.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
 import com.aimprosoft.sandbox.controller.data.EmployeeData;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import com.aimprosoft.sandbox.service.EmployeeService;
@@ -53,11 +53,11 @@ public class EmployeesPage implements Action {
             request.setAttribute("flag", request.getParameter("flag"));
             request.setAttribute("reason", request.getParameter("reason"));
 
-            request.getRequestDispatcher("/employees.jsp").forward(request, response);
+            request.getRequestDispatcher("/employeesPage.jsp").forward(request, response);
         } else {
             request.setAttribute("reason", "invalid");
             request.setAttribute("errorMessages", new String[]{("Invalid department id!")});
-            request.getRequestDispatcher("/employees.jsp").forward(request, response);
+            request.getRequestDispatcher("/employeesPage.jsp").forward(request, response);
         }
     }
 }

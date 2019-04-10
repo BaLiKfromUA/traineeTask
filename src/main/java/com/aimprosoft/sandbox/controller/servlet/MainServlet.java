@@ -1,12 +1,12 @@
-package com.aimprosoft.sandbox.controller;
+package com.aimprosoft.sandbox.controller.servlet;
 
-import com.aimprosoft.sandbox.controller.action.Action;
-import com.aimprosoft.sandbox.controller.action.ActionManager;
+import com.aimprosoft.sandbox.controller.servlet.action.Action;
+import com.aimprosoft.sandbox.controller.servlet.action.ActionManager;
 import com.aimprosoft.sandbox.util.database.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * @author BaLiK on 26.03.19
  */
-@Controller
+@Component
 public class MainServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(MainServlet.class);
 

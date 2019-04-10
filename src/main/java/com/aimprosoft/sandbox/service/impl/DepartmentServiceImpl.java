@@ -38,31 +38,26 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional
     public ArrayList<Department> getAllDepartments() throws DatabaseException {
         return repo.getAllDepartments();
     }
 
     @Override
-    @Transactional
     public boolean checkDepartment(DepartmentData department) throws DatabaseException {
         return repo.checkDepartment(convert(department));
     }
 
     @Override
-    @Transactional
     public void createDepartment(DepartmentData department) throws DatabaseException {
         repo.createDepartment(convert(department));
     }
 
     @Override
-    @Transactional
     public void deleteDepartmentById(String id) throws DatabaseException {
         repo.deleteDepartmentById(Long.parseLong(id));
     }
 
     @Override
-    @Transactional
     public void updateDepartment(DepartmentData department) throws DatabaseException {
         repo.updateDepartment(convert(department));
     }

@@ -1,4 +1,4 @@
-package com.aimprosoft.sandbox.controller.action;
+package com.aimprosoft.sandbox.controller.servlet.action;
 
 import org.springframework.stereotype.Component;
 

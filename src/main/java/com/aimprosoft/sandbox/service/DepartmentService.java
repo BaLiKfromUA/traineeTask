@@ -5,6 +5,7 @@ import com.aimprosoft.sandbox.domain.Department;
 import com.aimprosoft.sandbox.exception.DatabaseException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 /**

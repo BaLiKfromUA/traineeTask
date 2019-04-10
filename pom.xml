@@ -27,6 +27,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -154,8 +157,9 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <version>1.4</version>
         </dependency>
+
 
         <!--VALIDATION-->
         <dependency>
