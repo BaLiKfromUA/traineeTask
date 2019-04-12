@@ -53,11 +53,11 @@ public class EmployeesPage implements Action {
             request.setAttribute("flag", request.getParameter("flag"));
             request.setAttribute("reason", request.getParameter("reason"));
 
-            request.getRequestDispatcher("/employeesPage.jsp").forward(request, response);
         } else {
             request.setAttribute("reason", "invalid");
             request.setAttribute("errorMessages", new String[]{("Invalid department id!")});
-            request.getRequestDispatcher("/employeesPage.jsp").forward(request, response);
         }
+
+        request.getRequestDispatcher("/employeesPage.jsp").forward(request, response);
     }
 }

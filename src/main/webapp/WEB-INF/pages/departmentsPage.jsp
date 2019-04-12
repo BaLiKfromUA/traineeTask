@@ -1,14 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>BaLiK Sandbox</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
@@ -42,27 +47,30 @@
         </c:set>
 
         <tr>
-            <form method="post"  action="/old/departments/edit">
+                <%--@elvariable id="departmentModel" type="com.aimprosoft.sandbox.controller.data.DepartmentData"--%>
+            <form:form method="post" action="/departments/edit" modelAttribute="departmentModel">
                 <th scope="row">${department.ID}
-                    <input type="hidden" name="id" value="${department.ID}" autocomplete="off"></th>
+                    <form:hidden path="id" value="${department.ID}"/>
+                </th>
                 <td>
-                    <input type="text" name="new name" class="form-control" minlength="6" maxlength="20"
-                           placeholder="Enter department name" pattern="^[A-Z][a-z]{5,21}$"
-                           value="${departmentName}" autocomplete="off" required>
+                    <input:input path="name" type="text" class="form-control" minlength="6"
+                                 maxlength="20"
+                                 placeholder="Enter department name" pattern="^[A-Z][a-z]{5,21}$"
+                                 value="${departmentName}" autocomplete="off" required="true"/>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </td>
-            </form>
+            </form:form>
 
-            <form method="post" action="/old/departments/delete" >
+            <form method="post" action="/departments/delete">
                 <td>
                     <button type="submit" class="btn btn-danger">Delete</button>
                     <input type="hidden" name="id" value="${department.ID}" autocomplete="off">
                 </td>
             </form>
 
-            <form method="get" action="/old/employees">
+            <form method="get" action="/employees">
                 <td>
                     <button type="submit" class="btn btn-info">Employee List</button>
                     <input type="hidden" name="department_id" value="${department.ID}" autocomplete="off">
@@ -73,7 +81,8 @@
     </c:forEach>
 
     <tr>
-        <form id="add" method="post"  action="/old/departments/add">
+        <%--@elvariable id="departmentModel" type="com.aimprosoft.sandbox.controller.data.DepartmentData"--%>
+        <form:form id="add" method="post" action="/departments/add" modelAttribute="departmentModel">
             <th>*</th>
             <td>
                 <c:set var="departmentName">
@@ -88,9 +97,9 @@
                     </c:choose>
                 </c:set>
 
-                <input type="text" class="form-control" name="new name" minlength="6" maxlength="20"
-                       placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
-                       pattern="^[A-Z][a-z]{5,21}$" required>
+                <form:input path="name" type="text" class="form-control" name="new name" minlength="6" maxlength="20"
+                            placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
+                            pattern="^[A-Z][a-z]{5,21}$" required="false"/>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
@@ -101,7 +110,7 @@
             <td>
 
             </td>
-        </form>
+        </form:form>
     </tr>
     </tbody>
 </table>

@@ -52,7 +52,7 @@
 
 
         <tr>
-            <form method="post" action="/old/employees/edit?department_id=<%= request.getParameter("department_id") %>">
+            <form method="post" action="/employees/edit?department_id=<%= request.getParameter("department_id") %>">
 
                 <th scope="row">${employee.ID}
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
@@ -86,7 +86,7 @@
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </td>
             </form>
-            <form method="post" action="/old/employees/delete?department_id=<%= request.getParameter("department_id") %>">
+            <form method="post" action="/employees/delete?department_id=<%= request.getParameter("department_id") %>">
                 <td>
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -95,7 +95,7 @@
         </tr>
     </c:forEach>
     <tr>
-        <form id="add" method="post" action="/old/employees/add?department_id=<%= request.getParameter("department_id") %>">
+        <form id="add" method="post" action="/employees/add?department_id=<%= request.getParameter("department_id") %>">
             <th>*</th>
 
             <c:choose>
@@ -150,7 +150,7 @@
     </tbody>
 </table>
 <span class="d-block p-2 bg-dark text-white" style="margin: 0">
-     <form id="back" method="get" action="/old/departments" style="margin-top: 5px">
+     <form id="back" method="get" action="/departments" style="margin-top: 5px">
      <button type="submit" class="btn btn-primary">< BACK</button>
     </form>
 </span>

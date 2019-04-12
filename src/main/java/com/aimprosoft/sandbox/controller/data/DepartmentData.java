@@ -18,7 +18,7 @@ public class DepartmentData {
     @MinLength(value = 1, message = "Id length should be >= 1")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN,
             message = "Id should be a number >= 0")
-    private final String id;
+    private String id;
 
     @NotNull(message = "Name can not be null")
     @NotEmpty(message = "Name can not be empty")
@@ -26,7 +26,11 @@ public class DepartmentData {
     @Length(max = 20, message = "Name length should be <=20")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.NAME_PATTERN,
             message = "Name must contain ONLY letters of the English alphabet and begin with a capital letter.")
-    private final String name;
+    private String name;
+
+    public DepartmentData() {
+        id = "0";
+    }
 
     public DepartmentData(String name) {
         this.id = "0";
@@ -44,5 +48,13 @@ public class DepartmentData {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
