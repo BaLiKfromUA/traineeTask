@@ -15,7 +15,7 @@ public class EmployeeData {
     @MinLength(value = 1, message = "Id length should be >= 1")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN,
             message = "Id should be a number >= 0")
-    private final String id;
+    private String id;
 
     @NotNull(message = "Login can not be null")
     @NotEmpty(message = "Login can not be empty")
@@ -23,7 +23,7 @@ public class EmployeeData {
     @Length(max = 20, message = "Login length should be <= 20")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.LOGIN_PATTERN,
             message = "Login may consist of uppercase English letters, numbers, \"_\" and \"-\".")
-    private final String login;
+    private String login;
 
     @NotNull(message = "Email can not be null")
     @NotEmpty(message = "Email can not be empty")
@@ -31,7 +31,7 @@ public class EmployeeData {
     @Length(max = 40, message = "Email length should be <= 40")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.EMAIL_PATTERN,
             message = "Email should be valid")
-    private final String email;
+    private String email;
 
     @NotNull(message = "Rank can not be null")
     @NotEmpty(message = "Rank can not be empty")
@@ -39,21 +39,21 @@ public class EmployeeData {
     @Length(max = 3, message = "Rank length should be <= 3")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.RANK_PATTERN,
             message = "Rank should be >= 1 and < 1000")
-    private final String rank;
+    private String rank;
 
     @NotNull(message = "Date can not be null")
     @NotEmpty(message = "Date can not be empty")
     @DateRange(min = "1979-12-31", max = "2079-12-31", format = "yyyy-MM-dd",
             message = "Date format should be 'yyyy-MM-dd'.\n" +
                     "Date cannot be before 1979-12-31 or after 2079-12-31.")
-    private final String date;
+    private String date;
 
     @NotNull(message = "Department Id can not be null")
     @NotEmpty(message = "Department Id can not be empty")
     @MinLength(value = 1, message = "Department Id length should be >= 1")
     @javax.validation.constraints.Pattern(regexp = DataPatterns.ID_PATTERN,
             message = "Department Id should be a number >= 0")
-    private final String departmentId;
+    private String departmentId;
 
     public EmployeeData(String login, String email, String rank, String date, String departmentId) {
         this.id = "0";
@@ -73,6 +73,10 @@ public class EmployeeData {
         this.departmentId = departmentId;
     }
 
+    public EmployeeData() {
+        this.id = "0";
+        this.departmentId = "0";
+    }
 
     public String getId() {
         return id;
@@ -96,5 +100,29 @@ public class EmployeeData {
 
     public String getDepartmentId() {
         return departmentId;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author BaLiK on 10.04.19
@@ -30,6 +31,11 @@ public class DepartmentController {
     @GetMapping("/")
     public String redirect() {
         return "redirect:/departments";
+    }
+
+    @GetMapping("/404")
+    public String NotFoundPage() {
+        return "errorPage";
     }
 
     @ModelAttribute("departmentModel")
@@ -69,13 +75,13 @@ public class DepartmentController {
 
     @PostMapping("/departments/delete")
     public String deleteDepartment(@RequestParam("id") String id,
-                                   Model model) {
+                                   RedirectAttributes redirectAttributes) {
         if (validator.validateId(id)) {
             try {
                 service.deleteDepartmentById(id);
             } catch (DatabaseException e) {
-                model.addAttribute("dbError", true);
-                model.addAttribute("errorMessage", e.getMessage());
+                redirectAttributes.addFlashAttribute("dbError", true);
+                redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             }
 
             LOG.info("Department {} was removed!", id);
@@ -83,23 +89,23 @@ public class DepartmentController {
             return "redirect:/departments";
         }
 
-        return "redirect:/errors";
+        return "redirect:/404";
     }
 
     @PostMapping("/departments/add")
-    public String createDepartment(DepartmentData data, Model model) {
+    public String createDepartment(DepartmentData data, RedirectAttributes redirectAttributes) {
         if (validator.validate(data)) {
             try {
                 service.createDepartment(data);
                 LOG.info("Department {} was added!", data.getName());
             } catch (DatabaseException e) {
-                model.addAttribute("dbError", true);
-                model.addAttribute("errorMessage", e.getMessage());
+                redirectAttributes.addFlashAttribute("dbError", true);
+                redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             }
 
         } else {
-            model.addAttribute("flag", "invalid-new-department");
-            model.addAttribute("name", data.getName());
+            redirectAttributes.addFlashAttribute("flag", "invalid-new-department");
+            redirectAttributes.addFlashAttribute("name", data.getName());
         }
 
         return "redirect:/departments";
@@ -107,19 +113,19 @@ public class DepartmentController {
 
     //todo:redirect vs forward
     @PostMapping("/departments/edit")
-    public String editDepartment(DepartmentData data, Model model) {
+    public String editDepartment(DepartmentData data, RedirectAttributes redirectAttributes) {
         if (validator.validate(data)) {
             try {
                 service.updateDepartment(data);
                 LOG.info("Department {} was updated!", data.getId());
             } catch (DatabaseException e) {
-                model.addAttribute("dbError", true);
-                model.addAttribute("errorMessage", e.getMessage());
+                redirectAttributes.addFlashAttribute("dbError", true);
+                redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             }
 
         } else {
-            model.addAttribute("flag", data.getId());
-            model.addAttribute("name", data.getName());
+            redirectAttributes.addFlashAttribute("flag", data.getId());
+            redirectAttributes.addFlashAttribute("name", data.getName());
         }
 
         return "redirect:/departments";

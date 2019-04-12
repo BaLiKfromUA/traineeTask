@@ -45,13 +45,12 @@ public class EditEmployee implements Action {
             try {
                 employeeService.updateEmployee(data);
                 LOG.info("Employee {} was updated!", userId);
-                response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             } catch (DatabaseException e) {
                 request.setAttribute("dbError", true);
                 request.setAttribute("errorMessage", e.getMessage());
-                response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
             }
 
+            response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
         } else {
             response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, userId, "invalid"));
         }

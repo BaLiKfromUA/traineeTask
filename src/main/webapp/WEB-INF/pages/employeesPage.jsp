@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,6 +33,7 @@
     </thead>
     <tbody>
 
+    <c:set var="departmentId" value='<%= request.getParameter("department_id") %>'/>
     <c:forEach var="employee" items="${employees}">
 
         <c:choose>
@@ -52,41 +54,44 @@
 
 
         <tr>
-            <form method="post" action="/employees/edit?department_id=<%= request.getParameter("department_id") %>">
+                <%--@elvariable id="employeeModel" type="com.aimprosoft.sandbox.controller.data.EmployeeData"--%>
+            <form:form method="post" action="/employees/edit?department_id=${departmentId}"
+                       modelAttribute="employeeModel">
 
                 <th scope="row">${employee.ID}
-                    <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
+                    <form:hidden path="departmentId" value="${departmentId}"/>
+                    <form:input path="id" type="hidden" name="id" value="${employee.ID}" autocomplete="off"/>
                 </th>
                 <td>
-                    <input type="text" class="form-control" name="new login" minlength="6" maxlength="20"
-                           placeholder="Enter login" pattern="^[a-z0-9_-]{5,21}$"
-                           value="${currLogin}" autocomplete="off" required>
+                    <form:input path="login" type="text" class="form-control" minlength="6" maxlength="20"
+                                placeholder="Enter login" pattern="^[a-z0-9_-]{5,21}$"
+                                value="${currLogin}" autocomplete="off" required="true"/>
                 </td>
                 <td>
-                    <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
-                           aria-describedby="emailHelp"
-                           placeholder="Enter email"
-                           value="${currEmail}"
-                           pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
-                           autocomplete="off"
-                           required>
+                    <form:input path="email" type="email" class="form-control" minlength="6" maxlength="40"
+                                aria-describedby="emailHelp"
+                                placeholder="Enter email"
+                                value="${currEmail}"
+                                pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
+                                autocomplete="off"
+                                required="true"/>
                 </td>
                 <td>
-                    <input type="number" min="1" max="999" class="form-control" placeholder="Enter rank"
-                           name="new rank"
-                           value="${currRank}" autocomplete="off" required>
+                    <form:input path="rank" type="number" min="1" max="999" class="form-control"
+                                placeholder="Enter rank"
+                                value="${currRank}" autocomplete="off" required="true"/>
                 </td>
                 <td>
-                    <input type="date" class="form-control" name="new date"
-                           min="1979-12-31" max="2079-12-31"
-                           value="${currDate}" autocomplete="off" required>
+                    <form:input path="date" type="date" class="form-control"
+                                min="1979-12-31" max="2079-12-31"
+                                value="${currDate}" autocomplete="off" required="true"/>
                 </td>
 
                 <td>
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </td>
-            </form>
-            <form method="post" action="/employees/delete?department_id=<%= request.getParameter("department_id") %>">
+            </form:form>
+            <form method="post" action="/employees/delete?department_id=${departmentId}">
                 <td>
                     <input type="hidden" name="id" value="${employee.ID}" autocomplete="off">
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -95,7 +100,10 @@
         </tr>
     </c:forEach>
     <tr>
-        <form id="add" method="post" action="/employees/add?department_id=<%= request.getParameter("department_id") %>">
+        <%--@elvariable id="employeeModel" type="com.aimprosoft.sandbox.controller.data.EmployeeData"--%>
+        <form:form id="add" method="post"
+                   action="/employees/add?department_id=${departmentId}"
+                   modelAttribute="employeeModel">
             <th>*</th>
 
             <c:choose>
@@ -115,27 +123,28 @@
             </c:choose>
 
             <td>
-                <input type="text" class="form-control" name="new login" minlength="6" maxlength="20"
-                       placeholder="Enter login"
-                       value="${currLogin}" pattern="^[a-z0-9_-]{5,21}$" autocomplete="off" required>
+                <form:hidden path="departmentId" value="${departmentId}"/>
+                <form:input path="login" type="text" class="form-control" minlength="6" maxlength="20"
+                            placeholder="Enter login"
+                            value="${currLogin}" pattern="^[a-z0-9_-]{5,21}$" autocomplete="off" required="true"/>
             </td>
             <td>
-                <input type="email" class="form-control" name="new email" minlength="6" maxlength="40"
-                       aria-describedby="emailHelp"
-                       placeholder="Enter email" value="${currEmail}"
-                       pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
-                       autocomplete="off" required>
+                <form:input path="email" type="email" class="form-control" minlength="6"
+                            maxlength="40"
+                            aria-describedby="emailHelp"
+                            placeholder="Enter email" value="${currEmail}"
+                            pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
+                            autocomplete="off" required="true"/>
             </td>
             <td>
-                <input type="number" name="new rank" min="1" max="999" class="form-control"
-                       placeholder="Enter rank"
-                       value="${currRank}" autocomplete="off" required>
+                <form:input path="rank" type="number" min="1" max="999" class="form-control"
+                            placeholder="Enter rank"
+                            value="${currRank}" autocomplete="off" required="true"/>
             </td>
             <td>
-                <input type="date" class="form-control" name="new date"
-                       min="1979-12-31" max="2079-12-31"
-                       pattern=""
-                       value="${currDate}" autocomplete="off" required>
+                <form:input path="date" type="date" class="form-control"
+                            min="1979-12-31" max="2079-12-31"
+                            value="${currDate}" autocomplete="off" required="true"/>
             </td>
 
             <td>
@@ -144,7 +153,7 @@
             <td>
 
             </td>
-        </form>
+        </form:form>
     </tr>
 
     </tbody>
