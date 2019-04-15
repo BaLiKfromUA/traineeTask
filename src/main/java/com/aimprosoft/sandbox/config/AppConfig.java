@@ -1,16 +1,5 @@
 package com.aimprosoft.sandbox.config;
 
-import com.aimprosoft.sandbox.controller.servlet.action.Action;
-import com.aimprosoft.sandbox.controller.servlet.action.ActionManager;
-import com.aimprosoft.sandbox.controller.servlet.action.get.DepartmentsPage;
-import com.aimprosoft.sandbox.controller.servlet.action.get.EmployeesPage;
-import com.aimprosoft.sandbox.controller.servlet.action.get.ErrorPage;
-import com.aimprosoft.sandbox.controller.servlet.action.post.department.AddNewDepartment;
-import com.aimprosoft.sandbox.controller.servlet.action.post.department.DeleteDepartment;
-import com.aimprosoft.sandbox.controller.servlet.action.post.department.EditDepartment;
-import com.aimprosoft.sandbox.controller.servlet.action.post.employee.AddNewEmployee;
-import com.aimprosoft.sandbox.controller.servlet.action.post.employee.DeleteEmployee;
-import com.aimprosoft.sandbox.controller.servlet.action.post.employee.EditEmployee;
 import com.aimprosoft.sandbox.dao.DepartmentRepo;
 import com.aimprosoft.sandbox.dao.EmployeeRepo;
 import com.aimprosoft.sandbox.dao.impl.hibernate.HibernateDepartmentRepoImpl;
@@ -26,10 +15,7 @@ import com.aimprosoft.sandbox.util.validator.OvalValidator;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -38,18 +24,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
  * @author BaLiK on 09.04.19
  */
-//TODO: разделить на несколько классов
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = "classpath:application.properties")
 @EnableScheduling //task:annotation-driven
+@Import({ActionConfig.class})
 @ImportResource("classpath:spring_config.xml")
 public class AppConfig {
 
@@ -176,85 +160,6 @@ public class AppConfig {
         return service;
     }
 
-    /**
-     * ACTIONS
-     **/
-    @Bean
-    public DepartmentsPage getDepartments() {
-        return new DepartmentsPage();
-    }
-
-    @Bean
-    public EmployeesPage getEmployees() {
-        return new EmployeesPage();
-    }
-
-    @Bean
-    public ErrorPage error() {
-        return new ErrorPage();
-    }
-
-    @Bean
-    public AddNewDepartment addDepartment() {
-        return new AddNewDepartment();
-    }
-
-    @Bean
-    public DeleteDepartment deleteDepartment() {
-        return new DeleteDepartment();
-    }
-
-    @Bean
-    public EditDepartment editDepartment() {
-        return new EditDepartment();
-    }
-
-    @Bean
-    public AddNewEmployee addEmployee() {
-        return new AddNewEmployee();
-    }
-
-    @Bean
-    public DeleteEmployee deleteEmployee() {
-        return new DeleteEmployee();
-    }
-
-    @Bean
-    public EditEmployee editEmployee() {
-        return new EditEmployee();
-    }
-
-    /**
-     * ACTION MAP
-     **/
-    @Bean
-    public Map<String, Action> actionMap() {
-        Map<String, Action> actionMap = new HashMap<>();
-
-        actionMap.put("/departments", getDepartments());
-        actionMap.put("/employees", getEmployees());
-        actionMap.put("/error", error());
-
-        actionMap.put("/departments/add", addDepartment());
-        actionMap.put("/departments/delete", deleteDepartment());
-        actionMap.put("/departments/edit", editDepartment());
-
-        actionMap.put("/employees/add", addEmployee());
-        actionMap.put("/employees/delete", deleteEmployee());
-        actionMap.put("/employees/edit", editEmployee());
-
-        return actionMap;
-    }
-
-    /**
-     * ACTION MANAGER
-     **/
-    @Bean
-    public ActionManager actionManager() {
-        ActionManager actionManager = new ActionManager();
-        actionManager.setActions(actionMap());
-        return actionManager;
-    }
 
     /**
      * VALIDATOR

@@ -39,7 +39,7 @@ public class AddNewEmployee implements Action {
 
         EmployeeData data = new EmployeeData(newLogin, newEmail, newRank, newDate, departmentId);
 
-        if (validator.validate(data)) {
+        /*if (validator.validate(data)) {
             try {
                 employeeService.createEmployee(data);
                 LOG.info("Employee {} was added!", newLogin);
@@ -51,6 +51,6 @@ public class AddNewEmployee implements Action {
             }
         } else {
             response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, "invalid-new-employee", "invalid"));
-        }
+        }*/
     }
 }

@@ -38,10 +38,12 @@
                 <%--@elvariable id="flag" type="java.lang.String"--%>
                 <c:when test="${''.concat(department.ID) eq flag}">
                     <%--@elvariable id="name" type="java.lang.String"--%>
-                    ${name}
+                    ${incorrect_name}
+                    <c:set var="isError" value="true"/>
                 </c:when>
                 <c:otherwise>
                     ${department.name}
+                    <c:set var="isError" value="false"/>
                 </c:otherwise>
             </c:choose>
         </c:set>
@@ -57,6 +59,9 @@
                                  maxlength="20"
                                  placeholder="Enter department name" pattern="^[A-Z][a-z]{5,21}$"
                                  value="${departmentName}" autocomplete="off" required="true"/>
+                    <div <c:if test="${not isError}">hidden</c:if>>
+                        <form:errors path="name" cssStyle="color: red"/>
+                    </div>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-warning">Edit</button>
@@ -82,24 +87,30 @@
 
     <tr>
         <%--@elvariable id="departmentModel" type="com.aimprosoft.sandbox.controller.data.DepartmentData"--%>
-        <form:form id="add" method="post" action="/departments/add" modelAttribute="departmentModel">
+        <form:form id="add" method="post" action="/departments/add" modelAttribute="newDepartmentModel">
             <th>*</th>
             <td>
-                <c:set var="departmentName">
+                <c:set var="newDepartmentName">
                     <c:choose>
                         <%--@elvariable id="flag" type="java.lang.String"--%>
                         <c:when test="${'invalid-new-department' eq flag}">
                             <%--@elvariable id="name" type="java.lang.String"--%>
-                            ${name}
+                            ${incorrect_name}
+                            <c:set var="isError" value="true"/>
                         </c:when>
                         <c:otherwise>
+                            <c:set var="isError" value="false"/>
                         </c:otherwise>
                     </c:choose>
                 </c:set>
 
-                <form:input path="name" type="text" class="form-control" name="new name" minlength="6" maxlength="20"
-                            placeholder="Enter new department name" value="${departmentName}" autocomplete="off"
+                <form:input path="name"  type="text" class="form-control" minlength="6" maxlength="20"
+                            placeholder="Enter new department name" value="${newDepartmentName}" autocomplete="off"
                             pattern="^[A-Z][a-z]{5,21}$" required="false"/>
+
+                <div <c:if test="${not isError}">hidden</c:if>>
+                    <form:errors path="name" cssStyle="color: red"/>
+                </div>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
@@ -117,11 +128,6 @@
 <div class="alert alert-danger" role="alert" <c:if test="${not dbError}">hidden</c:if>>
     ${errorMessage}
 </div>
-<c:forEach var="message" items="${errorMessages}">
-    <div style="margin: 0" class="alert alert-warning" role="alert">
-            ${message}
-    </div>
-</c:forEach>
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>

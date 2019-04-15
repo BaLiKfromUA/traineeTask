@@ -9,8 +9,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * @author BaLiK on 11.04.19
@@ -27,6 +31,10 @@ public class EmployeeController {
     @Autowired
     OvalValidator validator;
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
 
     @ModelAttribute("employeeModel")
     public EmployeeData initEmployeeModel() {
@@ -36,7 +44,6 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public String getEmployees(@RequestParam(value = "department_id") String departmentId,
-                               @ModelAttribute(value = "reason") String reason,
                                @ModelAttribute(value = "flag") String flag,
                                @ModelAttribute("employeeModel") EmployeeData data,
                                Model model) {
@@ -44,8 +51,9 @@ public class EmployeeController {
         if (validator.validateId(departmentId)) {
             data.setDepartmentId(departmentId);
 
-            if ("invalid".equals(reason)) {
-                model.addAttribute("errorMessages", validator.getErrors(data).toArray());
+            if (model.asMap().containsKey("validateResult")) {
+                model.addAttribute("org.springframework.validation.BindingResult.employeeModel",
+                        model.asMap().get("validateResult"));
             }
 
             model.addAttribute("login", data.getLogin());
@@ -53,7 +61,6 @@ public class EmployeeController {
             model.addAttribute("rank", data.getRank());
             model.addAttribute("date", data.getDate());
             model.addAttribute("flag", flag);
-            model.addAttribute("reason", reason);
 
 
             try {
@@ -71,9 +78,10 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees/add")
-    public String createEmployee(@ModelAttribute("employeeModel") EmployeeData data,
+    public String createEmployee(@Valid @ModelAttribute("employeeModel") EmployeeData data,
+                                 BindingResult validateResult,
                                  RedirectAttributes redirectAttributes) {
-        if (validator.validate(data)) {
+        if (!validateResult.hasErrors()) {
             try {
                 service.createEmployee(data);
                 LOG.info("Employee {} was added!", data.getLogin());
@@ -83,9 +91,9 @@ public class EmployeeController {
             }
 
         } else {
+            redirectAttributes.addFlashAttribute("validateResult", validateResult);
             redirectAttributes.addFlashAttribute("employeeModel", data);
             redirectAttributes.addFlashAttribute("flag", "invalid-new-employee");
-            redirectAttributes.addFlashAttribute("reason", "invalid");
         }
 
         return String.format("redirect:/employees?department_id=%s", data.getDepartmentId());
@@ -113,10 +121,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees/edit")
-    public String editEmployee(@ModelAttribute("employeeModel") EmployeeData data,
+    public String editEmployee(@Valid @ModelAttribute("employeeModel") EmployeeData data,
+                               BindingResult validateResult,
                                RedirectAttributes redirectAttributes) {
 
-        if (validator.validate(data)) {
+        if (!validateResult.hasErrors()) {
             try {
                 service.updateEmployee(data);
                 LOG.info("Employee {} was updated!", data.getId());
@@ -125,9 +134,9 @@ public class EmployeeController {
                 redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             }
         } else {
+            redirectAttributes.addFlashAttribute("validateResult", validateResult);
             redirectAttributes.addFlashAttribute("employeeModel", data);
             redirectAttributes.addFlashAttribute("flag", data.getId());
-            redirectAttributes.addFlashAttribute("reason", "invalid");
         }
 
         return String.format("redirect:/employees?department_id=%s", data.getDepartmentId());

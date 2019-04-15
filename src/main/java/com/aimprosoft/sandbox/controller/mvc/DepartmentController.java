@@ -9,11 +9,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * @author BaLiK on 10.04.19
@@ -27,6 +28,11 @@ public class DepartmentController {
 
     @Autowired
     OvalValidator validator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
 
     @GetMapping("/")
     public String redirect() {
@@ -43,20 +49,25 @@ public class DepartmentController {
         return new DepartmentData();
     }
 
+    @ModelAttribute("newDepartmentModel")
+    public DepartmentData initNewDepartmentModel() {
+        return new DepartmentData();
+    }
+
+    //todo: list with objects
     @GetMapping("/departments")
     public String getDepartments(@ModelAttribute("flag") String flag,
                                  @ModelAttribute("name") String invalidName,
                                  Model model) {
 
-        if (!"".equals(flag)) {
-            String invalidId = flag;
-
-            if (!validator.validateId(invalidId)) {
-                invalidId = "0";
+        if (model.asMap().containsKey("validateResult")) {
+            if("invalid-new-department".equals(flag)){
+                model.addAttribute("org.springframework.validation.BindingResult.newDepartmentModel",
+                        model.asMap().get("validateResult"));
             }
-
-            if (invalidName != null) {
-                model.addAttribute("errorMessages", validator.getErrors(new DepartmentData(invalidId, invalidName)).toArray());
+            else {
+                model.addAttribute("org.springframework.validation.BindingResult.departmentModel",
+                        model.asMap().get("validateResult"));
             }
         }
 
@@ -67,7 +78,7 @@ public class DepartmentController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        model.addAttribute("name", invalidName);
+        model.addAttribute("incorrect_name", invalidName);
         model.addAttribute("flag", flag);
 
         return "departmentsPage";
@@ -93,8 +104,10 @@ public class DepartmentController {
     }
 
     @PostMapping("/departments/add")
-    public String createDepartment(DepartmentData data, RedirectAttributes redirectAttributes) {
-        if (validator.validate(data)) {
+    public String createDepartment(@Valid @ModelAttribute("newDepartmentModel") DepartmentData data,
+                                   BindingResult validateResult,
+                                   RedirectAttributes redirectAttributes) {
+        if (!validateResult.hasErrors()) {
             try {
                 service.createDepartment(data);
                 LOG.info("Department {} was added!", data.getName());
@@ -104,6 +117,7 @@ public class DepartmentController {
             }
 
         } else {
+            redirectAttributes.addFlashAttribute("validateResult", validateResult);
             redirectAttributes.addFlashAttribute("flag", "invalid-new-department");
             redirectAttributes.addFlashAttribute("name", data.getName());
         }
@@ -113,8 +127,10 @@ public class DepartmentController {
 
     //todo:redirect vs forward
     @PostMapping("/departments/edit")
-    public String editDepartment(DepartmentData data, RedirectAttributes redirectAttributes) {
-        if (validator.validate(data)) {
+    public String editDepartment(@Valid @ModelAttribute("departmentModel") DepartmentData data,
+                                 BindingResult validateResult,
+                                 RedirectAttributes redirectAttributes) {
+        if (!validateResult.hasErrors()) {
             try {
                 service.updateDepartment(data);
                 LOG.info("Department {} was updated!", data.getId());
@@ -124,6 +140,7 @@ public class DepartmentController {
             }
 
         } else {
+            redirectAttributes.addFlashAttribute("validateResult", validateResult);
             redirectAttributes.addFlashAttribute("flag", data.getId());
             redirectAttributes.addFlashAttribute("name", data.getName());
         }

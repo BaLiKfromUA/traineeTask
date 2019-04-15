@@ -36,7 +36,7 @@ public class EditDepartment implements Action {
 
         DepartmentData data = new DepartmentData(idStr, departmentName);
 
-        if (validator.validate(data)) {
+        /*if (validator.validate(data)) {
             try {
                 departmentService.updateDepartment(data);
                 LOG.info("Department {} was updated!", idStr);
@@ -48,7 +48,7 @@ public class EditDepartment implements Action {
             response.sendRedirect("/old/departments");
         } else {
             response.sendRedirect(String.format(URL, departmentName, idStr));
-        }
+        }*/
 
     }
 }

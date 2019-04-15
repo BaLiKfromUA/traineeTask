@@ -43,12 +43,14 @@
                 <c:set var="currEmail" value="${email}"/>
                 <c:set var="currRank" value="${rank}"/>
                 <c:set var="currDate" value="${date}"/>
+                <c:set var="isError" value="true"/>
             </c:when>
             <c:otherwise>
                 <c:set var="currLogin" value="${employee.login}"/>
                 <c:set var="currEmail" value="${employee.email}"/>
                 <c:set var="currRank" value="${employee.rank}"/>
                 <c:set var="currDate" value="${employee.getDateString()}"/>
+                <c:set var="isError" value="false"/>
             </c:otherwise>
         </c:choose>
 
@@ -66,6 +68,9 @@
                     <form:input path="login" type="text" class="form-control" minlength="6" maxlength="20"
                                 placeholder="Enter login" pattern="^[a-z0-9_-]{5,21}$"
                                 value="${currLogin}" autocomplete="off" required="true"/>
+                    <div <c:if test="${not isError}">hidden</c:if>>
+                        <form:errors path="login" cssStyle="color: red"/>
+                    </div>
                 </td>
                 <td>
                     <form:input path="email" type="email" class="form-control" minlength="6" maxlength="40"
@@ -75,16 +80,25 @@
                                 pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                                 autocomplete="off"
                                 required="true"/>
+                    <div <c:if test="${not isError}">hidden</c:if>>
+                        <form:errors path="email" cssStyle="color: red"/>
+                    </div>
                 </td>
                 <td>
                     <form:input path="rank" type="number" min="1" max="999" class="form-control"
                                 placeholder="Enter rank"
                                 value="${currRank}" autocomplete="off" required="true"/>
+                    <div <c:if test="${not isError}">hidden</c:if>>
+                        <form:errors path="rank" cssStyle="color: red"/>
+                    </div>
                 </td>
                 <td>
                     <form:input path="date" type="date" class="form-control"
                                 min="1979-12-31" max="2079-12-31"
                                 value="${currDate}" autocomplete="off" required="true"/>
+                    <div <c:if test="${not isError}">hidden</c:if>>
+                        <form:errors path="date" cssStyle="color: red"/>
+                    </div>
                 </td>
 
                 <td>
@@ -113,12 +127,14 @@
                     <c:set var="currEmail" value="${email}"/>
                     <c:set var="currRank" value="${rank}"/>
                     <c:set var="currDate" value="${date}"/>
+                    <c:set var="isError" value="true"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="currLogin" value=""/>
                     <c:set var="currEmail" value=""/>
                     <c:set var="currRank" value=""/>
                     <c:set var="currDate" value=""/>
+                    <c:set var="isError" value="false"/>
                 </c:otherwise>
             </c:choose>
 
@@ -127,6 +143,9 @@
                 <form:input path="login" type="text" class="form-control" minlength="6" maxlength="20"
                             placeholder="Enter login"
                             value="${currLogin}" pattern="^[a-z0-9_-]{5,21}$" autocomplete="off" required="true"/>
+                <div <c:if test="${not isError}">hidden</c:if>>
+                    <form:errors path="login" cssStyle="color: red"/>
+                </div>
             </td>
             <td>
                 <form:input path="email" type="email" class="form-control" minlength="6"
@@ -135,16 +154,25 @@
                             placeholder="Enter email" value="${currEmail}"
                             pattern="^([0-9a-z]([-_\\.]*[0-9a-z]+)*)@([0-9a-z]([-_\\.]*[0-9a-z]+)*)[\\.]([a-z]{2,6})$"
                             autocomplete="off" required="true"/>
+                <div <c:if test="${not isError}">hidden</c:if>>
+                    <form:errors path="email" cssStyle="color: red"/>
+                </div>
             </td>
             <td>
                 <form:input path="rank" type="number" min="1" max="999" class="form-control"
                             placeholder="Enter rank"
                             value="${currRank}" autocomplete="off" required="true"/>
+                <div <c:if test="${not isError}">hidden</c:if>>
+                    <form:errors path="rank" cssStyle="color: red"/>
+                </div>
             </td>
             <td>
                 <form:input path="date" type="date" class="form-control"
                             min="1979-12-31" max="2079-12-31"
                             value="${currDate}" autocomplete="off" required="true"/>
+                <div <c:if test="${not isError}">hidden</c:if>>
+                    <form:errors path="date" cssStyle="color: red"/>
+                </div>
             </td>
 
             <td>
@@ -175,6 +203,7 @@
         <hr>
     </c:forEach>
 </div>
+
 <footer>
     © 2019 Copyright: <b>BaLiK</b>
 </footer>

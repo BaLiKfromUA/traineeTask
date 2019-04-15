@@ -33,7 +33,7 @@ public class AddNewDepartment implements Action {
         DepartmentData data = new DepartmentData(request.getParameter("new name"));
         String flag = "invalid-new-department";
 
-        if (validator.validate(data)) {
+       /* if (validator.validate(data)) {
             try {
                 departmentService.createDepartment(data);
                 LOG.info("Department {} was added!", data.getName());
@@ -46,6 +46,6 @@ public class AddNewDepartment implements Action {
 
         } else {
             response.sendRedirect(String.format(URL, data.getName(), flag));
-        }
+        }*/
     }
 }

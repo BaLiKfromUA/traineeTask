@@ -42,9 +42,9 @@ public class EmployeesPage implements Action {
             final String rank = request.getParameter("rank");
             final String date = request.getParameter("date");
 
-            if ("invalid".equals(request.getParameter("reason"))) {
+         /*   if ("invalid".equals(request.getParameter("reason"))) {
                 request.setAttribute("errorMessages", validator.getErrors(new EmployeeData(login, email, rank, date, id)).toArray());
-            }
+            }*/
 
             request.setAttribute("login", login);
             request.setAttribute("email", email);

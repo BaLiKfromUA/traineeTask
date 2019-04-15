@@ -41,7 +41,7 @@ public class EditEmployee implements Action {
         EmployeeData data = new EmployeeData(userId, newLogin, newEmail, newRank, newDate, departmentId);
 
 
-        if (validator.validate(data)) {
+      /*  if (validator.validate(data)) {
             try {
                 employeeService.updateEmployee(data);
                 LOG.info("Employee {} was updated!", userId);
@@ -53,6 +53,6 @@ public class EditEmployee implements Action {
             response.sendRedirect(String.format(URL, Long.parseLong(departmentId)));
         } else {
             response.sendRedirect(String.format(FAIL_URL, departmentId, newLogin, newEmail, newRank, newDate, userId, "invalid"));
-        }
+        }*/
     }
 }
