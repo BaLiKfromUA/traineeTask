@@ -96,21 +96,18 @@
                         <c:when test="${'invalid-new-department' eq flag}">
                             <%--@elvariable id="name" type="java.lang.String"--%>
                             ${incorrect_name}
-                            <c:set var="isError" value="true"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="isError" value="false"/>
                         </c:otherwise>
                     </c:choose>
                 </c:set>
 
-                <form:input path="name"  type="text" class="form-control" minlength="6" maxlength="20"
+                <form:input path="name" type="text" class="form-control" minlength="6" maxlength="20"
                             placeholder="Enter new department name" value="${newDepartmentName}" autocomplete="off"
                             pattern="^[A-Z][a-z]{5,21}$" required="false"/>
 
-                <div <c:if test="${not isError}">hidden</c:if>>
-                    <form:errors path="name" cssStyle="color: red"/>
-                </div>
+
+                <form:errors path="name" cssStyle="color: red"/>
             </td>
             <td>
                 <button type="submit" class="btn btn-success">Add</button>
