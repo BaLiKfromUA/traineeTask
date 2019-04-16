@@ -21,7 +21,6 @@ import javax.validation.Valid;
  */
 @Controller
 //todo:show db errors
-//todo:@validate
 public class EmployeeController {
     private static Logger LOG = LogManager.getLogger(EmployeeController.class);
 
@@ -41,6 +40,10 @@ public class EmployeeController {
         return new EmployeeData();
     }
 
+    @ModelAttribute("newEmployeeModel")
+    public EmployeeData initNewEmployeeModel() {
+        return new EmployeeData();
+    }
 
     @GetMapping("/employees")
     public String getEmployees(@RequestParam(value = "department_id") String departmentId,
@@ -52,8 +55,13 @@ public class EmployeeController {
             data.setDepartmentId(departmentId);
 
             if (model.asMap().containsKey("validateResult")) {
-                model.addAttribute("org.springframework.validation.BindingResult.employeeModel",
-                        model.asMap().get("validateResult"));
+                if ("invalid-new-employee".equals(flag)) {
+                    model.addAttribute("org.springframework.validation.BindingResult.newEmployeeModel",
+                            model.asMap().get("validateResult"));
+                } else {
+                    model.addAttribute("org.springframework.validation.BindingResult.employeeModel",
+                            model.asMap().get("validateResult"));
+                }
             }
 
             model.addAttribute("login", data.getLogin());
@@ -78,7 +86,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees/add")
-    public String createEmployee(@Valid @ModelAttribute("employeeModel") EmployeeData data,
+    public String createEmployee(@Valid @ModelAttribute("newEmployeeModel") EmployeeData data,
                                  BindingResult validateResult,
                                  RedirectAttributes redirectAttributes) {
         if (!validateResult.hasErrors()) {
