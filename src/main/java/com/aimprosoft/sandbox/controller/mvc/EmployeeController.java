@@ -70,7 +70,6 @@ public class EmployeeController {
             model.addAttribute("date", data.getDate());
             model.addAttribute("flag", flag);
 
-
             try {
                 model.addAttribute("employees", service.getAllByDepartmentId(departmentId).toArray());
             } catch (DatabaseException e) {

@@ -27,7 +27,7 @@ public class DepartmentController {
     private DepartmentService service;
 
     @Autowired
-    OvalValidator validator;
+    private OvalValidator validator;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -54,18 +54,16 @@ public class DepartmentController {
         return new DepartmentData();
     }
 
-    //todo: list with objects
     @GetMapping("/departments")
     public String getDepartments(@ModelAttribute("flag") String flag,
                                  @ModelAttribute("name") String invalidName,
                                  Model model) {
 
         if (model.asMap().containsKey("validateResult")) {
-            if("invalid-new-department".equals(flag)){
+            if ("invalid-new-department".equals(flag)) {
                 model.addAttribute("org.springframework.validation.BindingResult.newDepartmentModel",
                         model.asMap().get("validateResult"));
-            }
-            else {
+            } else {
                 model.addAttribute("org.springframework.validation.BindingResult.departmentModel",
                         model.asMap().get("validateResult"));
             }
@@ -125,7 +123,6 @@ public class DepartmentController {
         return "redirect:/departments";
     }
 
-    //todo:redirect vs forward
     @PostMapping("/departments/edit")
     public String editDepartment(@Valid @ModelAttribute("departmentModel") DepartmentData data,
                                  BindingResult validateResult,

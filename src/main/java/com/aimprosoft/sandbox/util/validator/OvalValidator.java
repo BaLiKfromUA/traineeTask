@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
  * @author BaLiK on 01.04.19
  */
 @Component
-//todo:validate
 public class OvalValidator implements org.springframework.validation.Validator {
     private static Logger LOG = LogManager.getLogger(OvalValidator.class);
 

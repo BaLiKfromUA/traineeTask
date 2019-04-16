@@ -77,3 +77,27 @@ For information about using other forms of metadata with the Spring container, s
 
 - Java-based configuration: Starting with Spring 3.0, many features provided by the Spring JavaConfig project became part of the core Spring Framework.
  Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the @Configuration, @Bean, @Import and @DependsOn annotations.
+ 
+#### @ControllerAdvice 
+@ControllerAdvice is global: you can have a centralized way of handling exceptions, bindings, etc., it applies to the entire controller defined. 
+ 
+### Redirect vs forward
+```return "redirect:/books";```
+
+It returns to the client (browser) which interprets the http response and automatically calls the redirect URL
+
+```return "jsp/books/booksList";```
+
+It process the JSP and send the HTML to the client
+
+```return "forward:/books";```
+
+It transfer the request and calls the URL direct in the server side.
+
+
+
+To decide which one to use you have to consider some aspects of each approach:
+
+- **Forward**: is faster, the client browser is not involved, the browser displays the original URL, the request is transfered do the forwarded URL.
+
+- **Redirect**: is slower, the client browser is involved, the browser displays the redirected URL, it creates a new request to the redirected URL.
