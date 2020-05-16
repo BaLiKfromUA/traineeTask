@@ -1,5 +1,7 @@
 # Java trainee task
+
 This is a project I was asked to do during my internship in spring 2019.
+
 ---
 
 **The task is as follows:**
