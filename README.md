@@ -1,10 +1,8 @@
-# Java trainee task
+# Java backend trainee task
 
 This is a project I was asked to do during my internship in spring 2019.
 
----
-
-**The task is as follows:**
+## The task is as follows:
 
 There are employees and departments.
 A department may have lots of employees. Or it may not.
